@@ -1,3 +1,0 @@
-Markdown Extended Manifest
-==========================
-
