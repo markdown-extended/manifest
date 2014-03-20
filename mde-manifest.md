@@ -12,14 +12,14 @@ to write in Markdown and to build parsers implementation. It can be considered a
 Introduction
 ------------
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
-interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT",
+"RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described
+in [RFC 2119](http://tools.ietf.org/html/rfc2119).
 
-The present specifications of the syntax MAY NOT suppose about the final
-rendering of the Markdown content. This rendering is the purpose of the
-*parsers* and specific applications. The "HTML" final output can be used
-as rendering example but MAY NOT be a specification reference.
+The present specifications of the syntax MAY NOT suppose about the final rendering of the
+Markdown content. This rendering is the purpose of the *parsers* and specific applications.
+The "HTML" final output can be used as rendering example but MAY NOT be a specification
+reference.
 
 These specifications are open for discussion. If you want to correct a thing or propose
 your vision of a part of them, please see the [contribute](#contribute) section of this
@@ -34,7 +34,7 @@ The syntax's rules below are separated in the following three types based on the
 :	Rules concerning the rendering of typographic writing usages, such as bold
 	text or links ; this almost concerns a word, a group of words or an expression.
 
-**Block**
+**Structure**
 :	Rules concerning a special rendering of a sentence or a group of sentences,
 	such as citations or pre-formated blocks.
 
@@ -52,19 +52,55 @@ Two characters surrounding a bold text:
 
     __bold__ and **bold**
 
-One characters surrounding an italic text:
+One character surrounding an italic text:
 
     _italic_ and *italic*
 
 #### Hypertext links
 
+#### Abbreviations
 
+#### Code and variable names
 
-### Block rules
+#### Images
 
+#### Footnotes
 
+Footnotes may be considered as a "special case" as we MAY allow writer to distinguish
+simple footnotes of glossary and citations notes. The construction rules of these three
+types MAY be follow the same idea, with a special construction for glossary and citation
+notes, whish can be considered as a special footnote. Please refer to the [dedicated 
+section](#notes-special-case) about notes.
+
+### Structural rules
+
+#### Titles
+
+#### Pre-formated texts
+
+#### Citations
+
+#### Lists
+
+##### Unordered lists
+
+##### Ordered lists
+
+#### Terms definitions
+
+#### Tables
 
 ### Miscellaneous rules
+
+#### Escaping of meta-tags
+
+#### Inline HTML
+
+#### References
+
+#### Implementors specifics
+
+### The special case of notes (footnotes, glossary notes and citations notes) {#notes-special-case}
 
 
 Links
