@@ -1,32 +1,35 @@
 Markdown Extended Manifest
 ==========================
 
-Summary
--------
+* version: 1.0-alpha
+* source: http://github.com/markdown-extended/manifest
 
-This document explains the "official" specifications of the *Markdown Extended* (**MDE**)
-syntax. It intends to be a concise and complete set of syntax's rules and tags to use
-to write in Markdown and to build parsers implementation. It can be considered as the
-**MDE's reference** for any puprose.
+## Summary
 
-Introduction
-------------
+This document explains the "official" specifications of the *Markdown Extended* ("**MDE**"
+in the rest of this document) syntax. It intends to be a concise and complete set of
+syntax's rules and tags to use to write in Markdown and to build parsers implementation.
+It can be considered as the **MDE's reference** for any puprose.
+
+## Introduction
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT",
 "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described
 in [RFC 2119](http://tools.ietf.org/html/rfc2119).
 
-The present specifications of the syntax MAY NOT suppose about the final rendering of the
+The present specifications of the syntax DOES NOT suppose about the final rendering of the
 Markdown content. This rendering is the purpose of the *parsers* and specific applications.
-The "HTML" final output can be used as rendering example but MAY NOT be a specification
+The "HTML" final output can be used as a rendering example but MAY NOT be a specification
 reference.
 
-These specifications are open for discussion. If you want to correct a thing or propose
+Each item of the section below is identified by a structural ID composed like `A.B.C.` to allow
+it to be referenced and used in citations, implementations, documentations etc.
+
+These specifications are opened for discussion. If you want to correct a thing or propose
 your vision of a part of them, please see the [contribute](#contribute) section of this
 document.
 
-Markdown Extended specification
--------------------------------
+## Markdown Extended specification
 
 The syntax's rules below are separated in the following three types based on their utility:
 
@@ -41,12 +44,13 @@ The syntax's rules below are separated in the following three types based on the
 **Miscellaneous**
 :	Any rule that can not be classified in the two first categories.
 
-### Typographic rules
+### A. Typographic rules
 
-#### Emphasis
+#### A.1. Emphasis
 
 Bold and italic text emphasis MAY keep simple to use and read. We kept the first idea about
-these effects allowing two different typeface : the *underscore* and the *wildcard*.
+these effects allowing two different typeface : the *underscore* (A.1.a.) and the 
+*wildcard* (A.1.b.).
 
 Two characters surrounding a bold text:
 
@@ -56,15 +60,42 @@ One character surrounding an italic text:
 
     _italic_ and *italic*
 
-#### Hypertext links
+#### A.2. Abbreviations
 
-#### Abbreviations
+Abbreviations MUST allow the [References](#c4_references) notation.
 
-#### Code and variable names
+#### A.3. Code and variable names
 
-#### Images
+    This variable `$var` can be accessed using `->get(...)` method
 
-#### Footnotes
+#### A.4. Images
+
+Images MUST allow the [References](#c4_references) notation.
+
+#### A.5. Links
+
+Links MUST allow the [References](#c4_references) notation.
+
+##### A.5.a. Hypertext links
+
+    This is an automatic link: <http://link.com/query>.
+
+    This page can be found at [this address](http://link.com/query).
+
+Standalone URLs MAY NOT be automatically transformed in links if they are not written 
+following one of the above rules.
+
+##### A.5.b. In-page links (anchors)
+
+    Reach section [my section](#section-id).
+
+##### A.5.c. Emails links
+
+    This is an automatic "mailto" link: <contact@web.site>.
+
+    You can contact me at [this email address](contact@web.site).
+
+#### A.6. Footnotes
 
 Footnotes may be considered as a "special case" as we MAY allow writer to distinguish
 simple footnotes of glossary and citations notes. The construction rules of these three
@@ -72,42 +103,57 @@ types MAY be follow the same idea, with a special construction for glossary and 
 notes, whish can be considered as a special footnote. Please refer to the [dedicated 
 section](#notes-special-case) about notes.
 
-### Structural rules
+### B. Structural rules
 
-#### Titles
+#### B.1. Titles
 
-#### Pre-formated texts
+Global document's structure MAY be able to use both notations to build a single table
+of contents.
 
-#### Citations
+#### B.2. Pre-formated texts
 
-#### Lists
+#### B.3. Citations
 
-##### Unordered lists
+#### B.4. Lists
 
-##### Ordered lists
+##### B.4.a. Unordered lists
 
-#### Terms definitions
+##### B.4.b. Ordered lists
 
-#### Tables
+#### B.5. Terms definitions
 
-### Miscellaneous rules
+#### B.6. Tables
 
-#### Escaping of meta-tags
+### C. Miscellaneous rules
 
-#### Inline HTML
+#### C.1. Metas
 
-#### References
+#### C.2. Escaping of meta-characters
 
-#### Implementors specifics
+#### C.3. Inline HTML
 
-### The special case of notes (footnotes, glossary notes and citations notes) {#notes-special-case}
+#### C.4. References
+
+#### C.5. Implementors specifics
+
+### D. The special case of notes {#notes-special-case}
+
+#### Footnotes
+
+A paragraph with a footnote[^footnote_one] note.
+
+[^footnote_one]: Footnote content
+
+#### Glossary notes
+
+#### Citation notes
 
 
-Links
------
+## Links
 
 The original idea of the Markdown syntax came from [John Gruber](http://daringfireball.net/),
-who defined its goal and coded a first parser as a *Perl* script.
+who defined its goal, the first Markdown syntax rules and coded a first parser
+as a *Perl* script.
 
 An extended implementation, **Markdown Extra**, has been written by [Michel Fortin](http://michelf.com/),
 coded in *PHP* script.
@@ -115,8 +161,7 @@ coded in *PHP* script.
 Another extended implementation, **Multi Markdown**, has been written by 
 [Fletcher T. Penney](http://fletcherpenney.net/), coded in *Perl* script.
 
-About
------
+## About
 
 The Markdown Extended specification is authored and maintained by [Pierre 
 Cassat](http://github.com/pierowbmstr).
@@ -124,14 +169,18 @@ Cassat](http://github.com/pierowbmstr).
 If you'd like to leave feedback, please [open an issue on
 GitHub](https://github.com/markdown-extended/manifest/issues).
 
-Contribute
-----------
+## Contribute
 
-This document and the MDE's specification are opened for any kind of discussion and 
-argumentation.
+This document and the MDE's specification are opened for any kind of discussion,
+argumentation, translation and any other modification. The source of this document
+is under a GIT version-control repository publicly hosted on [GitHub](http://github.com).
+If you want to participate in any way, just [fork and edit](https://help.github.com/articles/fork-a-repo)
+the original repository and ask for a [pull request](https://help.github.com/articles/using-pull-requests)
+opening the appropriate issue ticket[^forking].
 
-License
--------
+## License
 
 This document is licensed under Creative Commons - CC BY 3.0
 <http://creativecommons.org/licenses/by/3.0/>
+
+[^forking]: GitHub embeds many tools and procedures to allow a quick and simple "*fork/pull request*" process.
