@@ -4,32 +4,33 @@ Markdown Extended Manifest
 * version: 1.0-alpha
 * source: http://github.com/markdown-extended/manifest
 
-## Summary
+Summary
+-------
 
-This document explains the "official" specifications of the *Markdown Extended* ("**MDE**"
-in the rest of this document) syntax. It intends to be a concise and complete set of
-syntax's rules and tags to use to write in Markdown and to build parsers implementation.
+This document explains the "official" specifications of the (unofficial) *Markdown Extended* 
+("**MDE**" in the rest of this document) syntax. It intends to be a concise and complete set 
+of syntax's rules and tags to use to write in Markdown and to build parsers implementation.
 It can be considered as the **MDE's reference** for any puprose.
 
-## Introduction
+Introduction
+------------
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT",
-"RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described
-in [RFC 2119](http://tools.ietf.org/html/rfc2119).
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", 
+"RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in 
+[RFC 2119](http://tools.ietf.org/html/rfc2119).
 
-The present specifications of the syntax DOES NOT suppose about the final rendering of the
+The present specifications of the syntax DOES NOT suppose about the final rendering of the 
 Markdown content. This rendering is the purpose of the *parsers* and specific applications.
-The "HTML" final output can be used as a rendering example but MAY NOT be a specification
-reference.
+The "HTML" final output can be used as a rendering example but MAY NOT be a specification reference.
 
-Each item of the section below is identified by a structural ID composed like `A.B.C.` to allow
-it to be referenced and used in citations, implementations, documentations etc.
+Each item of the section below is identified by a structural ID composed like `A.B.C.` 
+to allow it to be referenced and used in citations, implementations, documentations etc.
 
-These specifications are opened for discussion. If you want to correct a thing or propose
-your vision of a part of them, please see the [contribute](#contribute) section of this
-document.
+These specifications are opened for discussion. If you want to correct a thing or propose 
+your vision of a part of them, please see the [contribute](#contribute) section of this document.
 
-## Markdown Extended specification
+Markdown Extended specification
+-------------------------------
 
 The syntax's rules below are separated in the following three types based on their utility:
 
@@ -168,14 +169,16 @@ section](#notes-special-case) about notes.
 
 ### B. Structural rules
 
-#### B.1. Titles
+#### B.1. Paragraphs
+
+#### B.2. Titles
 
 Global document's structure MAY be able to use both notations to build a single table
 of contents.
 
-#### B.2. Pre-formated texts
+#### B.3. Pre-formated texts
 
-#### B.3. Citations
+#### B.4. Citations
 
 To create a blockquoted block, we just preceed each line or the first of a paragraph by a superior sing `>`.
 
@@ -187,7 +190,7 @@ To create a blockquoted block, we just preceed each line or the first of a parag
 
 Basically, once we are in a blockquote block (*e.g. as no blank line is passed*), our content will be part of it.
 
-I've found not so long ago an interesting feature added to this original syntax imagines by [**Egil Hansen**](http://egilhansen.com) for his [php-markdown-extra-extended](https://github.com/egil/php-markdown-extra-extended) version to precise the URL of the original content cited. To do so, we just have to write this URL at the begining of the first line.
+I've found not so long ago an interesting feature added to this original syntax imagines by [**Egil Hansen**](http://egilhansen.com) for his [php-markdown-extra-extended](http://github.com/egil/php-markdown-extra-extended) version to precise the URL of the original content cited. To do so, we just have to write this URL at the begining of the first line.
 
     > (http://test.com/) This is my blockquote,
     > with a content cited from the original "http://test.com" page ...
@@ -198,15 +201,15 @@ This will produce:
     This is my blockquote, with a content cited from the original "http://test.com" page ...
     </blockquote>
 
-#### B.4. Lists
+#### B.5. Lists
 
-##### B.4.a. Unordered lists
+##### B.5.a. Unordered lists
 
-##### B.4.b. Ordered lists
+##### B.5.b. Ordered lists
 
-#### B.5. Terms definitions
+#### B.6. Terms definitions
 
-#### B.6. Tables
+#### B.7. Tables
 
 The first table syntax was (*as I know*) introduced by Michel Fortin in he's *Markdown Extra* version. He imagines a visual syntax like:
 
@@ -259,7 +262,7 @@ Finally, Fletcher's imagines an high level of HTML construction allowing to writ
 
 The result will be a table with two `tbody` sections.
 
-#### B.7. Code blocks
+#### B.8. Code blocks
 
 A basic code block can be written starting each line by 4 spaces:
 
@@ -277,7 +280,7 @@ Michel Fortin, in his *Markdown Extra* version, added a special writing rule to 
 
 This way you can write some code blocks not counting every spaces of each line (...).
 
-I've found not so long ago an interesting feature added to this fenced syntax imagines by [**Egil Hansen**](http://egilhansen.com) for his [php-markdown-extra-extended](https://github.com/egil/php-markdown-extra-extended) version to create some *language-friendly* code blocks, as it is [preconize by the W3C](http://dev.w3.org/html5/spec-author-view/the-code-element.html#the-code-element) in the HTML5 specifications. To do so, we just have to write our language just at the end of the first tildes line.
+I've found not so long ago an interesting feature added to this fenced syntax imagines by [**Egil Hansen**](http://egilhansen.com) for his [php-markdown-extra-extended](http://github.com/egil/php-markdown-extra-extended) version to create some *language-friendly* code blocks, as it is [preconize by the W3C](http://dev.w3.org/html5/spec-author-view/the-code-element.html#the-code-element) in the HTML5 specifications. To do so, we just have to write our language just at the end of the first tildes line.
 
     ~~~~html
     My code here
@@ -384,7 +387,8 @@ comp.os.minix. (Web link) Retrieved September 30, 2011.
 As we can see, the circumflex is replaced by a sharp `#` and the marker is two-parts handlhed.
 
 
-## Links
+Links
+-----
 
 The original idea of the Markdown syntax came from [John Gruber](http://daringfireball.net/),
 who defined its goal, the first Markdown syntax rules and coded a first parser
@@ -396,26 +400,32 @@ coded in *PHP* script.
 Another extended implementation, **Multi Markdown**, has been written by 
 [Fletcher T. Penney](http://fletcherpenney.net/), coded in *Perl* script.
 
-## About
+About
+-----
 
-The Markdown Extended specification is authored and maintained by [Pierre 
-Cassat](http://github.com/pierowbmstr).
+The Markdown Extended specification is authored and maintained by Pierre Cassat ([@pierowbmstr](http://github.com/piwi)).
 
-If you'd like to leave feedback, please [open an issue on
-GitHub](https://github.com/markdown-extended/manifest/issues).
+If you'd like to leave feedback, please [open an issue on GitHub](http://github.com/markdown-extended/manifest/issues).
 
-## Contribute
+Contribute
+----------
 
 This document and the MDE's specification are opened for any kind of discussion,
 argumentation, translation and any other modification. The source of this document
 is under a GIT version-control repository publicly hosted on [GitHub](http://github.com).
-If you want to participate in any way, just [fork and edit](https://help.github.com/articles/fork-a-repo)
-the original repository and ask for a [pull request](https://help.github.com/articles/using-pull-requests)
+If you want to participate in any way, just [fork and edit](http://help.github.com/articles/fork-a-repo)
+the original repository and ask for a [pull request](http://help.github.com/articles/using-pull-requests)
 opening the appropriate issue ticket[^forking].
 
-## License
+License
+-------
 
 This document is licensed under Creative Commons - CC BY 3.0
-<http://creativecommons.org/licenses/by/3.0/>
+<http://creativecommons.org/licenses/by/3.0/>.
+
+>   Copyleft 2014 Pierre Cassat & contributors
+
+>   see <http://github.com/markdown-extended/manifest>
+
 
 [^forking]: GitHub embeds many tools and procedures to allow a quick and simple "*fork/pull request*" process.
