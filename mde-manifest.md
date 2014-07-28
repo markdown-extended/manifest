@@ -7,10 +7,24 @@ Markdown Extended Manifest
 Summary
 -------
 
-This document explains the "official" specifications of the (unofficial) *Markdown Extended* 
+This document explains the "official" specifications of the *Markdown Extended* 
 ("**MDE**" in the rest of this document) syntax. It intends to be a concise and complete set 
-of syntax's rules and tags to use to write in Markdown and to build parsers implementation.
+of syntax's rules and tags to use to write in Markdown and to build parsers implementations.
 It can be considered as the **MDE's reference** for any puprose.
+
+Presentation
+------------
+
+**[Markdown][]** is originally a plain text formatting syntax created by [John Gruber][]
+and [Aaron Swartz][]. It allows to write contents with an easy-to-read, easy-to-write set
+of rules for plain text format then convert it (basically in HTML) in a reach format.
+
+Many developers have proposed their own implementation of the original syntax with specific
+evolutions and extensions. The goal of **MDE** is to define an official and homogeneous new
+version, the most complete and rich as possible, while keeping only the relevant developments
+or more used rules. **MDE MUST be considered by developers as the new standard for Markdown,
+so that each user does not need to adapt to the current implementation but can use these rules 
+everywhere.**
 
 Introduction
 ------------
@@ -29,8 +43,8 @@ to allow it to be referenced and used in citations, implementations, documentati
 These specifications are opened for discussion. If you want to correct a thing or propose 
 your vision of a part of them, please see the [contribute](#contribute) section of this document.
 
-Markdown Extended specification
--------------------------------
+Markdown Extended specifications
+-------------------------------- 
 
 The syntax's rules below are separated in the following three types based on their utility:
 
@@ -45,21 +59,59 @@ The syntax's rules below are separated in the following three types based on the
 **Miscellaneous**
 :	Any rule that can not be classified in the two first categories.
 
+### First notes
+
+The sections below will explain each tag to use for each writing rule. As a very first introduction
+to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
+
+-   **a Markdown content is written as plain text**: it MUST be working by any software reading 
+    file (such as `vi`) and be readable by a human "as-is" (this is the very first goal of Markdown)
+-   as Markdown rules are written using some specific characters, **these characters MAY be escaped**
+    to be used "as-is" (this is developed below)
+-   **a paragraph is created in Markdown passing a blank line** (this rule is developed below)
+-   **all the rules MUST be used in one single Markdown content**, and be parsed correctly
+    (any conflict between rules MUST be avoided)
+-   for convenience, **the "references" notation MUST be allowed for a maximum of rules**
+    (this notation is explained below) as it permits to keep a content readable.
+
 ### A. Typographic rules
+
+A rule is considered as *typographic* when it only concerns one or more words written inline
+in a text. As long it does not concern a full block of text, a rule MUST be considered as *typographic*.
 
 #### A.1. Emphasis
 
-Bold and italic text emphasis MAY keep simple to use and read. We kept the first idea about
-these effects allowing two different typeface : the *underscore* (A.1.a.) and the 
-*wildcard* (A.1.b.).
+Bold and italic text emphasis MUST keep simple to use and read. The first idea was kept about
+these effects allowing two different typeface: the *underscore* (A.1.a.) and the *wildcard* (A.1.b.).
 
-Two characters surrounding a bold text:
+##### A.1.a. Emphasis with underscores
 
-    __bold__ and **bold**
+Italic text is written surrounded by one character:
 
-One character surrounding an italic text:
+    _italic_
 
-    _italic_ and *italic*
+Bold text is written surrounded by two characters:
+
+    __bold__
+
+NOTE - In-words underscores MAY NOT be considered as emphasis delimiters ; for instance, 
+writing `my_underscored_words`, the `underscored` word MAY NOT be in italic but the whole
+expression MAY be kept "as-is". In other words, writing `__my_underscored_words__` MAY be
+rendered as the expression `my_underscored_words` written in bold text (*leading and trailing
+characters are considered as emphasis delimiters but internal characters are auto-escaped*).
+This rule is important in a case like `underscored_words followed by other_underscores`
+as it seems easier to let a parser match the two distant underscores as delimiters while this
+MAY NOT be the case (*underscores may be kept "as-is" in both expressions*).
+
+##### A.1.b. Emphasis with wildcards
+
+Italic text is written surrounded by one character:
+
+    *italic*
+
+Bold text is written surrounded by two characters:
+
+    **bold**
 
 #### A.2. Abbreviations
 
@@ -67,11 +119,68 @@ Abbreviations MUST allow the [References](#c4_references) notation.
 
 #### A.3. Code and variable names
 
-    This variable `$var` can be accessed using `->get(...)` method
+Inline code and variables MUST keep simple to use and read. The first idea was kept about
+this span: surround the code or variable name between *ticks*. A code span MUST allow spaces
+inside.
 
-#### A.4. Images
+    This variable `$var` can be accessed using `-> get(...)` method
 
-Images can be *inline* in the text, like:
+#### A.4. Links
+
+A *link* concerns any kind of *hypertext link* (a full URL), in-page link (a hash tag referencing
+a section of current document) and any other kind of "clickable" thing in an HTML content,
+such as an email address, a phone number etc.
+
+Standalone URLs MUST NOT be automatically transformed in links if they are not written following one 
+of the below rules. An URL written inline in a content with no specific "link" tag is not a link, it
+is just a raw URL (in an HTML content, it MAY NOT be clickable).
+
+Links MUST allow the [References](#c4_references) notation.
+
+##### A.4.a. Raw inline links
+
+Making an URL (or any kind of text) clickable can be done by surrounding it between inferior and 
+superior signs:
+
+    <http://link.com/query>
+
+Any text written like that MUST be rendered clickable (with a special treatment if required,
+such as email adresses links).
+
+##### A.4.b. Inline links
+
+Links can be written *inline* in the text, separated in two parts:
+
+-   the link text between brackets
+-   then, between parenthesis, the URL of the link (relative or absolute) and an optional 
+    title wrapped in double-quotes followed by a list of attributes if necessary.
+
+    [a simple link](http://test.com/)
+
+    [a link with a title](http://test.com/ "My optional title")
+
+    [a link with a title and some attributes](http://test.com/ "My optional title" attribute1=value attribute2=value)
+
+##### A.4.c. In-page links
+
+In-page anchors can be accessed using the notation of A.4.b. replacing the URL by the section hash:
+
+    [my section](#section-id)
+
+See the **titles** section to learn how to define the hash reference of a part.
+
+##### A.4.d. Special links
+
+Some special treatments MAY be applied to special links such as email addresses. As these kinds
+of links can evolve, there is no list of them here.
+
+For instance, in an HTML rendering, an email address should be transformed as a `mailto:...` link.
+
+#### A.5. Images
+
+##### A.5.a. Inline images
+
+Images can be written *inline* in the text, like:
 
     This is a paragraph with an embedded image ![alt text](http://test.com/data1/images/1.jpg "My optional title")
 
@@ -103,61 +212,6 @@ As I said, the class will produce an image tag like:
 For now, you may write the entire reference definition on a single line. This is not the case in Multi Markdown, which allows to pass a line, but I can't get this feature working for now. This may be one of the evolutions ...
 
 Images MUST allow the [References](#c4_references) notation.
-
-#### A.5. Links
-
-Links can be *inline* in the text, like:
-
-    This is a paragraph with a [link to a test page](http://test.com/ "My optional title") for now ...
-
-The rule here is to write the link text between brackets. Then, between parenthesis, the URL of the link, relative or asbolute, and an optional title wrapped in double-quotes.
-
-Using this notation is the basic syntax for links. But it can make the file not easy to read, which is the first goal of Markdown.
-
-So we can use **references** for links. This allows us to keep the URL and other informations about the link outside the content. For example:
-
-    This is a paragraph with a [referenced link][linkid]. I can continue my content 
-    clearly because it is still readable for human eyes ...
-
-    [linkid]: http://test.com/ "My optional title"
-
-The link here in the final content will be exactly the same as above. The point is just that the informations are not in the content but after it.
-
-A new feature introduced by Fletcher Penney in he's *Multi Markdown* version is the possibility to add attributes in references. Doing so, we can add, after the optional title, any attributes constructed like couples of pair `variable/value` with or without double-quotes. For example:
-
-    This is a paragraph with a [referenced link][linkid]. I can continue my content 
-    clearly because it is still readable for human eyes ...
-
-    [linkid]: http://test.com/ "My optional title" class=mylinkclass style="border:1px solid black"
-
-As I said, the class will produce an link tag like:
-
-    <a href="http://test.com/" title="My optional title" 
-        class="mylinkclass" style="border:1px solid black">
-            referenced link</a>
-
-For now, you may write the entire reference definition on a single line. This is not the case in Multi Markdown, which allows to pass a line, but I can't get this feature working for now. This may be one of the evolutions ...
-
-Links MUST allow the [References](#c4_references) notation.
-
-##### A.5.a. Hypertext links
-
-    This is an automatic link: <http://link.com/query>.
-
-    This page can be found at [this address](http://link.com/query).
-
-Standalone URLs MAY NOT be automatically transformed in links if they are not written 
-following one of the above rules.
-
-##### A.5.b. In-page links (anchors)
-
-    Reach section [my section](#section-id).
-
-##### A.5.c. Emails links
-
-    This is an automatic "mailto" link: <contact@web.site>.
-
-    You can contact me at [this email address](contact@web.site).
 
 #### A.6. Footnotes
 
@@ -303,6 +357,35 @@ The code above will produce:
 
 #### C.4. References
 
+
+Using this notation is the basic syntax for links. But it can make the file not easy to read, which is the first goal of Markdown.
+
+So we can use **references** for links. This allows us to keep the URL and other informations about the link outside the content. For example:
+
+    This is a paragraph with a [referenced link][linkid]. I can continue my content 
+    clearly because it is still readable for human eyes ...
+
+    [linkid]: http://test.com/ "My optional title"
+
+The link here in the final content will be exactly the same as above. The point is just that the informations are not in the content but after it.
+
+A new feature introduced by Fletcher Penney in he's *Multi Markdown* version is the possibility to add attributes in references. Doing so, we can add, after the optional title, any attributes constructed like couples of pair `variable/value` with or without double-quotes. For example:
+
+    This is a paragraph with a [referenced link][linkid]. I can continue my content 
+    clearly because it is still readable for human eyes ...
+
+    [linkid]: http://test.com/ "My optional title" class=mylinkclass style="border:1px solid black"
+
+As I said, the class will produce an link tag like:
+
+    <a href="http://test.com/" title="My optional title" 
+        class="mylinkclass" style="border:1px solid black">
+            referenced link</a>
+
+For now, you may write the entire reference definition on a single line. This is not the case in Multi Markdown, which allows to pass a line, but I can't get this feature working for now. This may be one of the evolutions ...
+
+
+
 #### C.5. Implementors specifics
 
 ### D. The special case of notes {#notes-special-case}
@@ -428,4 +511,7 @@ This document is licensed under Creative Commons - CC BY 3.0
 >   see <http://github.com/markdown-extended/manifest>
 
 
+[Markdown] http://en.wikipedia.org/wiki/Markdown
+[John Gruber] http://en.wikipedia.org/wiki/John_Gruber
+[Aaron Swartz] http://en.wikipedia.org/wiki/Aaron_Swartz
 [^forking]: GitHub embeds many tools and procedures to allow a quick and simple "*fork/pull request*" process.
