@@ -14,7 +14,7 @@ remains before the first published version and all its content may change before
 This document explains the "official" specifications of the *Markdown Extended* 
 ("**MDE**" in the rest of this document) syntax. It intends to be a concise and complete set 
 of syntax's rules and tags to use to write under Markdown Extended and a reference to build 
-parsers  implementations. It can be considered as the **MDE's reference** for any puprose. 
+parsers  implementations. It can be considered as the **MDE's reference** for any purpose.
 The goal of these specifications is NOT to explain *how to write a content* but *how to build it* 
 using the MDE's syntax.
 
@@ -148,20 +148,29 @@ The MDE rules MUST keep ALL original Markdown's rules valid.
 
 ### A.3. MDE file format {#A3}
 
+An MDE file MUST be considered as a plain text document. It is basically a raw plain text file just like
+classic `.txt` files. It MAY be encoded in a "classic" file encoding such as `utf-8` or `iso-...`.
+
+NOTE - Keep in mind that any MDE file MUST work with any software reading file.
+
+ADVICE - The best practice is to always use the same extension for MDE files as it permits to identify them
+quickly and define some special treatments based on file extension. The `.md` or `.markdown` extensions are
+given here as examples.
+
 ### A.4. Rules ranking {#A4}
 
 The syntax's rules of these specifications are separated in the following three types based on their utility:
 
 **Typography**
-:	Rules concerning the rendering of typographic writing usages, such as bold
-	text or links ; this almost concerns a word, a group of words or an expression.
+:   Rules concerning the rendering of typographic writing usages, such as bold
+    text or links ; this almost concerns a word, a group of words or an expression.
 
 **Structure**
-:	Rules concerning a special rendering of a sentence or a group of sentences,
-	such as citations or pre-formated blocks.
+:   Rules concerning a special rendering of a sentence or a group of sentences,
+    such as citations or pre-formatted blocks.
 
 **Miscellaneous**
-:	Any rule that can not be classified in the two first categories.
+:   Any rule that can not be classified in the two first categories.
 
 
 ### A.5. Blank lines {#A5}
@@ -180,6 +189,15 @@ used in that content, considering the first character of the first indented line
 left side of its own indentation.
 
 To specify the end of the block (and of its indentation level), writers MUST pass two blank lines.
+
+EXAMPLE - A classic example is the case of a code block following a list item. If only one line is
+passed between both, the code block will be considered as part of the list item's content (and must
+be indented in consequence - by 2). If two blank lines are passed, the block must be considered as
+a fresh new block (the list item is considered finished).
+
+The global rule is that anytime two blank lines are passed, precedent block is closed and indentation
+level goes down by 1.
+
 
 ### A.7. Automatic escaping {#C7}
 
@@ -425,7 +443,7 @@ language name (without space):
     ~~~~
 
 NOTE - In an HTML implementation, this feature permits to create a *language friendly* code block, as 
-[preconize the W3C in the HTML5 specifications][w3c-html5-code-specifications].
+[recommended by the W3C in the HTML5 specifications][w3c-html5-code-specifications].
 
 
 ### C.6. Citations {#C6}
@@ -436,11 +454,11 @@ A blockquoted block is written preceding each line or only the first one of a pa
     > where we can include **other Markdown** tags ...
 
     > We can also write our blockquotes
-    without the superior sign on each line, but just at the begining of the first one.
+    without the superior sign on each line, but just at the beginning of the first one.
 
 Once a blockquote has begin (*e.g. as long as no blank line is passed*), the content will be part of it.
 
-To precise the URL of the original content cited, write this URL at the begining of the first line
+To precise the URL of the original content cited, write this URL at the beginning of the first line
 between parenthesis:
 
     > (http://test.com/) This is my blockquote,
@@ -528,6 +546,7 @@ Alignment in columns can be specified by using colons `:` in the separators line
 -   a colon on the right of a separator's cell means a right-aligned column : `---:`
 -   two colons on the left and the right of a separator's cell means a centered column : `:--:`
 
+
     | First Header  | Second Header | Third header |
     | ------------- | ------------: | :----------: |
     | Content Cell  | **Cell**      | **Cell**     |
@@ -584,11 +603,22 @@ A meta-data is added writing it at the very top of the document (without any bla
 the top) as a `var: val` pair:
 
     author: John Doe
-    
-Multiple meta-data can be written, beginning each item on a new line, and the "true" content 
+
+A meta-data name MUST be a kind of "slug": a single string without space which can be considered
+as an ID.
+
+Multiple meta-data can be written, beginning each item on a new line, and the "true" content
 of the document MUST begin after passing at least one blank line after meta-data.
 
 The value of the meta-data MUST allow multi-lines content.
+
+Meta-data can also be used to define variables values available in the document. To use a
+meta-data value, use notation `[%var]`: the meta-data name preceded by a percent sign between
+brackets.
+
+    mymeta: A value for the meta-data
+
+    This is the document content, where I can call [%mymeta] value.
 
 
 ### D.2. Escaping of meta-characters {#D2}
@@ -664,64 +694,76 @@ follow the [LaTeX syntax][latex-maths-doc].
 
 ### D.5. The special case of notes {#D5}
 
-Footnotes in a text are a way to increase the meaning of it, the external references, 
-some required definitions for the comprehension of that text without overcroweded it, etc.
-They are often used in books and official contents.
+Footnotes in a text are a way to increase its meaning, external references, some required
+definitions for the global comprehension, without overcrowding it. They are often used in
+books and official contents.
 
-Let's try to explain footnotes usage and differences between:
+We can distinguish three types of footnotes in a content, depending on their intention:
 
--   **a simple footnote**, a short additional content that would have no place in the content, 
--   **a glossary note**, an explanation about a technical term for example, 
--   **a bibliographic note**, which refer to another book or work, hardly referenced to let the 
-    lector find its original source.
+-   **a simple footnote** is a short additional content that would have no place in the content,
+-   **a glossary note** is an explanation about a technical term or a glossary entry,
+-   **a bibliographic note**, which refers to another book or work, is a hard reference to let the
+    reader find the original source.
 
 #### D.5.a. Footnotes {#D5a}
 
-As said above, footnotes are just snippets of additional information that seems not necessary
-in the content. For example, if we talk about *Linux* in a text about a specific computer, 
-it may not makes sense to cite *Linus Trovalds* in the content. But we do want Linus'name 
-to be present in our work, so we add a little note attached to the term "Linux", which can be:
+To create a *footnote* reference, just write its ID like `[^ID]` (a circumflex before the ID string,
+between brackets) in the content, then write the footnote content as a *reference*:
 
-    This computer is compatible with the operating system Linux[^xxx].
-    
-    [^xxx]: An open source operating system created by Linus Trovalds.
+    Paragraph with a footnote[^myid].
+
+    ...
+
+    [^myid]: Content of the footnote.
+
+A footnote can also be written inline like:
+
+    Paragraph with a footnote[^Content of the footnote.].
 
 #### D.5.b. Glossary notes {#D5b}
 
-A glossary note is most like a definition. It is attached to a specific term and try to give 
-one or more explanations of it. Glossary notes have to be considered as *definitions list* 
-in HTML, except that they will all be placed like footnotes at the end of the content.
+A glossary note is most like a definition. It is attached to a specific term and tries to give
+one or more explanation(s) of it. Glossary notes have to be considered as *definitions list*,
+except that they will all be placed like footnotes (at the end of the content for instance).
 
-For example, if we want to define the term "Linux" as a glossary entry, we will add 
-a marker attached to all occurences of the term, which will reach the footnote definition:
+A *glossary footnote* is written like a classic *footnote* but the first line of the note content
+contains concerned term, preceded by the string `glossary: `:
 
-    This computer is compatible with the operating system Linux[^xxx].
-    
-    [^xxx]: glossary: Linux
-    recursive acronym for "Linux Is Not UniX"
+    Paragraph with a glossary note[^myid].
 
-The point here is that the content always starts with `glossary:`. Then we write the term 
-to be defined, followed by an optional *short key* which will be used to later the sorting 
-order of the glossary. Then the definition is on a new line.
+    ...
+
+    [^myid]: glossary: Term
+    Actual content of the glossary footnote.
+
+On the first line of the note, the term defined can optionally be followed by a *short key*
+which will be used to build the sorting order of the glossary.
 
 #### D.5.c. Citation notes {#D5c}
 
-A bilbliographic note is a fully referenced external work. This kind of notes is often used 
+A bibliographic note is a fully referenced external work. This kind of notes is often used
 in academic or scientific work. The point is that we have to follow some *academic rules* 
-for bibliographic notes, such as naming the authors, writing the title of the work in italic, 
-exactly as it has been published, and cite enough informations (*such as the edition*) 
-to let the lector find this work easily.
+for bibliographic notes, basically to cite enough information to let the reader find this
+work easily.
 
-For example, if we talk about the creation of Linux and want to add a reference to the 
-very first work of it, we would attach a note after the expression "creation of Linux" 
-which could be:
+A *citation note* is written like a classic footnote but:
 
-    This computer is compatible with the operating system Linux[p. XX][#Doe:1991].
-    
-    [#Doe:1991]: Linus Benedict Torvalds (October 5, 1991). *Free minix-like kernel sources for 386-AT*.
-    comp.os.minix. (Web link) Retrieved September 30, 2011.
+-   the ID of the note is constructed in two parts like `[p. XX][#Doe:1991]`:
+    -   the page number between brackets
+    -   the reference ID, preceded by a sharp
+-   the note content follows the same rules as for classic footnotes, but the circumflex
+    is replaced by a sharp.
 
-As we can see, the circumflex is replaced by a sharp `#` and the marker is two-parts handlhed.
+
+    Paragraph with a citation note[p. XX][#Doe:1991].
+
+    ...
+
+    [#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
+    edition for instance ... (Web link) Retrieved September 30, 2011.
+
+ADVICE - Parsers MAY have to follow some typographic *academic rules* for bibliographic notes,
+such as naming  the authors in bold, writing the title of the work in italic etc.
 
 
 ### D.6. Implementors specifics {#D6}
@@ -738,6 +780,20 @@ As we can see, the circumflex is replaced by a sharp `#` and the marker is two-p
 ##### D.6.c.1. Inline HTML {#D6c1}
 
 #### D.6.c.2. Other file inclusion {#D6c2}
+
+
+Testing
+-------
+
+You will find in the `tests/` directory of present repository a set of test files you can use to
+test any parsers or implementations of the MDE syntax. Each test is stored in a sub-directory named
+with concerned specification reference and presents two files:
+
+-   `original.mde`: the original raw Markdown Extended test content
+-   `parsed-content.html`: the rendering of the content in HTML
+
+The global `tests/ORIGINAL.mde` file embeds all contents of sub-tests and the result parsed in HTML
+is stored in file `tests/PARSED-CONTENT.html`.
 
 
 
