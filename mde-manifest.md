@@ -13,13 +13,13 @@ remains before the first published version and all its content may change before
 
 This document explains the "official" specifications of the *Markdown Extended* 
 ("**MDE**" in the rest of this document) syntax. It intends to be a concise and complete set 
-of syntax's rules and tags to use to write under Markdown Extended and to build parsers 
-implementations. It can be considered as the **MDE's reference** for any puprose. The goal 
-of these specifications is NOT to explain *how to write a content* but *how to build it* 
+of syntax's rules and tags to use to write under Markdown Extended and a reference to build 
+parsers  implementations. It can be considered as the **MDE's reference** for any puprose. 
+The goal of these specifications is NOT to explain *how to write a content* but *how to build it* 
 using the MDE's syntax.
 
-This document is licensed under [Creative Commons - CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)
-and authored and maintained by Pierre Cassat ([@pierowbmstr](http://github.com/piwi)).
+This document is authored and maintained by Pierre Cassat ([@pierowbmstr][piwi])
+and licensed under [Creative Commons - CC BY 3.0][cc-by-3].
 
 **Table of contents:**
 
@@ -29,9 +29,10 @@ and authored and maintained by Pierre Cassat ([@pierowbmstr](http://github.com/p
 Introduction
 ------------
 
-**[Markdown][original-markdown]** is originally a plain text formatting syntax created by 
-[John Gruber][john-gruber] and [Aaron Swartz][aaron-swartz]. It allows to write contents with an easy-to-read, 
-easy-to-write set of rules for plain text format then convert it in a rich format (basically HTML).
+**[Markdown][wiki-markdown]** is originally a plain text formatting syntax created by 
+[John Gruber][wiki-john-gruber] and [Aaron Swartz][wiki-aaron-swartz]. It allows to write contents 
+with an easy-to-read, easy-to-write set of rules for plain text format then convert it in a rich format 
+(basically HTML).
 
 Many developers have proposed their own implementation of the original syntax with specific
 evolutions and extensions. The goal of **MDE** is to define an official and homogeneous new
@@ -40,31 +41,40 @@ or more used rules. **MDE can be considered by developers as the new standard fo
 so that each user does not need to adapt to the current implementation but can use these rules 
 everywhere.**
 
-The original idea of the Markdown syntax came from [John Gruber](http://daringfireball.net/),
+
+Inspiration
+-----------
+
+The original idea of the Markdown syntax came from [John Gruber][daring-fireball],
 who defined its goal, the first Markdown syntax rules and coded a first parser
-as a *Perl* script. He also wrote [the first manual](http://daringfireball.net/projects/markdown/syntax).
+as a *Perl* script. He also wrote [the first manual][markdown-manual].
 
 Working on these specifications, the following implementations inspired us:
 
--   [**Markdown Extra**](https://michelf.ca/projets/php-markdown/), 
-    written by [Michel Fortin](http://michelf.com/), coded in *PHP* script
--   [**Multi Markdown**](http://fletcherpenney.net/multimarkdown/), 
-    written by [Fletcher T. Penney](http://fletcherpenney.net/), coded in *Perl* script
--   [**PHP Markdown Extra Extended**](http://github.com/egil/php-markdown-extra-extended), 
-    written by [Egil Hansen](http://egilhansen.com), coded in *PHP* script
+-   [**Markdown Extra**][markdown-extra], written by [Michel Fortin][michel-fortin], coded in *PHP* script
+-   [**Multi Markdown**][multi-markdown], written by [Fletcher T. Penney][fletcher-penney], coded in *Perl* script
+-   [**PHP Markdown Extra Extended**][php-markdown-extra-extended], written by [Egil Hansen][egil-hansen], coded in *PHP* script
 
 
 Contribute
 ----------
 
-If you'd like to leave feedback, please [open an issue on GitHub](http://github.com/markdown-extended/manifest/issues).
+This document and the MDE's specification are opened for any kind of discussion, argumentation, 
+translation and any other modification.
 
-This document and the MDE's specification are opened for any kind of discussion,
-argumentation, translation and any other modification. The source of this document
-is under a GIT version-control repository publicly hosted on [GitHub](http://github.com).
-If you want to participate in any way, just [fork and edit](http://help.github.com/articles/fork-a-repo)
-the original repository and ask for a [pull request](http://help.github.com/articles/using-pull-requests)
-opening the appropriate issue ticket[^forking].
+If you'd like to leave feedback, please [open an appropriate issue on GitHub][package-issues].
+You could first search in existing tickets if your comment does not already exists. If your
+ticket concerns a specific rule, please include its reference in its title like `X.Y.Z. Ticket title ...`.
+
+The source of this document is maintained under a GIT version-control repository publicly hosted on [GitHub][github].
+If you want to participate in any way, just [fork and edit][github-fork-doc] the original repository 
+and ask for a [pull request][github-pull-doc] opening the appropriate issue ticket[^forking].
+
+If you want to contribute by translating this document, follow the steps above and create a 
+copy of the original `mde-manifest.md` file named like `mde-manifest.LN.md` where `LN` is
+your language code following the [ISO 639-1 list][iso-639-1].
+
+And finally, THANK YOU for being involved ;)
 
 
 Scope and definitions
@@ -72,7 +82,7 @@ Scope and definitions
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", 
 "RECOMMENDED", "MAY" and "OPTIONAL" in this document are to be interpreted as described in 
-[RFC 2119](http://tools.ietf.org/html/rfc2119).
+[RFC 2119][rfc-2119].
 
 The present specifications of the syntax DOES NOT suppose about the final rendering of the 
 Markdown content. This rendering is the purpose of the *parsers* and specific applications.
@@ -81,23 +91,25 @@ The "HTML" final output can be used as a rendering example but MUST NOT be a spe
 Each item of the sections below is identified by a structural ID composed like `A.B.C.` 
 to allow it to be referenced and used in citations, implementations, documentations etc.
 
-The **notes** of this document (marked with the `NOTE - ` tag) MUST be considered as part
-of the specifications. The **advices** (marked with the `ADVICE - ` tag) are written to
-facilitate writers choices but MUST NOT be considered as specifications rules.
-
 For the purposes of this document, the following terms and definitions apply:
 
-**blank line** - a "blank line" in MDE is any line that does not output anything ; 
-a line with only spaces MUST be considered as a blank line.
+**notes** - The notes of this document (marked with the `NOTE - ` tag) MUST be considered as part
+of the specifications.
 
-**meta characters** - any character used in at least one rule of the syntax
+**advices** - The advices (marked with the `ADVICE - ` tag) are written to facilitate writers 
+choices but MUST NOT be considered as specifications rules.
+
+**blank line** - a "blank line" in MDE is any line that does not output anything ; this concept
+is developed in the sections below.
+
+**meta characters** - any character used in at least one rule of the syntax.
 
 **reference** - a mark of any kind that refers to a definition written elsewhere in the document
-(at its bottom for instance)
+(at its bottom for instance) ; this concept is developed in the sections below.
 
 **indentation** - in MDE like in many other languages, the "indentation" is made by writing
 a *tabulation* OR *four spaces* from last indentation limit (originally the left side of the 
-document, which is the "indentation zero" limit)
+document, which is the "indentation zero" limit) ; this concept is developed in the sections below.
 
 **writers** - in these specifications, "writers" designates the "user", the persons who
 write contents using the MDE syntax
@@ -108,9 +120,12 @@ be important while reading the specifications
 
 **implementations** - this designates the various "parsers"
 
+**configuration** - this designates an optional set of options a parser can accept to define
+some of its behaviors
 
-A. Basic concepts
------------------
+
+A. Basic concepts {#A}
+----------------------
 
 The sections below will explain each tag to use for each writing rule. As a very first introduction
 to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
@@ -120,18 +135,20 @@ to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
 -   as Markdown rules are written using some specific characters, **these characters MAY be escaped**
     to be used "as-is" (this is developed below)
 -   **a paragraph is created in Markdown passing a blank line** (this rule is developed below)
--   **all the rules MUST be used in one single Markdown content**, and be parsed correctly
+-   **all the rules MUST be used in one single Markdown content** and be parsed correctly
     (any conflict between rules MUST be avoided)
 -   for convenience, **the "references" notation MUST be allowed for a maximum of rules**
     (this notation is explained below) as it permits to keep a content readable.
 
-### A.1. About the intention
+### A.1. Intention {#A1}
 
 The MDE rules MUST keep ALL original Markdown's rules valid.
 
-### A.2. About global construction
+### A.2. Global construction {#A2}
 
-### A.3. About rules ranking
+### A.3. MDE file format {#A3}
+
+### A.4. Rules ranking {#A4}
 
 The syntax's rules of these specifications are separated in the following three types based on their utility:
 
@@ -147,7 +164,12 @@ The syntax's rules of these specifications are separated in the following three 
 :	Any rule that can not be classified in the two first categories.
 
 
-### A.4. About indentation
+### A.5. Blank lines {#A5}
+
+A "blank line" in MDE is any line that does not output anything ; a line with only spaces 
+or tabulations MUST be considered as a blank line.
+
+### A.6. Indentation {#A6}
 
 The indentation level in MDE is *1 tabulation* or *four spaces*:
 
@@ -155,22 +177,27 @@ The indentation level in MDE is *1 tabulation* or *four spaces*:
 
 Any block of content that requires an indentation MAY allow any other syntax's rule to be
 used in that content, considering the first character of the first indented line as the new 
-left side of its own indentation. To specify the end of the block, writers MUST pass two blank lines.
+left side of its own indentation.
+
+To specify the end of the block (and of its indentation level), writers MUST pass two blank lines.
+
+### A.7. Automatic escaping {#C7}
 
 
-B. Typographic rules
---------------------
+
+B. Typographic rules {#B}
+-------------------------
 
 A rule is considered as *typographic* when it only concerns one or more words written inline
 in a text. As long it does not concern a full block of text, a rule MUST be considered as *typographic*.
 
 
-### B.1. Emphasis
+### B.1. Emphasis {#B1}
 
 Bold and italic text emphasis MUST keep simple to use and read. The first idea was kept about
 these effects allowing two different typeface: the *underscore* (B.1.a.) and the *wildcard* (B.1.b.).
 
-#### B.1.a. Emphasis with underscores
+#### B.1.a. Emphasis with underscores {#B1a}
 
 Italic text is written surrounded by one character:
 
@@ -180,16 +207,7 @@ Bold text is written surrounded by two characters:
 
     __bold__
 
-NOTE - In-words underscores MAY NOT be considered as emphasis delimiters ; for instance, 
-writing `my_underscored_words`, the `underscored` word MAY NOT be in italic but the whole
-expression MAY be kept "as-is". In other words, writing `__my_underscored_words__` MAY be
-rendered as the expression `my_underscored_words` written in bold text (*leading and trailing
-characters are considered as emphasis delimiters but internal characters are auto-escaped*).
-This rule is important in a case like `underscored_words followed by other_underscores`
-as it seems easier to let a parser match the two distant underscores as delimiters while this
-MAY NOT be the case (*underscores may be kept "as-is" in both expressions*).
-
-#### B.1.b. Emphasis with wildcards
+#### B.1.b. Emphasis with wildcards {#B1b}
 
 Italic text is written surrounded by one character:
 
@@ -202,22 +220,35 @@ Bold text is written surrounded by two characters:
 ADVICE - For a document often read "as is" as plain text, the wildcard notation MAY be used
 as it seems to let the reader understand word's importance.
 
+#### B.1.c. Emphasis auto-escaping {#B1c}
 
-### B.2. Abbreviations
+In-words underscores MAY NOT be considered as emphasis delimiters ; for instance, 
+writing `my_underscored_words`, the `underscored` word MAY NOT be in italic but the whole
+expression MAY be kept "as-is". In other words, writing `__my_underscored_words__` MAY be
+rendered as the expression `my_underscored_words` written in bold text (*leading and trailing
+characters are considered as emphasis delimiters but internal characters are auto-escaped*).
+This rule is important in a case like `underscored_words followed by other_underscores`
+as it seems easier to let a parser match the two distant underscores as delimiters while this
+MAY NOT be the case (*underscores may be kept "as-is" in both expressions*).
 
-Abbreviations MUST allow the [References](#c4_references) notation.
+
+### B.2. Abbreviations {#B2}
+
+An abbreviation is written like a [reference](#c4_references) with a leading asterisk:
+
+    *[HTML]: Hyper Text Markup Language
 
 
-### B.3. Code and variable names
+### B.3. Code and variable names {#B3}
 
 Inline code and variables MUST keep simple to use and read. The first idea was kept about
-this span: surround the code or variable name between *ticks*. A code span MUST allow spaces
-inside.
+this span: surround the code or variable name between *backticks*. A code span MUST allow 
+spaces inside.
 
-    This variable `$var` can be accessed using `-> get(...)` method
+    This variable `$var` can be accessed using the `-> get(...)` method
 
 
-### B.4. Links
+### B.4. Links {#B4}
 
 A *link* concerns any kind of *hypertext link* (a full URL), in-page link (a hash tag referencing
 a section of current document) and any other kind of "clickable" thing in an HTML content,
@@ -227,19 +258,16 @@ Standalone URLs MUST NOT be automatically transformed in links if they are not w
 of the below rules. An URL written inline in a content with no specific "link" tag is not a link, it
 is just a raw URL (in an HTML content, it MAY NOT be clickable).
 
-Links MUST allow the [References](#c4_references) notation.
+#### B.4.a. Raw inline links {#B4a}
 
-#### B.4.a. Raw inline links
-
-Making an URL (or any kind of text) clickable can be done by surrounding it between inferior and 
-superior signs:
+Making an URL (or any kind of text) clickable can be done by surrounding it between angle brackets:
 
     <http://link.com/query>
 
 Any text written like that MUST be rendered clickable (with a special treatment if required,
 such as email adresses links).
 
-#### B.4.b. Inline links
+#### B.4.b. Inline links {#B4b}
 
 Links can be written *inline* in the text, separated in two parts:
 
@@ -254,7 +282,7 @@ Links can be written *inline* in the text, separated in two parts:
 
     [a link with a title and some attributes](http://test.com/ "My optional title" attribute1=value attribute2=value)
 
-#### B.4.c. In-page links
+#### B.4.c. In-page links {#B4c}
 
 In-page anchors can be accessed using the notation of B.4.b. replacing the URL by the section hash:
 
@@ -262,19 +290,21 @@ In-page anchors can be accessed using the notation of B.4.b. replacing the URL b
 
 See the **titles** section to learn how to define the hash reference of a part.
 
-#### B.4.d. Special links
+#### B.4.d. Special links {#B4d}
 
 Some special treatments MAY be applied to special links such as email addresses. As these kinds
 of links can evolve, there is no list of them here.
 
-For instance, in an HTML rendering, an email address should be transformed as a `mailto:...` link.
+NOTE - For instance, in an HTML rendering, an email address should be transformed as a `mailto:...` link.
+
+#### B.4.e. Referenced links {#B4e}
+
+Links MUST allow the [References](#c4_references) notation.
 
 
-### B.5. Images
+### B.5. Images {#B5}
 
-Images MUST allow the [References](#c4_references) notation.
-
-#### B.5.a. Inline images
+#### B.5.a. Inline images {#B5a}
 
 Images can be written *inline* in the text, separated in two parts:
 
@@ -289,8 +319,12 @@ Images can be written *inline* in the text, separated in two parts:
 
     ![alt text](http://test.com/data1/images/1.jpg "My optional title" class=myimageclass style="width: 40px;"
 
+#### B.5.b. Referenced images {#B5b}
 
-### B.6. Footnotes
+Images MUST allow the [References](#c4_references) notation.
+
+
+### B.6. Footnotes {#B6}
 
 Footnotes may be considered as a "special case" as we MAY allow writers to distinguish
 simple footnotes from glossary and citations notes. The construction rules of these three
@@ -299,16 +333,34 @@ notes, which can be considered as special footnotes. Please refer to the [dedica
 section](#notes-special-case) about notes.
 
 
-C. Structural rules
--------------------
+C. Structural rules {#C}
+------------------------
 
-### C.1. Paragraphs and line breaks
+### C.1. Paragraphs {#C1}
 
-To build a paragraph, just surround it between blank lines.
+To build a paragraph, just surround it between blank lines (at least one before and one after).
+
+    Paragraph 1 ...
+    
+    Paragraph 2 ...
+
+### C.2. Line breaks {#C2}
 
 To insert a line break, write two or more spaces at the end of the line and pass to next line.
 
-### C.2. Titles
+    Line 1 ...  
+    Line 2 ...
+
+### C.3. Horizontal rules {#C3}
+
+To insert an horizontal, write at least three hyphens, asterisks or underscores alone on a line
+(spaces MUST not care).
+
+    ***
+    ----
+    _ _ _
+
+### C.4. Titles {#C4}
 
 Titles are built using two notations: the "atx" and the "sextet". HTML tags have a limit
 of 6 levels (`h1` to `h6`) but a MDE parser MUST ignore this limit and be prepared for any
@@ -317,7 +369,7 @@ depth levels as writer requires in a document.
 The titles list of a document MAY be accessible to build a "table of contents" quickly.
 Global document's structure MUST be able to use both notations to build a single table of contents.
 
-#### C.2.a. ATX: sharps titles
+#### C.4.a. ATX: sharps titles {#C4a}
 
 A "sextet" title is written alone on a single line, preceded by any sharps as the title level:
 
@@ -330,7 +382,7 @@ The actual number of final sharps MUST NOT matter:
 
     ### Title level 3 (HTML tag `h3`) ##
 
-#### C.2.b. Sextet: underlined titles
+#### C.4.b. Sextet: underlined titles {#C4b}
 
 The "dash" notation only concerns the two first levels of titles in a document. They are written
 underlined by equal signs for the first level and dashes for the second:
@@ -348,16 +400,16 @@ ADVICE - If you know that a document will often be read "as-is" as plain text, t
 MAY be chosen preferably to the sextet one as it seems more comprehensive.
 
 
-### C.3. Pre-formated texts
+### C.5. Pre-formated texts {#C5}
 
-#### C.3.a. Simple notation
+#### C.5.a. Simple notation {#C5a}
 
 A pre-formatted block is written as a paragraph beginning lines with 4 spaces (*the pipe 
 of the example below is not included in the notation and represents line's 1st character*):
 
     |    a pre formed content
 
-#### C.3.b. "Fenced" code blocks
+#### C.5.b. "Fenced" code blocks {#C5b}
 
 A "fenced" code block can be written surrounded a content between two lines of tildes (at least 3):
 
@@ -372,13 +424,13 @@ language name (without space):
     My HTML code here
     ~~~~
 
-In an HTML implementation, this feature permits to create a *language friendly* code block, as 
-[preconize the W3C in the HTML5 specifications](http://dev.w3.org/html5/spec-author-view/the-code-element.html#the-code-element).
+NOTE - In an HTML implementation, this feature permits to create a *language friendly* code block, as 
+[preconize the W3C in the HTML5 specifications][w3c-html5-code-specifications].
 
 
-### C.4. Citations
+### C.6. Citations {#C6}
 
-A blockquoted block is written preceding each line or only the first one of a paragraph by a superior sing `>`:
+A blockquoted block is written preceding each line or only the first one of a paragraph by a superior sign `>`:
 
     > This is my blockquote,
     > where we can include **other Markdown** tags ...
@@ -397,9 +449,9 @@ between parenthesis:
 NOTE - Inside a blockquote content, writers MUST be allowed to use any other MDE rule (*a nested blockquote,
 a list ...*).
 
-### C.5. Lists
+### C.7. Lists {#C7}
 
-#### C.5.a. Unordered lists
+#### C.7.a. Unordered lists {#C7a}
 
 An un-ordered list is written beginning each entry by an asterisk, a plus sign or an hyphen followed by 3 spaces.
 The character used for each item of a list MUST NOT matter:
@@ -410,7 +462,7 @@ The character used for each item of a list MUST NOT matter:
         * second sub-item
     -   third item
 
-#### C.5.b. Ordered lists
+#### C.7.b. Ordered lists {#C7b}
 
 An ordered list is written beginning each entry by a number followed by 3 spaces. The number used 
 for each item of a list MUST NOT matter:
@@ -427,51 +479,75 @@ point after the number MUST be escaped to not be parsed as an ordered list item:
 
     123\. My text
 
+#### C.7.c. Multi-lins list items {#C7c}
 
-### C.6. Terms definitions
+Each list item can be written on multiple lines and only the first one MUST be indented.
+
+
+### C.8. Terms definitions {#C8}
 
 A definition is written separated in at least two parts:
 
 - the term on the first line, with no leading space or character
 - then, the definition beginning on the second line, with a leading double-points
 
+
     Apple
     :   Pomaceous fruit of plants of the genus Malus in
         the family Rosaceae.
 
 
-### C.7. Tables
+### C.9. Tables {#C9}
 
-The first table syntax was introduced by Michel Fortin in he's *Markdown Extra* version. He imagines a visual syntax like:
+#### C.9.a. Basic table {#C9a}
 
-    | First Header  | Second Header |
-    | ------------- | ------------: |
-    | Content Cell  | Content Cell  |
-    | Content Cell  | Content Cell  |
+The basic table syntax is as simple as trying to build a visual table in plain text:
 
-The rules here are that every table's line is written alone on a single line. The very first line is the header of the table (*thead*), followed by a mandatory separators line of hyphens `-`. Then, each line of the table content is written on a single line (*tbody*). Columns are separated by pipes `|` and each line may have the same number of pipes. Spacing is not important except for visual facility and we can write our tables without the leading pipes. Finally, the content of the cells can have other Markdown span features like emphasis.
+    | First Header  | Second Header    |
+    | ------------- | ---------------- |
+    | Content Cell  | Content *Cell*   |
+    | Content Cell  | Content **Cell** |
 
-This syntax is basic but it feets the original Markdown's goal (*to keep a file content human readable*).
+The rules here are:
 
-Michel has constructed an advanced feature to manage **alignment in columns** by using colons `:` in the separators line :
+-   every table's line is written alone on a single line
+-   the first lines are the headers of the table (most of the time one single line)
+-   it is followed by a mandatory separators line of hyphens `-`
+-   each line below is a line of the table content
+-   columns are separated by pipes `|` and each line may have the same number of pipes
+-   spacing is not important except for visual facility
+-   we can write our tables without the leading pipes
 
-- a colon on the left of a separator's cell means a left-aligned column : `:---`
-- a colon on the right of a separator's cell means a right-aligned column : `---:`
-- two colons on the left and the right of a separator's cell means a centered column : `:--:`
+Finally, the content of the cells can have other Markdown typographic features like emphasis.
 
-Fletcher Penney, in he's *Multi Markdown* version, pushed the table structure one step higher by allowing **multi-header lines** and **multi-columns cells**. Let's look an example :
+#### C.9.b. Columns alignement {#C9b}
 
-    |               | Grouping                    ||
+Alignment in columns can be specified by using colons `:` in the separators line:
+
+-   a colon on the left of a separator's cell means a left-aligned column : `:---`
+-   a colon on the right of a separator's cell means a right-aligned column : `---:`
+-   two colons on the left and the right of a separator's cell means a centered column : `:--:`
+
+    | First Header  | Second Header | Third header |
+    | ------------- | ------------: | :----------: |
+    | Content Cell  | **Cell**      | **Cell**     |
+    | Content Cell  | **Cell**      | **Cell**     |
+
+#### C.9.c. Cell grouping {#C9c}
+
+To build cell groups (one cell over more than one column) we write as many final pipes as the content 
+must cover columns, without spaces:
+
     | First Header  | Second Header | Third header |
     | ------------- | ------------: | :----------: |
     | Content Cell  |  *Long Cell*                ||
     | Content Cell  | **Cell**      | **Cell**     |
 
-The result here will be a two lines header and, for example in the first line, a second cell containing "Grouping" on two columns (*this will be build in HTML with the attribute `colspan=2`*).
+NOTE - Cell grouping MUST be allowed in lines of content AND header line(s).
 
-The point, simple to understand and use, is that we write as many pipes (*without spaces*) as our content must cover columns. Easy and powerful ...
+#### C.9.d. Table caption {#C9d}
 
-Another new feature of Fletcher's work is that we can precise a **caption** for our table. To do so, we just write it between brackets just before or just after the table, on a single line. In the above example, it can be:
+Table caption is written between brackets just before or just after the table, on a new single line:
 
     |               | Grouping                    ||
     | First Header  | Second Header | Third header |
@@ -480,7 +556,9 @@ Another new feature of Fletcher's work is that we can precise a **caption** for 
     | Content Cell  | **Cell**      | **Cell**     |
     [ my table caption ]
 
-Finally, Fletcher's imagines an high level of HTML construction allowing to write separate sets of content for each table, separating them by a blank line:
+#### C.9.e. Table with multiple bodies {#C9e}
+
+Separate sets of content for a single table are written separating them with one blank line:
 
     |               | Grouping                    ||
     | First Header  | Second Header | Third header |
@@ -491,13 +569,13 @@ Finally, Fletcher's imagines an high level of HTML construction allowing to writ
     | New section   |   More        |         Data |
     | And more      |           And more          ||
 
-The result will be a table with two `tbody` sections.
+NOTE - In HTML, the result should be a table with two `tbody` sections.
 
 
-D. Miscellaneous rules
-----------------------
+D. Miscellaneous rules {#D}
+---------------------------
 
-### D.1. Metas
+### D.1. Metas data {#D1}
 
 Meta-data can be added to an MDE document when necessary ; it can be the case to specify
 a special title for the document, its author or any kind of "meta" information.
@@ -507,85 +585,84 @@ the top) as a `var: val` pair:
 
     author: John Doe
     
-Multiple meta-data can be written, one per line, and the "true" content of the document MUST
-begin after passing at least one blank line after meta-data.
+Multiple meta-data can be written, beginning each item on a new line, and the "true" content 
+of the document MUST begin after passing at least one blank line after meta-data.
 
-### D.2. Escaping of meta-characters
-
-
-
-### D.3. Inline HTML
+The value of the meta-data MUST allow multi-lines content.
 
 
+### D.2. Escaping of meta-characters {#D2}
 
-### D.4. References
+Escaping a meta-character in MDE only consists in preceding it by a "back-slash" `\`.
+
+The following characters MUST be escaped to be rendered as the raw character they are:
+
+-   `\\` : the backslash itself
+-   `\.` : the dot
+-   `\!` : the exclamation point
+-   `\#` : the hash mark
+-   `\*` : the asterisk
+-   `\+` : the plus sign
+-   `\-` : the hyphen
+-   `\_` : the underscore
+-   `\`` : the backtick quote
+-   `\(\)` : the parentheses
+-   `\[\]` : the brackets
+-   `\{\}` : the curly brackets
 
 
-Using this notation is the basic syntax for links. But it can make the file not easy to read, which is the first goal of Markdown.
+### D.3. References {#D3}
 
-So we can use **references** for links. This allows us to keep the URL and other informations about the link outside the content. For example:
+The idea of the "references" comes from the first idea of Markdown: let the content readable "as is".
 
-    This is a paragraph with a [referenced link][linkid]. I can continue my content 
-    clearly because it is still readable for human eyes ...
+So, in some cases, it is most relevant to move an information on a single line anywhere in the
+document (at its bottom for instance) and only insert its ID at its final place.
+
+The global construction of references is to replace the content by an ID and write that
+content on another line anywhere:
+
+    This is a paragraph with a [referenced link][linkid] ...
+    
+    ...
 
     [linkid]: http://test.com/ "My optional title"
 
-The link here in the final content will be exactly the same as above. The point is just that the informations are not in the content but after it.
+In the case above, the final rendering MUST be exactly the same as if it was written like:
 
-A new feature introduced by Fletcher Penney in he's *Multi Markdown* version is the possibility to add attributes in references. Doing so, we can add, after the optional title, any attributes constructed like couples of pair `variable/value` with or without double-quotes. For example:
+    This is a paragraph with a [referenced link](http://test.com/ "My optional title") ...
+    
+    ...
 
-    This is a paragraph with a [referenced link][linkid]. I can continue my content 
-    clearly because it is still readable for human eyes ...
+### D.4. Mathematics {#D4}
 
-    [linkid]: http://test.com/ "My optional title" class=mylinkclass style="border:1px solid black"
+One of the goal of MDE (and globally the Markdown syntax) is to write documentation. In this
+idea, MDE parsers MUST be prepared to handle complex mathematical notations.
 
-As I said, the class will produce an link tag like:
+NOTE - The final rendering of the mathematical notations can be the scope of a third-party
+application but an MDE parser MUST integrate such third-party natively.
 
-    <a href="http://test.com/" title="My optional title" 
-        class="mylinkclass" style="border:1px solid black">
-            referenced link</a>
+#### D.4.a. Inline mathematics {#D4a}
 
-For now, you may write the entire reference definition on a single line. This is not the case in Multi Markdown, which allows to pass a line, but I can't get this feature working for now. This may be one of the evolutions ...
+Inline mathematics is written by surrounding the content between escaped parenthesis:
 
+    \(...\)
+    \(\alpha = (t_1 - t_0)/L\)
 
-The rule here is the same as for inline links except that it bagin with an exclamation point. Then, between brackets, the alternative text (*displays if the image can't be loaded*) followed by, between parenthesis, the URL of the image, relative or asbolute, and an optional title wrapped in double-quotes.
+#### D.4.b. Block of mathematics {#D4b}
 
-Using this notation is the basic syntax for images. But it can make the file not easy to read, which is the first goal of Markdown.
+Block of mathematics formula is written surrounding the content between escaped brackets
+(additionally to blank lines):
 
-So we can use **references** for images. This allows us to keep the URL and other informations about the image outside the content. For example:
+    \[...\]
+    \[\Delta = \frac{\partial U^*}{\partial F} = \frac{12F}{Eb} \int_0^L \frac{x^2}{(t_0 + \alpha x)^3} dx\]
 
-    This is a paragraph with a referenced image ![alt text][imageid]. I can continue my content 
-    clearly because it is still readable for human eyes ...
+#### D.4.c. Mathematics formula notation {#D4c}
 
-    ![imageid]: http://test.com/data1/images/1.jpg "My optional title"
-
-The image here in the final content will be exactly the same as above. The point is just that the informations are not in the content but after it.
-
-A new feature introduced by Fletcher Penney in he's *Multi Markdown* version is the possibility to add attributes in references. Doing so, you can add, after the optional title, any attributes constructed like couples of pair `variable/value` with or without double-quotes. For example:
-
-    This is a paragraph with a referenced image ![alt text][imageid]. I can continue my content 
-    clearly because it is still readable for human eyes ...
-
-    ![imageid]: http://test.com/data1/images/1.jpg "My optional title" class=myimageclass style="width: 40px;"
-
-As I said, the class will produce an image tag like:
-
-    <img src="http://test.com/data1/images/1.jpg" alt="alt text"
-        title="My optional title" class="myimageclass" style="width:40px;" />
-
-For now, you may write the entire reference definition on a single line. This is not the case in Multi Markdown, which allows to pass a line, but I can't get this feature working for now. This may be one of the evolutions ...
+Inline and block mathematical contents (the part inside both wrappers described above) MUST 
+follow the [LaTeX syntax][latex-maths-doc].
 
 
-### D.5. Mathematics
-
-
-
-### D.6. Implementors specifics
-
-
-
-E. The special case of notes {#notes-special-case}
---------------------------------------------------
+### D.5. The special case of notes {#D5}
 
 Footnotes in a text are a way to increase the meaning of it, the external references, 
 some required definitions for the comprehension of that text without overcroweded it, etc.
@@ -598,7 +675,7 @@ Let's try to explain footnotes usage and differences between:
 -   **a bibliographic note**, which refer to another book or work, hardly referenced to let the 
     lector find its original source.
 
-### E.1. Footnotes
+#### D.5.a. Footnotes {#D5a}
 
 As said above, footnotes are just snippets of additional information that seems not necessary
 in the content. For example, if we talk about *Linux* in a text about a specific computer, 
@@ -609,13 +686,7 @@ to be present in our work, so we add a little note attached to the term "Linux",
     
     [^xxx]: An open source operating system created by Linus Trovalds.
 
-Which MAY render:
-
->    This computer is compatible with the operating system Linux[^1].
-    
-[^1]: An open source operating system created by Linus Trovalds.
-
-### E.2. Glossary notes
+#### D.5.b. Glossary notes {#D5b}
 
 A glossary note is most like a definition. It is attached to a specific term and try to give 
 one or more explanations of it. Glossary notes have to be considered as *definitions list* 
@@ -629,18 +700,11 @@ a marker attached to all occurences of the term, which will reach the footnote d
     [^xxx]: glossary: Linux
     recursive acronym for "Linux Is Not UniX"
 
-Which MAY render:
-
->    This computer is compatible with the operating system Linux[^linux].
-    
-[^linux]: glossary: Linux
-recursive acronym for "Linux Is Not UniX"
-
 The point here is that the content always starts with `glossary:`. Then we write the term 
 to be defined, followed by an optional *short key* which will be used to later the sorting 
 order of the glossary. Then the definition is on a new line.
 
-### E.3. Citation notes
+#### D.5.c. Citation notes {#D5c}
 
 A bilbliographic note is a fully referenced external work. This kind of notes is often used 
 in academic or scientific work. The point is that we have to follow some *academic rules* 
@@ -657,17 +721,47 @@ which could be:
     [#Doe:1991]: Linus Benedict Torvalds (October 5, 1991). *Free minix-like kernel sources for 386-AT*.
     comp.os.minix. (Web link) Retrieved September 30, 2011.
 
-Which MAY render:
-
->    This computer is compatible with the operating system Linux[p. XX][#Doe:1991].
-    
-[#Doe:1991]: Linus Benedict Torvalds (October 5, 1991). *Free minix-like kernel sources for 386-AT*.
-comp.os.minix. (Web link) Retrieved September 30, 2011.
-
 As we can see, the circumflex is replaced by a sharp `#` and the marker is two-parts handlhed.
 
 
-[original-markdown] http://en.wikipedia.org/wiki/Markdown
-[john-gruber] http://en.wikipedia.org/wiki/John_Gruber
-[aaron-swartz] http://en.wikipedia.org/wiki/Aaron_Swartz
+### D.6. Implementors specifics {#D6}
+
+#### D.6.a. Error handling {#D6a}
+
+#### D.6.b. Structural tags {#D6b}
+
+    {% TOC %}
+    {% NOTES %}
+
+#### D.6.c. Various {#D6c}
+
+##### D.6.c.1. Inline HTML {#D6c1}
+
+#### D.6.c.2. Other file inclusion {#D6c2}
+
+
+
+[wiki-markdown]: http://en.wikipedia.org/wiki/Markdown
+[wiki-john-gruber]: http://en.wikipedia.org/wiki/John_Gruber
+[wiki-aaron-swartz]: http://en.wikipedia.org/wiki/Aaron_Swartz
+[package-home]: http://github.com/markdown-extended/manifest
+[package-issues]: http://github.com/markdown-extended/manifest/issues
+[daring-fireball]: http://daringfireball.net/
+[michel-fortin]: http://michelf.com/
+[fletcher-penney]: http://fletcherpenney.net/
+[egil-hansen]: http://egilhansen.com
+[piwi]: http://github.com/piwi
+[markdown]: http://daringfireball.net/projects/markdown/
+[markdown-extra]: https://michelf.ca/projets/php-markdown/
+[multi-markdown]: http://fletcherpenney.net/multimarkdown/
+[php-markdown-extra-extended]: http://github.com/egil/php-markdown-extra-extended
+[markdown-manual]: http://daringfireball.net/projects/markdown/syntax
+[github]: http://github.com
+[github-fork-doc]: http://help.github.com/articles/fork-a-repo
+[github-pull-doc]: http://help.github.com/articles/using-pull-requests
+[latex-maths-doc]: https://en.wikibooks.org/wiki/LaTeX/Mathematics
+[w3c-html5-code-specifications]: http://dev.w3.org/html5/spec-author-view/the-code-element.html#the-code-element
+[cc-by-3]: http://creativecommons.org/licenses/by/3.0/
+[iso-639-1]: http://www.loc.gov/standards/iso639-2/php/code_list.php
+[rfc-2119]: http://tools.ietf.org/html/rfc2119
 [^forking]: GitHub embeds many tools and procedures to allow a quick and simple "*fork/pull request*" process.
