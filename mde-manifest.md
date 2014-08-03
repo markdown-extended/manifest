@@ -11,8 +11,6 @@ remains before the first published version and all its content may change before
 
 TODOS
 
--   section about attributes construction
--   section about anchors (ids and classes)
 
 ----
 
@@ -1252,21 +1250,6 @@ copy of the original `mde-manifest.md` file named like `mde-manifest.LN.md` wher
 your language code following the [ISO 639-1 list][iso-639-1].
 
 And finally, THANK YOU for being involved ;)
-
-
-Testing
--------
-
-You will find in the `tests/` directory of present repository a set of test files you can use to
-test any parsers or implementations of the MDE syntax. Each test is stored in a sub-directory named
-with concerned specification reference and presents two files:
-
--   `original.mde`: the original raw Markdown Extended test content
--   `parsed-content.html`: the rendering of the content in HTML
-
-The global `tests/ORIGINAL.mde` file embeds all contents of sub-tests and the result parsed in HTML
-is stored in file `tests/PARSED-CONTENT.html`.
-
 
 
 *[MDE]: MarkDown Extended
