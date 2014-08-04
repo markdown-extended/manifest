@@ -11,6 +11,9 @@ remains before the first published version and all its content may change before
 
 TODOS
 
+- rule for attributes writing
+- global cleanup
+- english !!
 
 ----
 
@@ -100,6 +103,8 @@ or contribution, please refer to [the dedicated section](#contribute).
         -   [D.5.b. Glossary notes](#D5b)
         -   [D.5.c. Citation notes](#D5c)
     -   [D.6. User defined attributes](#D6)
+        -   [D.6.a. Tags attributes](#D6a)
+        -   [D.6.b. Raw attributes](#D6b)
     -   [D.7. Identifiers construction](#D7)
     -   [D.8. Automatic indexes](#D8)
         -   [D.8.a. Table of contents](#D8a)
@@ -109,6 +114,8 @@ or contribution, please refer to [the dedicated section](#contribute).
         -   [D.9.b. Structural tags](#D9b)
         -   [D.9.c. User configuration](#D9c)
         -   [D.9.d. Various](#D9d)
+            -   [D.9.d.1. Other file inclusion](#D9d1)
+            -   [D.9.d.2. Critic markup](#D9d2)
 -   [Contribute](#contribute)
 -   [Testing](#testing)
 
@@ -142,16 +149,13 @@ Working on these specifications, the following implementations inspired us:
 -   [**Multi Markdown**][multi-markdown], written by [Fletcher T. Penney][fletcher-penney], coded in *Perl* script
 -   [**PHP Markdown Extra Extended**][php-markdown-extra-extended], written by [Egil Hansen][egil-hansen], coded in *PHP* script
 
-Developers and webmasters can use the [*Markdown Mark* icon created by Dustin Curtis](http://dcurt.is/the-markdown-mark)
-to identify MDE files and syntax.
-
 
 Scope of these specifications
 -----------------------------
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", 
 "RECOMMENDED", "MAY" and "OPTIONAL" in this document are to be interpreted as described in 
-[RFC 2119][rfc-2119].
+[RFC 2119][rfc-2119]. By extension, any capital word SHOULD be understood in its literal meaning.
 
 The present specifications of the syntax DOES NOT suppose about the final rendering of the 
 content. This rendering is the purpose of the *parsers* and specific applications. The "HTML" 
@@ -230,18 +234,27 @@ to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
 -   for convenience, **the "references" notation MUST be allowed for a maximum of rules**
     (this notation is explained in [§§](#D3)) as it permits to keep a content readable.
 
+For information, developers and webmasters can use the [*Markdown Mark* icon created by Dustin Curtis][markdown-mark]
+to identify MDE files and syntax.
+
 ### A.1. Intention {#A1}
 
 The MDE rules MUST keep ALL original Markdown's rules valid.
 
 As said in the *scope of these specifications* ([§§](#scope-of-these-specifications)),
 we WILL NOT give rendering rules here, each parser MAY follow its own final rendering rules
-according to the MDE specifications (concerning the original MDE content). Thus, we MUST keep
-in mind that the final output MAY NOT be HTML only ; a parser can construct any format of
-output (such as PDF, OpenDocument etc). This is a major difference with the original John Gruber's
-Markdown parser, which only constructs HTML output.
+according to the MDE specifications (concerning the original MDE content) and concerned language.
+Thus, we MUST keep in mind that the final output MAY NOT be HTML only ; a parser can construct any 
+format of output (such as PDF, OpenDocument etc). This is a major difference with the original 
+John Gruber's Markdown parser, which only constructs HTML output.
 
 ### A.2. Global construction {#A2}
+
+TODOS
+
+- word about words-wrapping
+- paragraphs ?
+- meta-data & footnotes ?
 
 ### A.3. MDE file format {#A3}
 
@@ -292,13 +305,13 @@ left side of its own indentation.
 
 The global rules for blocks sequences are:
 
--   passing 1 blank line MAY close last indented block (indentation level goes down by 1)
--   passing 2 blank lines MAY close ALL current indented block (indentation level goes back to 0)
+-   passing 1 blank line MUST close last indented block (indentation level goes down by 1)
+-   passing 2 blank lines MUST close ALL current indented blocks (indentation level goes back to 0)
 
 **Example:** A classic example is the case of a code block following a list item. If only one line is
 passed between both, the code block will be considered as part of the list item's content (and must
-be indented in consequence by 2). If two blank lines are passed, the block must be considered as
-a fresh new block (the list item is considered finished).
+be indented in consequence by 2: 2 tabulations or 8 spaces). If two blank lines are passed, the block 
+must be considered as a fresh new block (the list item is considered finished).
 
 Finally, for rules that requires an indentation, only the first line MUST actually be indented,
 subsequent lines of the same block can either be indented or not.
@@ -326,7 +339,7 @@ an HTML output:
 On the same idea as for *automatic escaping* ([§§](#A7)), inline HTML MUST be authorized
 in an MDE content. **But**, a consequence of the fact that the final rendering MAY NOT be
 only HTML ([§§](#scope-of-these-specifications)) is that raw HTML tags MAY NOT be rendered
-as you expect in other formats.
+as writers expect in other formats.
 
 #### A.8.a. Use with caution {#A8a}
 
@@ -334,8 +347,9 @@ In conclusion, raw inline HTML MAY be avoided in an MDE content but parsers MUST
 to treat such contents.
 
 **Implementation Note:** Without being a specification rule, we can conclude that parsers
-SHOULD be prepared to handle HTML tags for any final output. The best practice MAY be to
-keep the content "as is" skipping any HTML tag (but keeping the text content).
+SHOULD be prepared to handle HTML tags for any final output. For any other format than HTML, 
+the best practice MAY be to keep the content "as is" skipping any HTML tag (but keeping the 
+text content).
 
 #### A.8.b. HTML comments {#A8b}
 
@@ -349,7 +363,8 @@ can be multi-line:
 
 **Implementation Note:** The final result of a comment is not really defined as it MAY depend
 on the rendering format. By default, the best practice SHOULD be to skip comments from final
-output as a comment may have been written just for not-visible information.
+output as a comment may have been written just for not-visible information. Parsers rendering
+an HTML format CAN keep comments "as is" (present in the output) as they won't be displayed.
 
 ### A.9. Identifiers {#A9}
 
@@ -493,7 +508,7 @@ Links can be written *inline* in the text, separated in two parts:
 
 -   the link text between brackets `[` and `]`
 -   then, between parenthesis `(` and `)`, the URL of the link (relative or absolute) and 
-    an optional title wrapped in double-quotes `"` followed by a list of attributes if necessary.
+    an OPTIONAL title wrapped in double-quotes `"` followed by an OPTIONAL list of attributes.
 
 
     [a simple link](http://test.com/)
@@ -542,7 +557,7 @@ Images can be written *inline* in the text, separated in two parts:
 
 -   the image alternated text between brackets `[` and `]` preceded by an exclamation point `!`
 -   then, between parenthesis `(` and `)`, the URL of the image (relative or absolute) and an 
-    optional title wrapped in double-quotes `"` followed by a list of attributes if necessary.
+    OPTIONAL title wrapped in double-quotes `"` followed by an OPTIONAL list of attributes.
 
 
     ![alt text](http://test.com/data1/images/1.jpg)
@@ -642,7 +657,7 @@ An "ATX" title is written alone on a single line, preceded by as many sharps `#`
 
     ### Title level 3 (HTML tag `h3`)
 
-Optionally, ATX titles can be "closed" using a random number of sharps at the end of the text:
+OPTIONALLY, ATX titles can be "closed" using a random number of sharps at the end of the text:
 
     ### Title level 3 (HTML tag `h3`) ##
 
@@ -1062,7 +1077,7 @@ contains concerned term, preceded by the string `glossary: `:
     [^myid]: glossary: Term
     Actual content of the glossary footnote.
 
-On the first line of the note, the term defined can optionally be followed by a *short key*
+On the first line of the note, the term defined can OPTIONALLY be followed by a *short key*
 which will be used to build the sorting order of the glossary.
 
 #### D.5.c. Citation notes {#D5c}
@@ -1075,7 +1090,7 @@ work easily.
 A *citation note* is written like a classic footnote but:
 
 -   the ID of the note is constructed in two parts like `[p. XX][#Doe:1991]`:
-    -   the page number between brackets `[` and `]` (this part is optional)
+    -   the page number between brackets `[` and `]` (this part is OPTIONAL)
     -   the reference ID, preceded by a sharp `#`
 -   the note content follows the same rules as for classic footnotes, but the circumflex
     is replaced by a sharp `#`.
@@ -1093,6 +1108,8 @@ notes, such as naming the authors in bold, writing the title of the work in ital
 
 
 ### D.6. User defined attributes {#D6}
+
+#### D.6.a. Tags attributes {#D6a}
 
 A special notation allows writers to define some specific attributes, taken from the HTML 
 markup language: some **class names** and some **identifiers**.
@@ -1146,6 +1163,8 @@ content MUST be used instead of automatic one (with, eventually, modifications t
 class names as `class` attribute and ID as `id` attribute. In other output formats, some
 class names SHOULD have an effect in the final rendering (by defining a special rendering
 for common class names for instance).
+
+#### D.6.b. Raw attributes {#D6b}
 
 
 ### D.7. Identifiers construction {#D7}
@@ -1212,22 +1231,52 @@ and this ID MUST follow the specifications at [§§](#D6).
 
 ### D.9. Implementors specifics {#D9}
 
+This section will describe some features and rules the MDE's parsers MUST implement (except
+where noted).
+
 #### D.9.a. Error handling {#D9a}
 
 MDE parsers MUST be prepared to handle syntax errors informing the writer about what caused
-the error and, optionally, how to fix it. The error information MAY be a simple phrase with
+the error and, OPTIONALLY, how to fix it. The error information MAY be a simple phrase with
 a line number or the tag's type that causes the error.
 
 #### D.9.b. Structural tags {#D9b}
 
+A parser SHOULD let the writer choose its rendering structure by allowing him to use *structural
+tags* that SHOULD be replaced by corresponding block (mostly indexes) if it is defined and
+not empty.
+
+These tags are:
+
+-   `TOC` for the *table of contents* ([§§](#D8a))
+-   `TOF` for the *table of figures* ([§§](#D8b))
+-   `NOTES` for the *footnotes* ([§§](#D5)), which SHOULD be separated in three other tags:
+    -   `FOOTNOTES` for "classic" *footnotes* ([§§](#D5a))
+    -   `GLOSSARY` for glossary *footnotes* ([§§](#D5b))
+    -   `CITATIONS` for citations *footnotes* ([§§](#D5c))
+
+The construction of such tag MAY follow these rules:
+
+-   the name of the tag (from the list above) in capital letters
+-   surrounded between percent sign `%` and curly brackets `{` and `}`
+-   OPTIONAL spaces surrounding the tag name.
+
+
     \{% TOC %\}
+    \{% TOF %\}
     \{% NOTES %\}
+    \{% FOOTNOTES %\}
+    \{% GLOSSARY %\}
+    \{%CITATIONS%\}
 
 #### D.9.c. User configuration {#D9c}
 
+An MDE's parser SHOULD propose any user to define some preferences with a table of options.
+
 #### D.9.d. Various {#D9d}
 
--   Other file inclusion
+##### D.9.d.1. Other file inclusion {#D9d1}
+##### D.9.d.2. Critic markup {#D9d2}
 
 
 Contribute
@@ -1281,3 +1330,4 @@ And finally, THANK YOU for being involved ;)
 [django-slug]: https://docs.djangoproject.com/en/dev/ref/models/fields/#slugfield
 [html4-id]: http://www.w3.org/TR/html4/types.html#type-id
 [w3c-id]: http://www.w3schools.com/tags/att_global_id.asp
+[markdown-mark]: http://dcurt.is/the-markdown-mark
