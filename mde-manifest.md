@@ -11,7 +11,6 @@ remains before the first published version and all its content may change before
 
 TODOS
 
-- rule for attributes writing
 - global cleanup
 - english !!
 
@@ -21,8 +20,8 @@ This document explains the "official" specifications of the *Markdown Extended* 
 ("**MDE**" in the rest of this document). It intends to be a concise and complete set 
 of syntax's rules and tags to use to write under Markdown Extended and a reference to build 
 parsers  implementations. It can be considered as the **MDE's reference** for any purpose.
-The goal of these specifications is NOT to explain *how to write a content* but *how to build it* 
-using the MDE's syntax.
+The goal of these specifications is NOT to explain *how to write a content* but *how to
+build a content*  using the MDE's syntax.
 
 This document is authored and maintained by Pierre Cassat ([@pierowbmstr][piwi])
 and licensed under [Creative Commons - CC BY 3.0][cc-by-3]. It is opened for discussion
@@ -33,7 +32,7 @@ or contribution, please refer to [the dedicated section](#contribute).
 -   [Introduction](#introduction)
 -   [Origins of Markdown Extended](#origins-of-markdown-extended)
 -   [Scope of these specifications](#scope-of-these-specifications)
--   [Terms and definitions](#terms-and-definitinons)
+-   [Terms and definitions](#terms-and-definitions)
 -   [A. Basic concepts](#A)
     -   [A.1. Intention](#A1)
     -   [A.2. Global construction](#A2)
@@ -74,7 +73,7 @@ or contribution, please refer to [the dedicated section](#contribute).
     -   [C.5. Titles](#C5)
         -   [C.5.a. ATX: sharps titles](#C5a)
         -   [C.5.b. Sextet: underlined titles](#C5b)
-    -   [C.6. Pre-formated texts](#C6)
+    -   [C.6. Pre-formatted texts](#C6)
         -   [C.6.a. Simple notation](#C6a)
         -   [C.6.b. Fenced code blocks](#C6b)
     -   [C.7. Citations](#C7)
@@ -84,7 +83,7 @@ or contribution, please refer to [the dedicated section](#contribute).
     -   [C.9. Terms definitions](#C9)
     -   [C.10. Tables](#C10)
         -   [C.10.a. Basic table](#C10a)
-        -   [C.10.b. Columns alignement](#C10b)
+        -   [C.10.b. Columns alignment](#C10b)
         -   [C.10.c. Cell grouping](#C10c)
         -   [C.10.d. Table ID](#C10d)
         -   [C.10.e. Table caption](#C10e)
@@ -109,7 +108,7 @@ or contribution, please refer to [the dedicated section](#contribute).
     -   [D.8. Automatic indexes](#D8)
         -   [D.8.a. Table of contents](#D8a)
         -   [D.8.b. Table of figures and tables](#D8b)
-    -   [D.9. Implementors specifics](#D9)
+    -   [D.9. Implementers specifics](#D9)
         -   [D.9.a. Error handling](#D9a)
         -   [D.9.b. Structural tags](#D9b)
         -   [D.9.c. User configuration](#D9c)
@@ -124,13 +123,13 @@ Introduction
 ------------
 
 **[Markdown][wiki-markdown]** is originally a plain text formatting syntax created by 
-[John Gruber][wiki-john-gruber] and [Aaron Swartz][wiki-aaron-swartz]. It allows to write contents 
-with an easy-to-read, easy-to-write set of rules for plain text format then convert it in a rich format 
+[John Gruber][wiki-john-gruber] and [Aaron Swartz][wiki-aaron-swartz]. It allows to write some contents
+with an easy-to-read, easy-to-write set of rules for plain text format then to convert it in a rich format
 (basically HTML).
 
 Many developers have proposed their own implementation of the original syntax with specific
 evolutions and extensions. The goal of **MDE** is to define an official and homogeneous new
-version, the most complete and rich as possible, while keeping only the relevant evolutions
+version, as complete and rich as possible, while keeping only the relevant evolutions
 or more used rules. **MDE can be considered by developers as the new standard for Markdown,
 so that each user does not need to adapt to the current implementation but can use these rules 
 everywhere.**
@@ -155,7 +154,8 @@ Scope of these specifications
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", 
 "RECOMMENDED", "MAY" and "OPTIONAL" in this document are to be interpreted as described in 
-[RFC 2119][rfc-2119]. By extension, any capital word SHOULD be understood in its literal meaning.
+[RFC 2119][rfc-2119]. By extension, any word in capital letters SHOULD be understood in its
+literal meaning.
 
 The present specifications of the syntax DOES NOT suppose about the final rendering of the 
 content. This rendering is the purpose of the *parsers* and specific applications. The "HTML" 
@@ -500,7 +500,7 @@ Making an URL (or any kind of text) clickable can be done by surrounding it betw
     <http://link.com/query>
 
 Any text written like that MUST be rendered clickable (with a special treatment if required,
-such as email adresses links).
+such as email addresses links).
 
 #### B.5.c. Inline links {#B5c}
 
@@ -823,7 +823,7 @@ The rules here are:
 
 Finally, the content of the cells can have other MDE's typographic features like emphasis.
 
-#### C.10.b. Columns alignement {#C10b}
+#### C.10.b. Columns alignment {#C10b}
 
 Alignment in columns can be specified by using colons `:` in the separators line:
 
@@ -907,11 +907,11 @@ Mathematics notation is developed in a dedicated section [§§](#D4).
 Following the same notation as for *inline images* ([§§](#B6a)), an image CAN be written
 as a single block alone on a line:
 
-    A pragraph ...
+    A paragraph ...
 
     ![alt text](http://test.com/data1/images/1.jpg "My optional title" class=myimageclass style="width: 40px;")
 
-    Another pragraph ...
+    Another paragraph ...
 
 This notation MUST be used to build the *table of figures and tables* ([§§](#D8b)).
 
@@ -1006,7 +1006,7 @@ different MDE's rules, following different constructions:
 
 2.  the abbreviation reference as described in [B.3.](#B3):
 
-        *[TERM]: Content of the abbreviated accronym.
+        *[TERM]: Content of the abbreviated acronym.
 
 3.  the footnote reference as described in [D.5.a.](#D5a):
 
@@ -1166,6 +1166,15 @@ for common class names for instance).
 
 #### D.6.b. Raw attributes {#D6b}
 
+In some notations, writers can add raw attributes to contents. This basically concerns only
+*links* ([§§](#B5)) and *images* ([§§](#B6) and [§§](#C12)).
+
+The global rule for such a notation is that:
+
+-   when the attribute value is unique, the simple notation `var=val` is allowed
+-   when the attribute value is "long" (includes multiple words), the notation MUST
+    use double-quoted values `"` : `var="val1 val2"`
+
 
 ### D.7. Identifiers construction {#D7}
 
@@ -1229,7 +1238,7 @@ To do so, any table and figure MUST have a unique ID as reference (like the `id`
 and this ID MUST follow the specifications at [§§](#D6).
 
 
-### D.9. Implementors specifics {#D9}
+### D.9. Implementers specifics {#D9}
 
 This section will describe some features and rules the MDE's parsers MUST implement (except
 where noted).
