@@ -157,12 +157,13 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 [RFC 2119][rfc-2119]. By extension, any word in capital letters SHOULD be understood in its
 literal meaning.
 
-The present specifications of the syntax DOES NOT suppose about the final rendering of the 
+The present specifications of the syntax DOES NOT concern the final rendering of the
 content. This rendering is the purpose of the *parsers* and specific applications. The "HTML" 
 final output CAN be used as a rendering example but MUST NOT be a specification reference.
 
 Each item of the sections below is identified by a structural ID composed like `A.B.C.` 
-to allow it to be referenced and used in citations, implementations, documentations etc.
+to allow it to be referenced and used in citations, implementations, documentations etc. At
+each specifications release, these IDs WILL NOT change.
 
 
 Terms and definitions
@@ -220,7 +221,7 @@ Below is a list of all meta-characters used for tags in MDE:
 A. Basic concepts {#A}
 ----------------------
 
-The sections below will explain each tag to use for each writing rule. As a very first introduction
+The sections below will explain each notation to use for each writing rule. As a very first introduction
 to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
 
 -   **a Markdown content is written as plain text**: 
@@ -228,8 +229,8 @@ to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
     -   it MUST be readable by a human "as-is" (this is the very first goal of Markdown)
 -   as Markdown rules are written using some specific characters, **these characters MAY be escaped**
     to be used "as-is" (this is developed in [§§](#D2))
--   **a paragraph is created in Markdown passing a blank line** (this rule is developed in [§§](#C2))
--   **all the rules MUST be used in one single Markdown content** and be parsed correctly
+-   **a paragraph is created in Markdown by passing a blank line** (this rule is developed in [§§](#C2))
+-   **all the rules CAN be used in one single Markdown content and MUST be parsed correctly**
     (any conflict between rules MUST be avoided)
 -   for convenience, **the "references" notation MUST be allowed for a maximum of rules**
     (this notation is explained in [§§](#D3)) as it permits to keep a content readable.
@@ -682,7 +683,7 @@ MAY be chosen preferably to the sextet one as it seems more comprehensive.
 
 **Implementation Note:** The "sextet" structure is taken from [the Setext markup][setext-markup].
 
-### C.6. Pre-formated texts {#C6}
+### C.6. Pre-formatted texts {#C6}
 
 #### C.6.a. Simple notation {#C6a}
 
