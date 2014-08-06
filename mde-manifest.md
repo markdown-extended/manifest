@@ -72,7 +72,7 @@ or contribution, please refer to [the dedicated section](#contribute).
     -   [C.4. Horizontal rules](#C4)
     -   [C.5. Titles](#C5)
         -   [C.5.a. ATX: sharps titles](#C5a)
-        -   [C.5.b. Sextet: underlined titles](#C5b)
+        -   [C.5.b. Setext: underlined titles](#C5b)
     -   [C.6. Pre-formatted texts](#C6)
         -   [C.6.a. Simple notation](#C6a)
         -   [C.6.b. Fenced code blocks](#C6b)
@@ -157,13 +157,12 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 [RFC 2119][rfc-2119]. By extension, any word in capital letters SHOULD be understood in its
 literal meaning.
 
-The present specifications of the syntax DOES NOT concern the final rendering of the
+The present specifications of the syntax DOES NOT suppose about the final rendering of the 
 content. This rendering is the purpose of the *parsers* and specific applications. The "HTML" 
 final output CAN be used as a rendering example but MUST NOT be a specification reference.
 
 Each item of the sections below is identified by a structural ID composed like `A.B.C.` 
-to allow it to be referenced and used in citations, implementations, documentations etc. At
-each specifications release, these IDs WILL NOT change.
+to allow it to be referenced and used in citations, implementations, documentations etc.
 
 
 Terms and definitions
@@ -221,7 +220,7 @@ Below is a list of all meta-characters used for tags in MDE:
 A. Basic concepts {#A}
 ----------------------
 
-The sections below will explain each notation to use for each writing rule. As a very first introduction
+The sections below will explain each tag to use for each writing rule. As a very first introduction
 to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
 
 -   **a Markdown content is written as plain text**: 
@@ -229,8 +228,8 @@ to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
     -   it MUST be readable by a human "as-is" (this is the very first goal of Markdown)
 -   as Markdown rules are written using some specific characters, **these characters MAY be escaped**
     to be used "as-is" (this is developed in [§§](#D2))
--   **a paragraph is created in Markdown by passing a blank line** (this rule is developed in [§§](#C2))
--   **all the rules CAN be used in one single Markdown content and MUST be parsed correctly**
+-   **a paragraph is created in Markdown passing a blank line** (this rule is developed in [§§](#C2))
+-   **all the rules MUST be used in one single Markdown content** and be parsed correctly
     (any conflict between rules MUST be avoided)
 -   for convenience, **the "references" notation MUST be allowed for a maximum of rules**
     (this notation is explained in [§§](#D3)) as it permits to keep a content readable.
@@ -250,6 +249,30 @@ format of output (such as PDF, OpenDocument etc). This is a major difference wit
 John Gruber's Markdown parser, which only constructs HTML output.
 
 ### A.2. Global construction {#A2}
+
+The master idea of Markdown is the **readability** of the content. Which means: if I have a Markdown file
+and I open it with a program like `less` or `vi` (or any program that render a file "as is"), I MUST
+be able to read its content with no other action.
+
+This idea basically means two things:
+
+1.  the semantic tags used to finally build a rich content SHOULD NOT prevent a clear reading
+    of that content
+2.  a reader SHOULD have to only scroll down to continue reading (right/left scroll SHOULD be avoided)
+
+Keeping readability using the semantic tags of the syntax is the purpose of these specifications ;
+we will here try to define the best rules to NOT prevent a clear reading but DO allow a maximum
+of rich final rendering. Keeping a document "one way scroll only" is made simple by the global
+construction of a Markdown content: the real *end of lines* of the content ARE NOT the final
+ones. Writers CAN, if they need to, render a final end of line (called "hard breaks" [§§](#C3)),
+but the first thing to keep in mind writing with the Markdown syntax is that you DO NOT NEED
+to write your paragraphs chained on a single line. You SHOULD choose a word-wrapping number (a number
+of characters a line must not exceed - something like 100 characters in this document) and
+pass to next line each time your current one goes to this number.
+
+**Writer Note:** This is generally the case of the common *LICENSE* files: the text of the
+license is clearly readable because each line of content does not exceed a short number of
+characters.
 
 TODOS
 
@@ -314,8 +337,9 @@ passed between both, the code block will be considered as part of the list item'
 be indented in consequence by 2: 2 tabulations or 8 spaces). If two blank lines are passed, the block 
 must be considered as a fresh new block (the list item is considered finished).
 
-Finally, for rules that requires an indentation, only the first line MUST actually be indented,
-subsequent lines of the same block can either be indented or not.
+Finally, for rules that requires a character AND an indentation, only the first line MUST 
+actually be indented, subsequent lines of the same block can either be indented or not. This
+is NOT true when the rule does not include a character (like for pre-formatted blocks - [§§](#C6a)).
 
 **Writer Note:** It is a good idea to always indent a block for readability.
 
@@ -501,7 +525,7 @@ Making an URL (or any kind of text) clickable can be done by surrounding it betw
     <http://link.com/query>
 
 Any text written like that MUST be rendered clickable (with a special treatment if required,
-such as email addresses links).
+such as email addresses links - see [§§](#B5e)).
 
 #### B.5.c. Inline links {#B5c}
 
@@ -509,7 +533,7 @@ Links can be written *inline* in the text, separated in two parts:
 
 -   the link text between brackets `[` and `]`
 -   then, between parenthesis `(` and `)`, the URL of the link (relative or absolute) and 
-    an OPTIONAL title wrapped in double-quotes `"` followed by an OPTIONAL list of attributes.
+    an OPTIONAL title wrapped in double-quotes `"` followed by an OPTIONAL list of attributes ([§§](#D6)).
 
 
     [a simple link](http://test.com/)
@@ -524,7 +548,7 @@ In-page anchors can be accessed using the notation of inline links ([§§](#B5b)
 
     [my section](#section-id)
 
-See the dedicated section ([§§](#D6)) to learn how to define the hash reference of a part.
+See the dedicated section ([§§](#D7)) to learn how to define the hash reference of a part.
 
 #### B.5.e. Special links {#B5e}
 
@@ -558,7 +582,7 @@ Images can be written *inline* in the text, separated in two parts:
 
 -   the image alternated text between brackets `[` and `]` preceded by an exclamation point `!`
 -   then, between parenthesis `(` and `)`, the URL of the image (relative or absolute) and an 
-    OPTIONAL title wrapped in double-quotes `"` followed by an OPTIONAL list of attributes.
+    OPTIONAL title wrapped in double-quotes `"` followed by an OPTIONAL list of attributes ([§§](#D6)).
 
 
     ![alt text](http://test.com/data1/images/1.jpg)
@@ -664,7 +688,7 @@ OPTIONALLY, ATX titles can be "closed" using a random number of sharps at the en
 
 **Implementation Note:** The "ATX" structure is taken from [the ATX markup][atx-markup].
 
-#### C.5.b. Sextet: underlined titles {#C5b}
+#### C.5.b. Setext: underlined titles {#C5b}
 
 The "dash" notation only concerns the two first levels of titles in a document. They are written
 underlined by equal signs `=` for the first level and hyphens `-` for the second:
@@ -678,8 +702,8 @@ underlined by equal signs `=` for the first level and hyphens `-` for the second
 The underlining line MUST NOT require to be as long as the title text, any number of
 equals or dashes MUST work.
 
-**Writer Note:** If you know that a document will often be read "as-is" as plain text, the dashes notation
-MAY be chosen preferably to the sextet one as it seems more comprehensive.
+**Writer Note:** If you know that a document will often be read "as-is" as plain text, the Setext notation
+MAY be chosen preferably to the ATX one as it seems more comprehensive.
 
 **Implementation Note:** The "sextet" structure is taken from [the Setext markup][setext-markup].
 
@@ -692,6 +716,9 @@ of the example below is not included in the notation and represents line's 1st c
 
     |    a pre formed content
 
+Following to indentation rules for blocks ([§§](#A6)), ALL lines of a pre-formatted block 
+MUST be indented as this is the only rule to identify that kind of content.
+
 #### C.6.b. Fenced code blocks {#C6b}
 
 A "fenced" code block can be written surrounded a content between two lines of tildes `~` 
@@ -701,7 +728,10 @@ or backticks `\`` (at least 3):
     My code here
     ~~~
 
-An information about the language used in the block can be defined following the first tildes by the 
+**Implementation Note:** The rendering of such content MUST be the exact same as for "classic"
+pre-formatted content ([§§](#C6)).
+
+An information about the language used in the block can be defined following the first delimiter by the 
 language name (without space):
 
     ```html
@@ -741,12 +771,22 @@ MUST be the same as:
     > This is my blockquote
     >> This is a nested blockquote
 
+**Writer Note:** The notation of blockquotes is the "classic" *email-style* for citations, this
+is the reason why the indentation between the angle bracket and the content is NOT required.
+
+
 ### C.8. Lists {#C8}
 
 #### C.8.a. Unordered lists {#C8a}
 
 An un-ordered list is written beginning each entry by an asterisk `*`, a plus sign `+` or an 
-hyphen `-` followed by 3 spaces. The character used for each item of a list MUST NOT matter:
+hyphen `-` followed by 1 or more space(s). The character used for each item of a list MUST NOT matter:
+
+    -   first item
+    *   second item
+    -   third item
+
+To create sub-items, just indent the sub-list twice:
 
     -   first item
     *   second item
@@ -756,13 +796,13 @@ hyphen `-` followed by 3 spaces. The character used for each item of a list MUST
 
 #### C.8.b. Ordered lists {#C8b}
 
-An ordered list is written beginning each entry by a number followed by 3 spaces. The number used 
-for each item of a list MUST NOT matter:
+An ordered list is written beginning each entry by a number followed by a period `.` and 
+1 or more space(s). The number used for each item of a list MUST NOT matter:
 
     1.   first item
     1.   second item
-        1. first sub-item
-        1. second sub-item
+        1.  first sub-item
+        1.  second sub-item
     2.   third item
 
 **Writer Note:** A special attention MAY be attached when beginning a line with a raw dash, asterisk or plus or
