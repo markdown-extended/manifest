@@ -239,7 +239,7 @@ to identify MDE files and syntax.
 
 ### A.1. Intention {#A1}
 
-The MDE rules MUST keep ALL original Markdown's rules valid.
+The MDE rules MUST keep ALL original Markdown's rules valid as described on [daringfireball.net][markdown-manual].
 
 As said in the *scope of these specifications* ([§§](#scope-of-these-specifications)),
 we WILL NOT give rendering rules here, each parser MAY follow its own final rendering rules
@@ -262,7 +262,7 @@ This idea basically means two things:
 
 Keeping readability using the semantic tags of the syntax is the purpose of these specifications ;
 we will here try to define the best rules to NOT prevent a clear reading but DO allow a maximum
-of rich final rendering. Keeping a document "one way scroll only" is made simple by the global
+of rich final rendering. Keeping a document "one way scroll only" is simplified by the global
 construction of a Markdown content: the real *end of lines* of the content ARE NOT the final
 ones. Writers CAN, if they need to, render a final end of line (called "hard breaks" [§§](#C3)),
 but the first thing to keep in mind writing with the Markdown syntax is that you DO NOT NEED
@@ -274,21 +274,15 @@ pass to next line each time your current one goes to this number.
 license is clearly readable because each line of content does not exceed a short number of
 characters.
 
-TODOS
-
-- word about words-wrapping
-- paragraphs ?
-- meta-data & footnotes ?
-
 ### A.3. MDE file format {#A3}
 
 An MDE file MUST be considered as a plain text document. It is basically a raw plain text file just like
 a classic `.txt` file. It MAY be encoded in a "classic" file encoding such as `utf-8` or `iso-...`.
 
-Any MDE file MUST work with any software reading file.
+Any MDE file MUST work with any software reading file contents.
 
 **Writer Note:** The best practice is to always use the same extension for MDE files as it permits to identify them
-quickly and define some special treatments based on a file extension filtering. The `.md` or `.markdown` 
+quickly and define some special treatments based on a file extension filtering ; the `.md`, `.mde` or `.markdown`
 extensions are given here as examples.
 
 ### A.4. Rules ranking {#A4}
@@ -319,7 +313,7 @@ or tabulations MUST be considered as a blank line.
 
 ### A.6. Indentation {#A6}
 
-The indentation level in MDE is *1 tabulation* or *four spaces*:
+The indentation level in MDE is **1 tabulation** or **four spaces**:
 
     1 tab = 4 spaces = 1 indentation level
 
@@ -1325,8 +1319,53 @@ An MDE's parser SHOULD propose any user to define some preferences with a table 
 
 #### D.9.d. Various {#D9d}
 
+The rules described in this section are NOT part of the specifications, these are just ideas and
+commonly used features.
+
 ##### D.9.d.1. Other file inclusion {#D9d1}
+
+For facility, it seems to be a good idea to allow writers to include external files.
+
 ##### D.9.d.2. Critic markup {#D9d2}
+
+As defined in *MultiMarkdown*, the **Critic Markup** rules CAN be useful when working on a Markdown
+document with a team. It allows to keep an information about addition, modifications and deletions
+in a content.
+
+Summary of the CriticMarkup rules:
+
+-   an **addition** is written surrounded in a `{++ ++}` notation:
+
+        {++my addition++}
+
+-   a **deletion** is written surrounded in a `{-- --}` notation:
+
+        {--my deletion--}
+
+-   a **modification** is written surrounded in a `{~~ ~~}` notation showing the substitution with
+    `old text->new text`:
+
+        {~~old text->new text~~}
+
+-   a **comment** is written surrounded in a `{>> <<}` notation:
+
+        {>>my comment<<}
+
+-   **highlighting** a content is done by surrounding it in a `{== ==}` notation and adding a comment
+    to inform about why this is highlighted:
+
+        {==an important info==}{>>important because ...<<}
+
+For each of the notations above, an information about the author can be added simply adding a comment
+just after the notation containing the author name preceded by `@`:
+
+        {--my deletion--}{>>@authorname<<}
+
+For a full information, please see [criticmarkup.com][critic-markup].
+
+**Implementation Note:** When allowing the CriticMarkup syntax, an MDE parser MUST be prepared to
+handle different states like `old` and `new` and finally consider any modification as *validated*
+for a final rendering (the `new` status MUST be the default).
 
 
 Contribute
@@ -1381,3 +1420,4 @@ And finally, THANK YOU for being involved ;)
 [html4-id]: http://www.w3.org/TR/html4/types.html#type-id
 [w3c-id]: http://www.w3schools.com/tags/att_global_id.asp
 [markdown-mark]: http://dcurt.is/the-markdown-mark
+[critic-markup]: http://criticmarkup.com/
