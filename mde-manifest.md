@@ -19,12 +19,12 @@ TODOS
 This document explains the "official" specifications of the *Markdown Extended* syntax
 ("**MDE**" in the rest of this document). It intends to be a concise and complete set 
 of syntax's rules and tags to use to write under Markdown Extended and a reference to build 
-parsers  implementations. It can be considered as the **MDE's reference** for any purpose.
-The goal of these specifications is NOT to explain *how to write a content* but *how to
-build a content*  using the MDE's syntax.
+parsers  implementations. It can be considered as the **Markdown Extended reference** for
+any purpose. The goal of these specifications is NOT to explain *how to write a content* but
+*how to build a content* using the Markdown Extended syntax.
 
-This document is authored and maintained by Pierre Cassat ([@pierowbmstr][piwi])
-and licensed under [Creative Commons - CC BY 3.0][cc-by-3]. It is opened for discussion
+This document is authored and maintained by Pierre Cassat ([@pierowbmstr][e-piwi])
+and licensed under [Creative Commons - CC BY 3.0][cc-by-3] ; it is opened for discussion
 or contribution, please refer to [the dedicated section](#contribute).
 
 **Table of contents:**
@@ -147,6 +147,8 @@ Working on these specifications, the following implementations inspired us:
 -   [**Markdown Extra**][markdown-extra], written by [Michel Fortin][michel-fortin], coded in *PHP* script
 -   [**Multi Markdown**][multi-markdown], written by [Fletcher T. Penney][fletcher-penney], coded in *Perl* script
 -   [**PHP Markdown Extra Extended**][php-markdown-extra-extended], written by [Egil Hansen][egil-hansen], coded in *PHP* script
+-   [**PHP Markdown Extended**][php-markdown-extended], written by [myself][e-piwi], coded in *PHP* script (*this is my implementation
+    of Markdown and the reason why I decided to write these specifications*)
 
 
 Scope of these specifications
@@ -163,6 +165,7 @@ final output CAN be used as a rendering example but MUST NOT be a specification 
 
 Each item of the sections below is identified by a structural ID composed like `A.B.C.` 
 to allow it to be referenced and used in citations, implementations, documentations etc.
+These MUST NOT change for a given release of the specifications.
 
 
 Terms and definitions
@@ -170,10 +173,19 @@ Terms and definitions
 
 For the purposes of this document, the following terms and definitions apply:
 
-**blank line** - a "blank line" in MDE is any line that does not output anything ; this concept
+**MDE** - shortcut for "Markdown Extended"
+
+**span element** - A "span" element is a piece of content that does not concern an entire *block*
+; span elements are described in the *typographic rules* of these specifications ([§§](#B)).
+
+**block element** - A "block" element is a piece of content that concerns an entire *block* as
+described at [§§](#C1) ; block elements are described in the *structural rules* of these
+specifications ([§§](#C)).
+
+**blank line** - A "blank line" in MDE is any line that does not output anything ; this concept
 is developed in [§§](#A5).
 
-**meta characters** - Any character used in at least one rule of the syntax is considered as a
+**meta character** - Any character used in at least one rule of the syntax is considered as a
 "meta" character ; they are listed in the list below.
 
 **meta data** - A "meta-data" is a piece of information written in a document (or loaded by
@@ -198,7 +210,7 @@ be important while reading the specifications.
 **configuration** - This designates an optional set of options a parser can accept to define
 some of its behaviors.
 
-Below is a list of all meta-characters used for tags in MDE:
+Below is a list of all meta-characters used for semantic rules in MDE:
 
 -   `\` : the backslash
 -   `.` : the dot
@@ -220,16 +232,16 @@ Below is a list of all meta-characters used for tags in MDE:
 A. Basic concepts {#A}
 ----------------------
 
-The sections below will explain each tag to use for each writing rule. As a very first introduction
-to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
+The sections of this document will explain each tag to use for each writing rule. To begin, as a very
+first introduction to the MDE syntax, we MUST ALWAYS keep the following basis in mind:
 
 -   **a Markdown content is written as plain text**: 
     -   it MUST be working by any software reading file (such as `vi`)
     -   it MUST be readable by a human "as-is" (this is the very first goal of Markdown)
+-   **a paragraph is created in Markdown passing a blank line** (this rule is developed in [§§](#C2))
 -   as Markdown rules are written using some specific characters, **these characters MAY be escaped**
     to be used "as-is" (this is developed in [§§](#D2))
--   **a paragraph is created in Markdown passing a blank line** (this rule is developed in [§§](#C2))
--   **all the rules MUST be used in one single Markdown content** and be parsed correctly
+-   **all the rules CAN be used in one single Markdown content** and be parsed correctly
     (any conflict between rules MUST be avoided)
 -   for convenience, **the "references" notation MUST be allowed for a maximum of rules**
     (this notation is explained in [§§](#D3)) as it permits to keep a content readable.
@@ -1189,6 +1201,14 @@ Such notation concerns the following contents:
         [link-id]: http://test.com/ {#link-id}
         ![image-id]: http://test.com/img.ext {#image-id}
 
+The usage of a user defined ID CAN be largely used for any type of content in an MDE document.
+This allows to reference a part of a content for in-page links writing:
+
+    This is a paragraph with an anchor{#my-anchor} I can access with a [link](#my-anchor) ...
+
+Note that writing class names on the same model would not have sense as writer can't define
+concerned span of content. Such a usage of class names in the middle of a content (outside
+the content types listed above) MUST NOT be allowed and MUST NOT have any effect.
 
 As developed in the *identifiers construction* section ([§§](#D7)), any ID defined in the
 content MUST be used instead of automatic one (with, eventually, modifications to fit the
@@ -1236,11 +1256,11 @@ definitions useful:
 In conclusion, in MDE, the construction of IDs MUST follow the rules below:
 
 -   a string all lower-case
--   containing letters `[A-Za-z]`, digits `[0-9]`, hyphens `-`, underscores `_`, colons `:` and periods `.`
+-   containing letters `[a-z]`, digits `[0-9]`, hyphens `-`, underscores `_`, colons `:` and periods `.`
 
-These rules MUST be applied when constructing an automatic ID AND when a user defined ID occurred
+These rules MUST be applied when constructing an automatic ID AND when a user defined ID occurs
 [§§](#D6). When a writer specify an ID "by hand", parser MUST take that ID instead of creating an
-automatic one, but this ID MUST be transformed to follow above specifications if it is not the case.
+automatic one, but the ID MUST be transformed to follow above specifications if it is not the case.
 
 **Example:** The example below is given as a demonstration. The final "slugify" process is NOT part
 of these specifications:
@@ -1400,11 +1420,12 @@ And finally, THANK YOU for being involved ;)
 [michel-fortin]: http://michelf.com/
 [fletcher-penney]: http://fletcherpenney.net/
 [egil-hansen]: http://egilhansen.com
-[piwi]: http://github.com/piwi
+[e-piwi]: http://e-piwi.fr/
 [markdown]: http://daringfireball.net/projects/markdown/
 [markdown-extra]: https://michelf.ca/projets/php-markdown/
 [multi-markdown]: http://fletcherpenney.net/multimarkdown/
 [php-markdown-extra-extended]: http://github.com/egil/php-markdown-extra-extended
+[php-markdown-extended]: http://github.com/piwi/markdown-extended
 [markdown-manual]: http://daringfireball.net/projects/markdown/syntax
 [github]: http://github.com
 [github-fork-doc]: http://help.github.com/articles/fork-a-repo
