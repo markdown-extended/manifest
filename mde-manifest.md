@@ -116,7 +116,7 @@ or contribution, please refer to [the dedicated section](#contribute).
             -   [D.9.d.1. Other file inclusion](#D9d1)
             -   [D.9.d.2. Critic markup](#D9d2)
 -   [Contribute](#contribute)
--   [Testing](#testing)
+-   [Summary](#summary)
 
 
 Introduction
@@ -191,14 +191,17 @@ is developed in [§§](#A5).
 **meta data** - A "meta-data" is a piece of information written in a document (or loaded by
 parsers) but not actually rendered in final output ; this concept is developed in [§§](#D1).
 
-**reference** - A reference is a mark of any kind that refers to a definition written elsewhere 
+**reference** - A "reference" is a mark of any kind that refers to a definition written elsewhere 
 in the document (at its bottom for instance) ; this concept is developed in [§§](#D3).
 
 **indentation** - In MDE like in many other languages, the "indentation" is made by writing
 a *tabulation* OR *four spaces* from last indentation limit (originally the left side of the 
 document, which is the "indentation zero" limit) ; this concept is developed in [§§](#A6).
 
-**writer** - In these specifications, "writer" designates the "user", the persons who
+**reader** - In these specifications, "reader" designates the "final user", the persons who
+read an MDE document.
+
+**writer** - In these specifications, "writer" designates the "syntax user", the persons who
 write contents using the MDE syntax.
 
 **parser** - In these specifications, "parser" designates the application in charge to treat
@@ -263,7 +266,7 @@ John Gruber's Markdown parser, which only constructs HTML output.
 ### A.2. Global construction {#A2}
 
 The master idea of Markdown is the **readability** of the content. Which means: if I have a Markdown file
-and I open it with a program like `less` or `vi` (or any program that render a file "as is"), I MUST
+and I open it with a program like `less` or `vi` (or any program that renders a file "as is"), I MUST
 be able to read its content with no other action.
 
 This idea basically means two things:
@@ -359,18 +362,19 @@ Even if we MUST NOT suppose about the final rendering here ([§§](#scope-of-the
 we also posed the condition that any original Markdown rule MUST be valid in MDE ([§§](#A1)).
 So we MUST keep the original auto-escaping of HTML meta characters.
 
-Outside a code span or block, the following characters SHOULD be escaped when rendering
-an HTML output:
+Outside a code span ([§§](#B4)) or a pre-formatted block ([§§](#C6)), the following characters 
+SHOULD be escaped when rendering an HTML output:
 
 -   the *ampersand* `&` SHOULD be rendered as `&amp;`
 -   the *left angle* `<` SHOULD be rendered as `&lt;`
+-   the *right angle* `>` SHOULD be rendered as `&gt;`
 
 ### A.8. Inline HTML {#A8}
 
 On the same idea as for *automatic escaping* ([§§](#A7)), inline HTML MUST be authorized
 in an MDE content. **But**, a consequence of the fact that the final rendering MAY NOT be
 only HTML ([§§](#scope-of-these-specifications)) is that raw HTML tags MAY NOT be rendered
-as writers expect in other formats.
+as writer expects in other formats.
 
 #### A.8.a. Use with caution {#A8a}
 
@@ -385,7 +389,7 @@ text content).
 #### A.8.b. HTML comments {#A8b}
 
 HTML comments MUST be an exception as this is the best way to include a comment in an MDE
-content. All parsers MUST handle HTML comments as a comment (in any language).
+content. All parsers MUST handle HTML comments as comments (in any language).
 
 As a reminder, the HTML comment tag is constructed surrounded between `<!--` and `-->` and
 can be multi-line:
@@ -417,7 +421,8 @@ B. Typographic rules {#B}
 -------------------------
 
 A rule is considered as *typographic* when it only concerns one or more words written inline
-in a text. As long it does not concern a full block of text, a rule MUST be considered as *typographic*.
+in a text. As long as it does not concern a full block of text, a rule MUST be considered as 
+*typographic*.
 
 ### B.1. Application scope {#B1}
 
@@ -485,7 +490,7 @@ as typographic delimiters.
 
 ### B.3. Abbreviations {#B3}
 
-An abbreviation is written like a *reference* ([§§](#D3)) with a leading asterisk `*`:
+An abbreviation is written like a *reference* ([§§](#D3)) with a leading *asterisk* `*`:
 
     *[HTML]: Hyper Text Markup Language
 
@@ -526,7 +531,7 @@ is just a raw URL (in an HTML content, it MAY NOT be clickable).
 
 #### B.5.b. Raw inline links {#B5b}
 
-Making an URL (or any kind of text) clickable can be done by surrounding it between angle brackets `<` and `>`:
+Making an URL (or any kind of text) clickable can be done by surrounding it between *angle brackets* `<` and `>`:
 
     <http://link.com/query>
 
@@ -537,9 +542,9 @@ such as email addresses links - see [§§](#B5e)).
 
 Links can be written *inline* in the text, separated in two parts:
 
--   the link text between brackets `[` and `]`
--   then, between parenthesis `(` and `)`, the URL of the link (relative or absolute) and 
-    an OPTIONAL title wrapped in double-quotes `"` followed by an OPTIONAL list of attributes ([§§](#D6)).
+-   the link text between *brackets* `[` and `]`
+-   then, between *parenthesis* `(` and `)`, the URL of the link (relative or absolute) and 
+    an OPTIONAL title wrapped in *double-quotes* `"` followed by an OPTIONAL list of attributes ([§§](#D6)).
 
 
     [a simple link](http://test.com/)
@@ -554,7 +559,7 @@ In-page anchors can be accessed using the notation of inline links ([§§](#B5b)
 
     [my section](#section-id)
 
-See the dedicated section ([§§](#D7)) to learn how to define the hash reference of a part.
+See the dedicated section [§§](#D7) to learn how to define the hash reference of a part.
 
 #### B.5.e. Special links {#B5e}
 
@@ -586,9 +591,9 @@ Basically, images follow the same notation as for *links* ([§§](#B5)) with a l
 
 Images can be written *inline* in the text, separated in two parts:
 
--   the image alternated text between brackets `[` and `]` preceded by an exclamation point `!`
--   then, between parenthesis `(` and `)`, the URL of the image (relative or absolute) and an 
-    OPTIONAL title wrapped in double-quotes `"` followed by an OPTIONAL list of attributes ([§§](#D6)).
+-   the image alternated text between *brackets* `[` and `]` preceded by an *exclamation point* `!`
+-   then, between *parenthesis* `(` and `)`, the URL of the image (relative or absolute) and an 
+    OPTIONAL title wrapped in *double-quotes* `"` followed by an OPTIONAL list of attributes ([§§](#D6)).
 
 
     ![alt text](http://test.com/data1/images/1.jpg)
@@ -623,7 +628,7 @@ section about notes [§§](#D5).
 
 ### B.8. Inline mathematics {#B8}
 
-Inline mathematics is written by surrounding the content between escaped parenthesis `\(` and `\)`:
+Inline mathematics is written by surrounding the content between *escaped parenthesis* `\(` and `\)`:
 
     \(...\)
     \(\alpha = (t_1 - t_0)/L\)
@@ -642,14 +647,14 @@ A rule is considered as *structural* when it concerns a whole block of content.
 A "block" of content is separated from others by:
 
 -   the top or bottom sides of the document
--   a blank line
+-   a blank line ([§§](#A5))
 
 Any block of content MUST allow any other syntax's rule to be used and interpreted. This can
 create some nested indentations as described at [§§](#A6).
 
 ### C.2. Paragraphs {#C2}
 
-To build a paragraph, just surround it between blank lines (at least one before and one after).
+To build a paragraph, just surround it between *blank lines* (at least one before and one after - [§§](#A5)).
 
     Paragraph 1 ...
     
@@ -657,14 +662,14 @@ To build a paragraph, just surround it between blank lines (at least one before 
 
 ### C.3. Line breaks {#C3}
 
-To insert a line break, write two or more spaces at the end of the line and pass to next line.
+To insert a line break, write two or more *spaces* at the end of the line and pass to next line.
 
     Line 1 ...  
     Line 2 ...
 
 ### C.4. Horizontal rules {#C4}
 
-To insert an horizontal rule, write at least three hyphens `-`, asterisks `*` or underscores `_` 
+To insert an horizontal rule, write at least three *hyphens* `-`, *asterisks* `*` or *underscores* `_` 
 alone on a line (spaces MUST not care):
 
     ***
@@ -682,13 +687,13 @@ This is developed at [§§](#D8a).
 
 #### C.5.a. ATX: sharps titles {#C5a}
 
-An "ATX" title is written alone on a single line, preceded by as many sharps `#` as the title level:
+An "ATX" title is written alone on a single line, preceded by as many *sharps* `#` as the title level:
 
     # Title level 1 (HTML tag `h1`)
 
     ### Title level 3 (HTML tag `h3`)
 
-OPTIONALLY, ATX titles can be "closed" using a random number of sharps at the end of the text:
+OPTIONALLY, ATX titles can be "closed" using a random number of *sharps* at the end of the line:
 
     ### Title level 3 (HTML tag `h3`) ##
 
@@ -697,7 +702,7 @@ OPTIONALLY, ATX titles can be "closed" using a random number of sharps at the en
 #### C.5.b. Setext: underlined titles {#C5b}
 
 The "dash" notation only concerns the two first levels of titles in a document. They are written
-underlined by equal signs `=` for the first level and hyphens `-` for the second:
+underlined by *equal signs* `=` for the first level and *hyphens* `-` for the second:
 
     Title level 1 (HTML tag `h1`)
     =============================
@@ -717,7 +722,7 @@ MAY be chosen preferably to the ATX one as it seems more comprehensive.
 
 #### C.6.a. Simple notation {#C6a}
 
-A pre-formatted block is written as a paragraph beginning lines with 4 spaces (*the pipe 
+A pre-formatted block is written as a paragraph beginning lines with 4 *spaces* (*the pipe 
 of the example below is not included in the notation and represents line's 1st character*):
 
     |    a pre formed content
@@ -727,8 +732,8 @@ MUST be indented as this is the only rule to identify that kind of content.
 
 #### C.6.b. Fenced code blocks {#C6b}
 
-A "fenced" code block can be written surrounded a content between two lines of tildes `~` 
-or backticks `\`` (at least 3):
+A "fenced" code block can be written surrounded a content between two lines of *tildes* `~` 
+or *backticks* `\`` (at least 3):
 
     ~~~
     My code here
@@ -750,7 +755,7 @@ as recommended by the W3C in the [HTML5 specifications][w3c-html5-code-specifica
 
 ### C.7. Citations {#C7}
 
-A blockquoted block is written preceding each line or only the first one of a paragraph by a right angle bracket `>`:
+A blockquoted block is written preceding each line or only the first one of a paragraph by a *right angle bracket* `>`:
 
     > This is my blockquote,
     > where we can include **other Markdown** tags ...
@@ -761,7 +766,7 @@ A blockquoted block is written preceding each line or only the first one of a pa
 Once a blockquote has begin (*e.g. as long as no blank line is passed*), the content will be part of it.
 
 To precise the URL of the original content cited, write this URL at the beginning of the first line
-between parenthesis `(` and `)`:
+between *parenthesis* `(` and `)`:
 
     > (http://test.com/) This is my blockquote,
     > with a content cited from the original "http://test.com" page ...
@@ -785,8 +790,8 @@ is the reason why the indentation between the angle bracket and the content is N
 
 #### C.8.a. Unordered lists {#C8a}
 
-An un-ordered list is written beginning each entry by an asterisk `*`, a plus sign `+` or an 
-hyphen `-` followed by 1 or more space(s). The character used for each item of a list MUST NOT matter:
+An un-ordered list is written beginning each entry by an *asterisk* `*`, a *plus sign* `+` or an 
+*hyphen* `-` followed by 1 or more *space(s)*. The character used for each item of a list MUST NOT matter:
 
     -   first item
     *   second item
@@ -802,8 +807,8 @@ To create sub-items, just indent the sub-list twice:
 
 #### C.8.b. Ordered lists {#C8b}
 
-An ordered list is written beginning each entry by a number followed by a period `.` and 
-1 or more space(s). The number used for each item of a list MUST NOT matter:
+An ordered list is written beginning each entry by a number followed by a *period* `.` and 
+1 or more *space(s)*. The number used for each item of a list MUST NOT matter:
 
     1.   first item
     1.   second item
@@ -822,15 +827,16 @@ point after the number MUST be escaped to not be parsed as an ordered list item:
 
 A definition is written separated in at least two parts:
 
-- the term on the first line, with no leading space or character
-- then, the definition beginning on the second line, with a leading colon `:`
+-   the term on the first line, with no leading space or character
+-   then, the definition beginning on the second line, with a leading *colon* `:` followed by 
+    at least 3 *spaces* (1 level of indentation)
 
 
     Apple
     :   Pomaceous fruit of plants of the genus Malus in
         the family Rosaceae.
 
-A term can have multiple definitions, separated by a blank line:
+A term can have multiple definitions, separated by a *blank line* ([§§](#A5)):
 
     Apple
     :   Pomaceous fruit of plants of the genus Malus in
@@ -862,21 +868,21 @@ The rules here are:
 
 -   every table's line is written alone on a single line
 -   the first lines are the headers of the table (most of the time one single line)
--   it is followed by a mandatory separator line of hyphens `-`
+-   it is followed by a mandatory separator line of *hyphens* `-`
 -   each line below is a line of the table content
--   columns are separated by pipes `|` and each line may have the same number of pipes
+-   columns are separated by *pipes* `|` and each line may have the same number of pipes
 -   spacing is not important except for visual facility
 -   tables can be written without the leading pipes
 
-Finally, the content of the cells can have other MDE's typographic features like emphasis.
+Finally, the content of the cells can have other MDE's typographic features like emphasis ([§§](#B2)).
 
 #### C.10.b. Columns alignment {#C10b}
 
-Alignment in columns can be specified by using colons `:` in the separators line:
+Alignment in columns can be specified by using *colons* `:` in the separators line:
 
--   a colon on the left of a separator's cell means a left-aligned column : `:---`
--   a colon on the right of a separator's cell means a right-aligned column : `---:`
--   two colons on the left and the right of a separator's cell means a centered column : `:--:`
+-   a colon on the left of a separator's cell means a *left-aligned column*: `:---`
+-   a colon on the right of a separator's cell means a *right-aligned column*: `---:`
+-   two colons on the left and the right of a separator's cell means a *centered column*: `:--:`
 
 
     | First Header  | Second Header | Third header |
@@ -898,7 +904,7 @@ must cover columns, without spaces:
 
 #### C.10.d. Table ID {#C10d}
 
-Table ID is written between brackets `[` and `]` just before or just after the table, 
+Table ID is written between *brackets* `[` and `]` just before or just after the table, 
 on a new single line:
 
     |               | Grouping                    ||
@@ -912,7 +918,7 @@ This ID MUST be used to build the *table of figures and tables* ([§§](#D8b)).
 
 #### C.10.e. Table caption {#C10e}
 
-Table caption is written between brackets `[` and `]` just after the table ID ([§§](#C10d)):
+Table caption is written between *brackets* `[` and `]` just after the table ID ([§§](#C10d)):
 
     |               | Grouping                    ||
     | First Header  | Second Header | Third header |
@@ -926,7 +932,7 @@ its ID ([§§](#C10d)).
 
 #### C.10.f. Table with multiple bodies {#C10f}
 
-Separate sets of content for a single table are written separating them with one blank line:
+Separate sets of content for a single table are written separating them with one *blank line* ([§§](#A5)):
 
     |               | Grouping                    ||
     | First Header  | Second Header | Third header |
@@ -941,7 +947,7 @@ Separate sets of content for a single table are written separating them with one
 
 ### C.11. Mathematics blocks {#C11}
 
-Block of mathematics formula is written surrounding the content between escaped brackets `\[` and `\]`
+Block of mathematics formula is written surrounding the content between *escaped brackets* `\[` and `\]`
 (additionally to blank lines):
 
     \[...\]
@@ -988,7 +994,7 @@ of the document MUST begin after passing at least one blank line after meta-data
 The value of the meta-data MUST allow multi-lines content.
 
 Meta-data can also be used to define variables values available in the document. To use a
-meta-data value, use notation `[%var]`: the meta-data name preceded by a percent sign `%` 
+meta-data value, use notation `[%var]`: the meta-data name preceded by a *percent sign* `%` 
 between brackets `[` and `]`.
 
     mymeta: A value for the meta-data
@@ -998,7 +1004,7 @@ between brackets `[` and `]`.
 
 ### D.2. Escaping of meta-characters {#D2}
 
-Escaping a meta-character in MDE only consists in preceding it by a "back-slash" `\`.
+Escaping a meta-character in MDE only consists in preceding it by a *back-slash* `\`.
 
 The following characters MUST be escaped to be rendered as the raw character they are:
 
@@ -1095,8 +1101,8 @@ We can distinguish three types of footnotes in a content, depending on their int
 
 #### D.5.a. Footnotes {#D5a}
 
-To create a *footnote* reference, just write its ID like `[^ID]`: a circumflex `^` before the ID string,
-between brackets `[` and `]` in the content, then write the footnote content as a *reference* ([§§](#D3)):
+To create a *footnote* reference, just write its ID like `[^ID]`: a *circumflex* `^` before the ID string,
+between *brackets* `[` and `]` in the content, then write the footnote content as a *reference* ([§§](#D3)):
 
     Paragraph with a footnote[^myid].
 
@@ -1137,10 +1143,10 @@ work easily.
 A *citation note* is written like a classic footnote but:
 
 -   the ID of the note is constructed in two parts like `[p. XX][#Doe:1991]`:
-    -   the page number between brackets `[` and `]` (this part is OPTIONAL)
-    -   the reference ID, preceded by a sharp `#`
--   the note content follows the same rules as for classic footnotes, but the circumflex
-    is replaced by a sharp `#`.
+    -   the page number between *brackets* `[` and `]` (this part is OPTIONAL)
+    -   the reference ID, preceded by a *sharp* `#`
+-   the note content follows the same rules as for classic footnotes, but the *circumflex*
+    is replaced by a *sharp* `#`.
 
 
     Paragraph with a citation note[p. XX][#Doe:1991].
@@ -1169,10 +1175,10 @@ Writers can use the following notation, placing it near concerned content:
 
 This notation can be decomposed in:
 
--   one or zero ID string preceded by a hash mark `#`
--   zero, one or more class names preceded by a period `.`
--   each attribute separated from others by a space ` `
--   the whole string surrounded between curly brackets `{` and `}`
+-   one or zero ID string preceded by a *hash mark* `#`
+-   zero, one or more class names preceded by a *period* `.`
+-   each attribute separated from others by a *space*
+-   the whole string surrounded between *curly brackets* `{` and `}`
 
 Such notation concerns the following contents:
 
@@ -1228,7 +1234,7 @@ The global rule for such a notation is that:
 
 -   when the attribute value is unique, the simple notation `var=val` is allowed
 -   when the attribute value is "long" (includes multiple words), the notation MUST
-    use double-quoted values `"` : `var="val1 val2"`
+    use *double-quoted* values `"` : `var="val1 val2"`
 
 
 ### D.7. Identifiers construction {#D7}
@@ -1256,7 +1262,7 @@ definitions useful:
 In conclusion, in MDE, the construction of IDs MUST follow the rules below:
 
 -   a string all lower-case
--   containing letters `[a-z]`, digits `[0-9]`, hyphens `-`, underscores `_`, colons `:` and periods `.`
+-   containing *letters* `[a-z]`, *digits* `[0-9]`, *hyphens* `-`, *underscores* `_`, *colons* `:` and *periods* `.`
 
 These rules MUST be applied when constructing an automatic ID AND when a user defined ID occurs
 [§§](#D6). When a writer specify an ID "by hand", parser MUST take that ID instead of creating an
@@ -1410,7 +1416,33 @@ your language code following the [ISO 639-1 list][iso-639-1].
 And finally, THANK YOU for being involved ;)
 
 
-*[MDE]: MarkDown Extended
+Summary
+-------
+
+-   **italic emphasis**
+    1.  surrounded between 1 *underscore* on the left and 1 *underscore* on the right
+        
+            A text with _italic content_ for demonstration.
+
+    1.  surrounded between 1 *asterisk* on the left and 1 *asterisk* on the right
+        
+            A text with *italic content* for demonstration.
+
+-   **bold emphasis**
+    1.  surrounded between 2 *underscores* on the left and 2 *underscores* on the right
+        
+            A text with __bold content__ for demonstration.
+
+    1.  surrounded between 2 *asterisks* on the left and 2 *asterisks* on the right
+        
+            A text with **bold content** for demonstration.
+
+-   **code span**
+    -   surrounded between 1 *backtick* on the left and 1 *backtick* on the right
+        
+            A text with `$some ( code )` for demonstration.
+
+
 [wiki-markdown]: http://en.wikipedia.org/wiki/Markdown
 [wiki-john-gruber]: http://en.wikipedia.org/wiki/John_Gruber
 [wiki-aaron-swartz]: http://en.wikipedia.org/wiki/Aaron_Swartz
