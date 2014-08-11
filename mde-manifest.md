@@ -618,14 +618,14 @@ Images MUST allow the *references* ([§§](#D3)) notation:
 
     This is a paragraph with an embedded image ![referenced image][imageid] ...
     
-    ![imageid]: http://test.com/data1/images/1.jpg "My optional title"
+    [imageid]: http://test.com/data1/images/1.jpg "My optional title"
 
 Just like for *links* ([§§](#B5f)), the image reference notation can be simplified if the
 "ID" is the exact same string as the "alternate" text:
 
     This is a paragraph with an embedded image ![image 1][] ...
     
-    ![image 1]: http://test.com/data1/images/1.jpg "My optional title"
+    [image 1]: http://test.com/data1/images/1.jpg "My optional title"
 
 
 ### B.7. Footnotes {#B7}
@@ -832,6 +832,8 @@ point after the number MUST be escaped to not be parsed as an ordered list item:
 
     123\. My text
 
+**TODO:** use alphabetical notation `a.` ?
+
 
 ### C.9. Terms definitions {#C9}
 
@@ -914,7 +916,8 @@ must cover columns, without spaces:
 
 #### C.10.d. Table ID {#C10d}
 
-Table ID is written between *brackets* `[` and `]` just before or just after the table, 
+Table ID is written between following the *user defined attributes* rule ([§§](#D6a)):
+between *curly brackets* `{` and `}` with a leading *hash mark* `#` just before or just after the table,
 on a new single line:
 
     |               | Grouping                    ||
@@ -922,7 +925,7 @@ on a new single line:
     | ------------- | ------------: | :----------: |
     | Content Cell  |  *Long Cell*                ||
     | Content Cell  | **Cell**      | **Cell**     |
-    [table-id]
+    {#table-id}
 
 This ID MUST be used to build the *table of figures and tables* ([§§](#D8b)).
 
@@ -935,10 +938,18 @@ Table caption is written between *brackets* `[` and `]` just after the table ID 
     | ------------- | ------------: | :----------: |
     | Content Cell  |  *Long Cell*                ||
     | Content Cell  | **Cell**      | **Cell**     |
-    [table-id][ my table caption ]
+    [ my table caption ]
 
-If only one information is found between brackets around a table, it MUST be considered as
-its ID ([§§](#C10d)).
+In the case of a table with an ID AND a caption, both MUST be written on the same line and the ID
+MUST be written first:
+
+    |               | Grouping                    ||
+    | First Header  | Second Header | Third header |
+    | ------------- | ------------: | :----------: |
+    | Content Cell  |  *Long Cell*                ||
+    | Content Cell  | **Cell**      | **Cell**     |
+    {#table-id}[ my table caption ]
+
 
 #### C.10.f. Table with multiple bodies {#C10f}
 
@@ -1226,7 +1237,17 @@ Such notation concerns the following contents:
         A paragraph with referenced [link][link-id] and ![image][image-id].
         
         [link-id]: http://test.com/ {#link-id}
-        ![image-id]: http://test.com/img.ext {#image-id}
+        [image-id]: http://test.com/img.ext {#image-id}
+
+-   the *tables* ([§§](#C10d)):
+
+        |               | Grouping                    ||
+        | First Header  | Second Header | Third header |
+        | ------------- | ------------: | :----------: |
+        | Content Cell  |  *Long Cell*                ||
+        | Content Cell  | **Cell**      | **Cell**     |
+        {#tableid}
+
 
 The usage of a user defined ID CAN be largely used for any type of content in an MDE document.
 This allows to reference a part of a content for in-page links writing:
