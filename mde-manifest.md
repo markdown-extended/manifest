@@ -116,7 +116,6 @@ or contribution, please refer to [the dedicated section](#contribute).
             -   [D.9.d.1. Other file inclusion](#D9d1)
             -   [D.9.d.2. Critic markup](#D9d2)
 -   [Contribute](#contribute)
--   [Summary](#summary)
 
 
 Introduction
@@ -213,23 +212,24 @@ be important while reading the specifications.
 **configuration** - This designates an optional set of options a parser can accept to define
 some of its behaviors.
 
-Below is a list of all meta-characters used for semantic rules in MDE:
+Below is a list of all meta-characters used for semantic rules in MDE (the word in *italic* 
+is the one we will use in this document):
 
--   `\` : the backslash
--   `.` : the dot
--   `:` : the colon
--   `!` : the exclamation point
--   `#` : the hash mark or "sharp"
--   `*` : the asterisk or "wildcard"
--   `+` : the plus sign
--   `-` : the hyphen or "dash" or minus sign
--   `_` : the underscore
--   `\`` : the backtick quote
--   `|` : the pipe
--   `(` and `)` : the parentheses
--   `[` and `]` : the brackets
--   `{` and `}` : the curly brackets
--   `<` and `>` : the angle brackets or "chevrons"
+-   `\` : the *backslash*
+-   `.` : the *dot*
+-   `:` : the *colon*
+-   `!` : the *exclamation point*
+-   `#` : the *hash mark* or "sharp"
+-   `*` : the *asterisk* or "wildcard"
+-   `+` : the *plus sign*
+-   `-` : the *hyphen* or "dash" or minus sign
+-   `_` : the *underscore*
+-   `\`` : the *backtick* quote
+-   `|` : the *pipe*
+-   `(` and `)` : the *parentheses*
+-   `[` and `]` : the *brackets*
+-   `{` and `}` : the *curly brackets*
+-   `<` and `>` : the *angle brackets* or "chevrons"
 
 
 A. Basic concepts {#A}
@@ -449,21 +449,25 @@ these effects allowing two different typeface: the *underscore* `_` and the *ast
 
 #### B.2.a. Emphasis with underscores {#B2a}
 
-Italic text is written surrounded by one character:
+Italic text is written surrounded by one character (1 *underscore* on the left and 1 *underscore*
+on the right without space):
 
     _italic_
 
-Bold text is written surrounded by two characters:
+Bold text is written surrounded by two characters (2 *underscores* on the left and 2 *underscores*
+on the right without space):
 
     __bold__
 
 #### B.2.b. Emphasis with asterisks {#B2b}
 
-Italic text is written surrounded by one character:
+Italic text is written surrounded by one character (1 *asterisk* on the left and 1 *asterisk*
+on the right without space):
 
     *italic*
 
-Bold text is written surrounded by two characters:
+Bold text is written surrounded by two characters (2 *asterisks* on the left and 2 *asterisks*
+on the right without space):
 
     **bold**
 
@@ -491,6 +495,12 @@ as typographic delimiters.
 ### B.3. Abbreviations {#B3}
 
 An abbreviation is written like a *reference* ([§§](#D3)) with a leading *asterisk* `*`:
+
+-   the abbreviation term at the beginning of the line between *brackets* `[` and `]` and with:
+    -   a leading *asterisk* `*` (without space)
+    -   a trailing *colon* `:` (without space)
+-   then the full text of the abbreviation
+
 
     *[HTML]: Hyper Text Markup Language
 
@@ -687,13 +697,13 @@ This is developed at [§§](#D8a).
 
 #### C.5.a. ATX: sharps titles {#C5a}
 
-An "ATX" title is written alone on a single line, preceded by as many *sharps* `#` as the title level:
+An "ATX" title is written alone on a single line, preceded by as many *hash marks* `#` as the title level:
 
     # Title level 1 (HTML tag `h1`)
 
     ### Title level 3 (HTML tag `h3`)
 
-OPTIONALLY, ATX titles can be "closed" using a random number of *sharps* at the end of the line:
+OPTIONALLY, ATX titles can be "closed" using a random number of *hash marks* at the end of the line:
 
     ### Title level 3 (HTML tag `h3`) ##
 
@@ -711,7 +721,7 @@ underlined by *equal signs* `=` for the first level and *hyphens* `-` for the se
     -----------------------------
 
 The underlining line MUST NOT require to be as long as the title text, any number of
-equals or dashes MUST work.
+equals or hyphens MUST work.
 
 **Writer Note:** If you know that a document will often be read "as-is" as plain text, the Setext notation
 MAY be chosen preferably to the ATX one as it seems more comprehensive.
@@ -727,7 +737,7 @@ of the example below is not included in the notation and represents line's 1st c
 
     |    a pre formed content
 
-Following to indentation rules for blocks ([§§](#A6)), ALL lines of a pre-formatted block 
+Unlike indentation rules for blocks ([§§](#A6)), ALL lines of a pre-formatted block 
 MUST be indented as this is the only rule to identify that kind of content.
 
 #### C.6.b. Fenced code blocks {#C6b}
@@ -816,7 +826,7 @@ An ordered list is written beginning each entry by a number followed by a *perio
         1.  second sub-item
     2.   third item
 
-**Writer Note:** A special attention MAY be attached when beginning a line with a raw dash, asterisk or plus or
+**Writer Note:** A special attention MAY be attached when beginning a line with a raw hyphen, asterisk or plus or
 with a number followed by a point. For instance, to write the raw string `123. My text`, the
 point after the number MUST be escaped to not be parsed as an ordered list item:
 
@@ -983,15 +993,17 @@ a special title for the document, its author or any kind of "meta" information.
 A meta-data is added writing it at the very top of the document (without any blank line from
 the top) as a `var: val` pair:
 
+-   the meta-data name is written at the beginning of the line, followed by a *colon* `:` and a *space*
+-   the meta-data content can be multi-line
+
+
     author: John Doe
 
-A meta-data name MUST be a kind of "slug": a single string without space which can be considered
-as an ID.
+The name of a meta-data MUST be a kind of "slug": a single string without space which can be 
+considered as an ID.
 
 Multiple meta-data can be written, beginning each item on a new line, and the "true" content
 of the document MUST begin after passing at least one blank line after meta-data.
-
-The value of the meta-data MUST allow multi-lines content.
 
 Meta-data can also be used to define variables values available in the document. To use a
 meta-data value, use notation `[%var]`: the meta-data name preceded by a *percent sign* `%` 
@@ -1034,7 +1046,15 @@ document (at its bottom for instance) and only insert its ID at its final place.
 ### D.3.a. Basis of references {#D3a}
 
 The global construction of references is to replace the content by an ID and write that
-content on another line anywhere:
+content on another line anywhere.
+
+The ID is written between *brackets* `[` and `]` in the content. The reference is written
+on a single line, anywhere in the document (it MUST be skipped from final rendering), with:
+
+-   the ID at the beginning of the line between *brackets* `[` and `]`
+-   a *colon* `:` without space after closing bracket
+-   then the value of the reference after a *space*
+
 
     This is a paragraph with a [referenced link][linkid] ...
     
@@ -1047,6 +1067,7 @@ In the case above, the final rendering MUST be exactly the same as if it was wri
     This is a paragraph with a [referenced link](http://test.com/ "My optional title") ...
     
     ...
+
 
 ### D.3.b. Various types of references {#D3b}
 
@@ -1144,9 +1165,9 @@ A *citation note* is written like a classic footnote but:
 
 -   the ID of the note is constructed in two parts like `[p. XX][#Doe:1991]`:
     -   the page number between *brackets* `[` and `]` (this part is OPTIONAL)
-    -   the reference ID, preceded by a *sharp* `#`
+    -   the reference ID, preceded by a *hash mark* `#`
 -   the note content follows the same rules as for classic footnotes, but the *circumflex*
-    is replaced by a *sharp* `#`.
+    is replaced by a *hash mark* `#`.
 
 
     Paragraph with a citation note[p. XX][#Doe:1991].
@@ -1414,33 +1435,6 @@ copy of the original `mde-manifest.md` file named like `mde-manifest.LN.md` wher
 your language code following the [ISO 639-1 list][iso-639-1].
 
 And finally, THANK YOU for being involved ;)
-
-
-Summary
--------
-
--   **italic emphasis**
-    1.  surrounded between 1 *underscore* on the left and 1 *underscore* on the right
-        
-            A text with _italic content_ for demonstration.
-
-    1.  surrounded between 1 *asterisk* on the left and 1 *asterisk* on the right
-        
-            A text with *italic content* for demonstration.
-
--   **bold emphasis**
-    1.  surrounded between 2 *underscores* on the left and 2 *underscores* on the right
-        
-            A text with __bold content__ for demonstration.
-
-    1.  surrounded between 2 *asterisks* on the left and 2 *asterisks* on the right
-        
-            A text with **bold content** for demonstration.
-
--   **code span**
-    -   surrounded between 1 *backtick* on the left and 1 *backtick* on the right
-        
-            A text with `$some ( code )` for demonstration.
 
 
 [wiki-markdown]: http://en.wikipedia.org/wiki/Markdown
