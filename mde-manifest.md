@@ -832,8 +832,6 @@ point after the number MUST be escaped to not be parsed as an ordered list item:
 
     123\. My text
 
-**TODO:** use alphabetical notation `a.` ?
-
 
 ### C.9. Terms definitions {#C9}
 
@@ -1131,6 +1129,13 @@ We can distinguish three types of footnotes in a content, depending on their int
 -   **a bibliographic note**, which refers to another book or work, is a hard reference to let the
     reader find the original source.
 
+Any footnote MUST be callable multiple times in a single documents using the same note ID, without
+creating a new footnote entry at each call.
+
+**Implementation Note:** Parsers MAY allow, in any output format, to let reader access to a footnote
+text where it appears in the document content. If the footnote text is written elsewhere (at the
+document bottom for instance), a link MAY be proposed to go back in the content.
+
 #### D.5.a. Footnotes {#D5a}
 
 To create a *footnote* reference, just write its ID like `[^ID]`: a *circumflex* `^` before the ID string,
@@ -1153,30 +1158,28 @@ one or more explanation(s) of it. Glossary notes have to be considered as *defin
 except that they will all be placed like footnotes (at the end of the content for instance).
 
 A *glossary footnote* is written like a classic *footnote* but the first line of the note content
-contains concerned term, preceded by the string `glossary: `:
+contains concerned term, preceded by the string `glossary: ` and OPTIONALLY followed by a *character*
+between *parenthesis* `(` and `)` that will be used to sort the term in an alphabetical lexical:
 
     Paragraph with a glossary note[^myid].
 
     ...
 
-    [^myid]: glossary: Term
+    [^myid]: glossary: Term (x)
     Actual content of the glossary footnote.
 
-On the first line of the note, the term defined can OPTIONALLY be followed by a *short key*
-which will be used to build the sorting order of the glossary.
-
-#### D.5.c. Citation notes {#D5c}
+#### D.5.c. Bibliographic notes {#D5c}
 
 A bibliographic note is a fully referenced external work. This kind of notes is often used
-in academic or scientific work. The point is that we have to follow some *academic rules* 
-for bibliographic notes, basically to cite enough information to let the reader find this
+in academic or scientific works. The point is that we have to follow some *academic rules*
+for bibliographic notes, basically to cite enough information to let the reader find concerned
 work easily.
 
 A *citation note* is written like a classic footnote but:
 
 -   the ID of the note is constructed in two parts like `[p. XX][#Doe:1991]`:
-    -   the page number between *brackets* `[` and `]` (this part is OPTIONAL)
-    -   the reference ID, preceded by a *hash mark* `#`
+    -   the page number between *brackets* `[` and `]` (this content of this part is OPTIONAL)
+    -   the reference ID, constructed like classic footnotes ([§§](#D5a)) but preceded by a *hash mark* `#`
 -   the note content follows the same rules as for classic footnotes, but the *circumflex*
     is replaced by a *hash mark* `#`.
 
@@ -1188,7 +1191,27 @@ A *citation note* is written like a classic footnote but:
     [#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
     edition for instance ... (Web link) Retrieved September 30, 2011.
 
-**Implementation Note:** Parsers MAY have to follow some typographic *academic rules* for bibliographic 
+In a case where the page number is unknown (or not relevant) writer MUST write the first *brackets*
+`[` and `]` with an empty content:
+
+    Paragraph with a citation note[][#Doe:1991].
+
+    ...
+
+    [#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
+    edition for instance ... (Web link) Retrieved September 30, 2011.
+
+In a case where writers need to reference a citation without using it in the content, the `[not cited]`
+prefix MUST be used and MUST be case insensitive:
+
+    Paragraph with no citation note.
+
+    ...
+
+    [Not Cited][#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
+    edition for instance ... (Web link) Retrieved September 30, 2011.
+
+**Implementation Note:** Parsers MAY have to follow some typographic *academic rules* for bibliographic
 notes, such as naming the authors in bold, writing the title of the work in italic etc.
 
 
