@@ -96,6 +96,7 @@ or contribution, please refer to [the dedicated section](#contribute).
     -   [D.3. References](#D3)
         -   [D.3.a. Basis of references](#D3a)
         -   [D.3.b. Various types of references](#D3b)
+        -   [D.3.c. Identifiers construction](#D3c)
     -   [D.4. Mathematics](#D4)
     -   [D.5. The special case of notes](#D5)
         -   [D.5.a. Footnotes](#D5a)
@@ -105,7 +106,7 @@ or contribution, please refer to [the dedicated section](#contribute).
         -   [D.6.a. Tags attributes](#D6a)
         -   [D.6.b. Raw attributes](#D6b)
     -   [D.7. Identifiers construction](#D7)
-    -   [D.8. Automatic indexes](#D8)
+    -   [D.8. Automatic indexations](#D8)
         -   [D.8.a. Table of contents](#D8a)
         -   [D.8.b. Table of figures and tables](#D8b)
     -   [D.9. Implementers specifics](#D9)
@@ -139,7 +140,7 @@ Origins of Markdown Extended
 
 The original idea of the Markdown syntax came from [John Gruber][daring-fireball],
 who defined its goal, the first Markdown syntax rules and coded a first parser
-as a *Perl* script. He also wrote [the first manual][markdown-manual].
+as a *Perl* script. He also wrote [the first manual of the syntax][markdown-manual].
 
 Working on these specifications, the following implementations inspired us:
 
@@ -185,13 +186,19 @@ specifications ([§§](#C)).
 is developed in [§§](#A5).
 
 **meta character** - Any character used in at least one rule of the syntax is considered as a
-"meta" character ; they are listed in the list below.
+"meta" character ; they are listed below.
 
 **meta data** - A "meta-data" is a piece of information written in a document (or loaded by
 parsers) but not actually rendered in final output ; this concept is developed in [§§](#D1).
 
 **reference** - A "reference" is a mark of any kind that refers to a definition written elsewhere 
 in the document (at its bottom for instance) ; this concept is developed in [§§](#D3).
+
+**ID** - This designates an *identifier string* as defined in the HTML language ; it is used in MDE
+to identify certain contents with a unique (and constant) string ; this concept is developed in [§§](#D7).
+
+**REFID** - This designates an *identifier string* used to identify each *reference* item ; the *REFID*
+follows different construction rules than the classic *ID* ; this concept is developed in [§§](#D3c).
 
 **indentation** - In MDE like in many other languages, the "indentation" is made by writing
 a *tabulation* OR *four spaces* from last indentation limit (originally the left side of the 
@@ -257,7 +264,7 @@ to identify MDE files and syntax.
 The MDE rules MUST keep ALL original Markdown's rules valid as described on [daringfireball.net][markdown-manual].
 
 As said in the *scope of these specifications* ([§§](#scope-of-these-specifications)),
-we WILL NOT give rendering rules here, each parser MAY follow its own final rendering rules
+we WILL NOT give rendering rules here. Each parser MAY follow its own final rendering rules
 according to the MDE specifications (concerning the original MDE content) and concerned language.
 Thus, we MUST keep in mind that the final output MAY NOT be HTML only ; a parser can construct any 
 format of output (such as PDF, OpenDocument etc). This is a major difference with the original 
@@ -265,8 +272,8 @@ John Gruber's Markdown parser, which only constructs HTML output.
 
 ### A.2. Global construction {#A2}
 
-The master idea of Markdown is the **readability** of the content. Which means: if I have a Markdown file
-and I open it with a program like `less` or `vi` (or any program that renders a file "as is"), I MUST
+The master idea of Markdown is the **readability** of the content. Which means: if a reader has a Markdown file
+and opens it with a program like `less` or `vi` (or any program that renders a file "as is"), he MUST
 be able to read its content with no other action.
 
 This idea basically means two things:
@@ -279,7 +286,7 @@ Keeping readability using the semantic tags of the syntax is the purpose of thes
 we will here try to define the best rules to NOT prevent a clear reading but DO allow a maximum
 of rich final rendering. Keeping a document "one way scroll only" is simplified by the global
 construction of a Markdown content: the real *end of lines* of the content ARE NOT the final
-ones. Writers CAN, if they need to, render a final end of line (called "hard breaks" [§§](#C3)),
+ones. Writers CAN, if they need to, render a final end of line (called "hard break" [§§](#C3)),
 but the first thing to keep in mind writing with the Markdown syntax is that you DO NOT NEED
 to write your paragraphs chained on a single line. You SHOULD choose a word-wrapping number (a number
 of characters a line must not exceed - something like 100 characters in this document) and
@@ -291,7 +298,7 @@ characters.
 
 ### A.3. MDE file format {#A3}
 
-An MDE file MUST be considered as a plain text document. It is basically a raw plain text file just like
+An MDE file MUST be considered as a *plain text* document. It is basically a raw plain text file just like
 a classic `.txt` file. It MAY be encoded in a "classic" file encoding such as `utf-8` or `iso-...`.
 
 Any MDE file MUST work with any software reading file contents.
@@ -306,7 +313,7 @@ The syntax's rules of these specifications are separated in the following three 
 
 **Typography**
 :   Rules concerning the rendering of typographic writing usages, such as bold
-    text or links ; this almost concerns a word, a group of words or an expression.
+    emphasis or links ; this almost concerns a word, a group of words or an expression.
     The "typographic" rules are often called "span elements".
     See [§§](#B).
 
@@ -323,7 +330,7 @@ The syntax's rules of these specifications are separated in the following three 
 
 ### A.5. Blank lines {#A5}
 
-A "blank line" in MDE is any line that does not output anything ; a line with only spaces 
+A "blank line" in MDE is any line that does not output anything. A line with only spaces 
 or tabulations MUST be considered as a blank line.
 
 ### A.6. Indentation {#A6}
@@ -333,8 +340,8 @@ The indentation level in MDE is **1 tabulation** or **four spaces**:
     1 tab = 4 spaces = 1 indentation level
 
 Any block of content that requires an indentation MAY allow any other syntax's rule to be
-used in that content, considering the first character of the first indented line as the new 
-left side of its own indentation.
+used in that content, considering the position of the first character of the first indented 
+line as the new left side of its own indentation.
 
 The global rules for blocks sequences are:
 
@@ -350,7 +357,8 @@ Finally, for rules that requires a character AND an indentation, only the first 
 actually be indented, subsequent lines of the same block can either be indented or not. This
 is NOT true when the rule does not include a character (like for pre-formatted blocks - [§§](#C6a)).
 
-**Writer Note:** It is a good idea to always indent a block for readability.
+**Writer Note:** For a document often read "as is" as plain text, it MAY be a good idea to 
+always indent a block for readability.
 
 
 ### A.7. Automatic escaping {#A7}
@@ -362,17 +370,20 @@ Even if we MUST NOT suppose about the final rendering here ([§§](#scope-of-the
 we also posed the condition that any original Markdown rule MUST be valid in MDE ([§§](#A1)).
 So we MUST keep the original auto-escaping of HTML meta characters.
 
-Outside a code span ([§§](#B4)) or a pre-formatted block ([§§](#C6)), the following characters 
-SHOULD be escaped when rendering an HTML output:
+Outside a code span ([§§](#B4)) or a pre-formatted block ([§§](#C6)), and as long as the character
+is NOT part of an MDE tag, the following characters SHOULD be escaped when rendering an HTML output:
 
 -   the *ampersand* `&` SHOULD be rendered as `&amp;`
 -   the *left angle* `<` SHOULD be rendered as `&lt;`
 -   the *right angle* `>` SHOULD be rendered as `&gt;`
 
+**Implementation Note:** Parsers that rendered a non-HTML output SHOULD introduce the raw 
+original character in the final rendering.
+
 ### A.8. Inline HTML {#A8}
 
 On the same idea as for *automatic escaping* ([§§](#A7)), inline HTML MUST be authorized
-in an MDE content. **But**, a consequence of the fact that the final rendering MAY NOT be
+in an MDE content. BUT, a consequence of the fact that the final rendering MAY NOT be
 only HTML ([§§](#scope-of-these-specifications)) is that raw HTML tags MAY NOT be rendered
 as writer expects in other formats.
 
@@ -389,7 +400,7 @@ text content).
 #### A.8.b. HTML comments {#A8b}
 
 HTML comments MUST be an exception as this is the best way to include a comment in an MDE
-content. All parsers MUST handle HTML comments as comments (in any language).
+content. All parsers MUST handle HTML comments as *comments* (in any language).
 
 As a reminder, the HTML comment tag is constructed surrounded between `<!--` and `-->` and
 can be multi-line:
@@ -403,11 +414,12 @@ an HTML format CAN keep comments "as is" (present in the output) as they won't b
 
 ### A.9. Identifiers {#A9}
 
-An MDE parser MUST be able to reference some specific contents with identifiers (IDs). Each ID
-must be unique for the document and SHOULD be constant to let readers retrieve a section with
-permanent links. The ID construction process is described in a dedicated section [§§](#D7).
+An MDE parser MUST be able to reference some specific contents with identifiers (the *ID* as 
+described at [§§](#terms-and-definitions)). Each ID must be unique for the document and SHOULD 
+be constant to let readers retrieve a section with permanent links. The ID construction process 
+is described in a dedicated section [§§](#D7).
 
-Basically, three types of contents MUST ALWAYS have an ID:
+Basically, three types of contents MUST ALWAYS have an *ID*:
 
 -   the *titles* ([§§](#C5))
 -   the *tables* ([§§](#C10))
@@ -449,30 +461,30 @@ these effects allowing two different typeface: the *underscore* `_` and the *ast
 
 #### B.2.a. Emphasis with underscores {#B2a}
 
-Italic text is written surrounded by one character (1 *underscore* on the left and 1 *underscore*
-on the right without space):
+Italic text is written surrounded by one character (1 *underscore* `_` on the left and 
+1 *underscore* `_` on the right without space):
 
     _italic_
 
-Bold text is written surrounded by two characters (2 *underscores* on the left and 2 *underscores*
-on the right without space):
+Bold text is written surrounded by two characters (2 *underscores* `__` on the left and 
+2 *underscores* `__` on the right without space):
 
     __bold__
 
 #### B.2.b. Emphasis with asterisks {#B2b}
 
-Italic text is written surrounded by one character (1 *asterisk* on the left and 1 *asterisk*
-on the right without space):
+Italic text is written surrounded by one character (1 *asterisk* `*` on the left and 
+1 *asterisk* `*` on the right without space):
 
     *italic*
 
-Bold text is written surrounded by two characters (2 *asterisks* on the left and 2 *asterisks*
-on the right without space):
+Bold text is written surrounded by two characters (2 *asterisks* `**` on the left and 
+2 *asterisks* `**` on the right without space):
 
     **bold**
 
 **Writer Note:** For a document often read "as is" as plain text, the asterisk notation MAY be used
-as it seems to let the reader understand word's importance.
+preferably as it seems to let the reader understand word's importance.
 
 #### B.2.c. Emphasis auto-escaping {#B2c}
 
@@ -487,7 +499,7 @@ as it seems easier to let a parser match the two distant underscores as delimite
 MAY NOT be the case (*underscores may be kept "as-is" in both expressions*).
 
 **Implementation Note:** As concluded by Fletcher Penney in his work on MultiMarkdown, the
-original reason of this auto-escaping is that "*This caused too many problems with URL's*".
+original reason of this auto-escaping is that "*[underscores] caused too many problems with URL's*".
 Effectively, URLs often use underscores as a word separator and these ones MUST NOT be considered
 as typographic delimiters.
 
@@ -499,7 +511,7 @@ An abbreviation is written like a *reference* ([§§](#D3)) with a leading *aste
 -   the abbreviation term at the beginning of the line between *brackets* `[` and `]` and with:
     -   a leading *asterisk* `*` (without space)
     -   a trailing *colon* `:` (without space)
--   then the full text of the abbreviation
+-   then the full text of the abbreviation after a space
 
 
     *[HTML]: Hyper Text Markup Language
@@ -536,8 +548,8 @@ embed clickable interactions, MUST render a link with the original address visib
 #### B.5.a. Automatic links {#B5a}
 
 Standalone URLs MUST NOT be automatically transformed in links if they are not written following one 
-of the below rules. An URL written inline in a content with no specific "link" tag is not a link, it
-is just a raw URL (in an HTML content, it MAY NOT be clickable).
+of the rules below ([§§](#B5b), [§§](#B5c) and [§§](#B5d)). An URL written inline in a content with 
+no specific "link" tag is not a link, it is just a raw URL (in an HTML content, it MAY NOT be clickable).
 
 #### B.5.b. Raw inline links {#B5b}
 
@@ -587,7 +599,8 @@ Links MUST allow the *references* ([§§](#D3)) notation:
     
     [linkid]: http://test.com/ "My optional title"
 
-This notation can be simplified if the "ID" is the exact same string as the link text:
+This notation can be simplified if the *REFID* (as described at [§§](#terms-and-definitions)) 
+is the exact same string as the link text:
 
     This is a paragraph with a link to [Test.com][] ...
     
@@ -621,7 +634,8 @@ Images MUST allow the *references* ([§§](#D3)) notation:
     [imageid]: http://test.com/data1/images/1.jpg "My optional title"
 
 Just like for *links* ([§§](#B5f)), the image reference notation can be simplified if the
-"ID" is the exact same string as the "alternate" text:
+*REFID* (as described at [§§](#terms-and-definitions)) is the exact same string as the 
+"alternate" text:
 
     This is a paragraph with an embedded image ![image 1][] ...
     
@@ -631,8 +645,8 @@ Just like for *links* ([§§](#B5f)), the image reference notation can be simpli
 ### B.7. Footnotes {#B7}
 
 Footnotes may be considered as a "special case" as we MAY allow writers to distinguish
-simple footnotes from glossary and citations notes. The construction rules of these three
-types MUST follow the same idea, with a special construction for glossary and citation
+simple footnotes from glossary and bibliographic notes. The construction rules of these three
+types MUST follow the same idea, with a special construction for glossary and bibliographic
 notes, which can be considered as special footnotes. Please refer to the dedicated 
 section about notes [§§](#D5).
 
@@ -914,9 +928,9 @@ must cover columns, without spaces:
 
 #### C.10.d. Table ID {#C10d}
 
-Table ID is written between following the *user defined attributes* rule ([§§](#D6a)):
-between *curly brackets* `{` and `}` with a leading *hash mark* `#` just before or just after the table,
-on a new single line:
+Table *ID* (as described at [§§](#terms-and-definitions)) is written between following the 
+*user defined attributes* rule ([§§](#D6a)): between *curly brackets* `{` and `}` with a 
+leading *hash mark* `#` just before or just after the table, on a new single line:
 
     |               | Grouping                    ||
     | First Header  | Second Header | Third header |
@@ -925,7 +939,7 @@ on a new single line:
     | Content Cell  | **Cell**      | **Cell**     |
     {#table-id}
 
-This ID MUST be used to build the *table of figures and tables* ([§§](#D8b)).
+This *ID* MUST be used to build the *table of figures and tables* ([§§](#D8b)).
 
 #### C.10.e. Table caption {#C10e}
 
@@ -1009,7 +1023,7 @@ the top) as a `var: val` pair:
     author: John Doe
 
 The name of a meta-data MUST be a kind of "slug": a single string without space which can be 
-considered as an ID.
+considered as an identifier.
 
 Multiple meta-data can be written, beginning each item on a new line, and the "true" content
 of the document MUST begin after passing at least one blank line after meta-data.
@@ -1040,27 +1054,34 @@ The following characters MUST be escaped to be rendered as the raw character the
 -   `\_` : the underscore
 -   `\`` : the backtick quote
 -   `\|` : the pipe
--   `\(\)` : the parentheses
--   `\[\]` : the brackets
--   `\{\}` : the curly brackets
+-   `\(` and `\)` : the parentheses
+-   `\[` and `\]` : the brackets
+-   `\{` and `\}` : the curly brackets
 
+BUT, as certain tags MUST be written using such notation (this is the case of mathematical 
+notations for instance, [§§](#B8) and [§§](#C11)), they SHOULD be escaped twice if they are
+used in couples (one opening and one closing character):
+
+-   `\\(` and `\\)` : the parentheses
+-   `\\[` and `\\]` : the brackets
 
 ### D.3. References {#D3}
 
-The idea of the "references" comes from the first idea of Markdown: let the content readable "as is".
+The idea of the "references" comes from the first idea of Markdown: let the content be readable "as is".
 
 So, in some cases, it is most relevant to move an information on a single line anywhere in the
-document (at its bottom for instance) and only insert its ID at its final place.
+document (at its bottom for instance) and only insert its *REFID* (as described at 
+[§§](#terms-and-definitions)) at its final place.
 
-### D.3.a. Basis of references {#D3a}
+#### D.3.a. Basis of references {#D3a}
 
-The global construction of references is to replace the content by an ID and write that
+The global construction of references is to replace the content by a *REFID* and write that
 content on another line anywhere.
 
-The ID is written between *brackets* `[` and `]` in the content. The reference is written
+The *REFID* is written between *brackets* `[` and `]` in the content. The reference is written
 on a single line, anywhere in the document (it MUST be skipped from final rendering), with:
 
--   the ID at the beginning of the line between *brackets* `[` and `]`
+-   the *REFID* at the beginning of the line between *brackets* `[` and `]`
 -   a *colon* `:` without space after closing bracket
 -   then the value of the reference after a *space*
 
@@ -1078,31 +1099,44 @@ In the case above, the final rendering MUST be exactly the same as if it was wri
     ...
 
 
-### D.3.b. Various types of references {#D3b}
+#### D.3.b. Various types of references {#D3b}
 
 As developed in other sections of these specifications, the "reference" notation is used for
 different MDE's rules, following different constructions:
 
-1.  the classic reference as described in [D.3.a.](#D3a), which can be used for links and images:
+1.  the classic reference as described in [§§](#D3a), which can be used for links and images:
 
         [id]: http://test.com/ "Optional title"
 
-2.  the abbreviation reference as described in [B.3.](#B3):
+2.  the abbreviation reference as described in [§§](#B3):
 
         *[TERM]: Content of the abbreviated acronym.
 
-3.  the footnote reference as described in [D.5.a.](#D5a):
+3.  the footnote reference as described in [§§](#D5a):
 
         [^id]: Content of the footnote.
 
-4.  the glossary note reference as described in [D.5.b.](#D5b):
+4.  the glossary note reference as described in [§§](#D5b):
 
         [^myid]: glossary: Term
         Actual content of the glossary footnote.
 
-5.  the citation note reference as described in [D.5.c.](#D5c):
+5.  the citation note reference as described in [§§](#D5c):
 
         [#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
+
+#### D.3.c. Identifiers construction {#D3c}
+
+As described at [§§](#terms-and-definitions), we have to differentiate the *ID* ([§§](#D7))
+and the *REFID*, the *references identifier*, which does not have the same usage as classic *ID*
+and may not follow the same construction rules. The *REFID* is the string written at the beginning
+of the line, between *brackets* `[` and `]`, in the notations listed above ([§§](#D3b)).
+
+A *reference identifier* MUST be constructed, by default, as:
+
+-   a string with or without space
+-   with NO meta-caracter ([§§](#terms-and-definitions)) except when it is part of the identifier
+    rule (see the list above for examples - [§§](#D3b)).
 
 ### D.4. Mathematics {#D4}
 
@@ -1129,7 +1163,7 @@ We can distinguish three types of footnotes in a content, depending on their int
 -   **a bibliographic note**, which refers to another book or work, is a hard reference to let the
     reader find the original source.
 
-Any footnote MUST be callable multiple times in a single documents using the same note ID, without
+Any footnote MUST be callable multiple times in a single documents using the same note *REFID*, without
 creating a new footnote entry at each call.
 
 **Implementation Note:** Parsers MAY allow, in any output format, to let reader access to a footnote
@@ -1138,7 +1172,7 @@ document bottom for instance), a link MAY be proposed to go back in the content.
 
 #### D.5.a. Footnotes {#D5a}
 
-To create a *footnote* reference, just write its ID like `[^ID]`: a *circumflex* `^` before the ID string,
+To create a *footnote* reference, just write its *REFID* like `[^ID]`: a *circumflex* `^` before the *REFID* string,
 between *brackets* `[` and `]` in the content, then write the footnote content as a *reference* ([§§](#D3)):
 
     Paragraph with a footnote[^myid].
@@ -1159,7 +1193,7 @@ except that they will all be placed like footnotes (at the end of the content fo
 
 A *glossary footnote* is written like a classic *footnote* but the first line of the note content
 contains concerned term, preceded by the string `glossary: ` and OPTIONALLY followed by a *character*
-between *parenthesis* `(` and `)` that will be used to sort the term in an alphabetical lexical:
+between *parenthesis* `(` and `)` that will be used to sort the term in an alphabetical lexicon:
 
     Paragraph with a glossary note[^myid].
 
@@ -1167,6 +1201,9 @@ between *parenthesis* `(` and `)` that will be used to sort the term in an alpha
 
     [^myid]: glossary: Term (x)
     Actual content of the glossary footnote.
+
+The differentiation between classic and glossary footnotes allows to build a *lexicon* of a
+document referencing only glossary notes ([§§](#D9b)).
 
 #### D.5.c. Bibliographic notes {#D5c}
 
@@ -1177,9 +1214,9 @@ work easily.
 
 A *citation note* is written like a classic footnote but:
 
--   the ID of the note is constructed in two parts like `[p. XX][#Doe:1991]`:
+-   the *REFID* of the note is constructed in two parts like `[p. XX][#Doe:1991]`:
     -   the page number between *brackets* `[` and `]` (this content of this part is OPTIONAL)
-    -   the reference ID, constructed like classic footnotes ([§§](#D5a)) but preceded by a *hash mark* `#`
+    -   the reference *REFID*, constructed like classic footnotes ([§§](#D5a)) but preceded by a *hash mark* `#`
 -   the note content follows the same rules as for classic footnotes, but the *circumflex*
     is replaced by a *hash mark* `#`.
 
@@ -1214,6 +1251,8 @@ prefix MUST be used and MUST be case insensitive:
 **Implementation Note:** Parsers MAY have to follow some typographic *academic rules* for bibliographic
 notes, such as naming the authors in bold, writing the title of the work in italic etc.
 
+The differentiation between classic and citation footnotes allows to build a *bibliographic index* of a
+document referencing only citation notes ([§§](#D9b)).
 
 ### D.6. User defined attributes {#D6}
 
@@ -1230,7 +1269,7 @@ Writers can use the following notation, placing it near concerned content:
 
 This notation can be decomposed in:
 
--   one or zero ID string preceded by a *hash mark* `#`
+-   one or zero *ID* string preceded by a *hash mark* `#`
 -   zero, one or more class names preceded by a *period* `.`
 -   each attribute separated from others by a *space*
 -   the whole string surrounded between *curly brackets* `{` and `}`
@@ -1272,7 +1311,7 @@ Such notation concerns the following contents:
         {#tableid}
 
 
-The usage of a user defined ID CAN be largely used for any type of content in an MDE document.
+The usage of a user defined *ID* CAN be largely used for any type of content in an MDE document.
 This allows to reference a part of a content for in-page links writing:
 
     This is a paragraph with an anchor{#my-anchor} I can access with a [link](#my-anchor) ...
@@ -1281,12 +1320,12 @@ Note that writing class names on the same model would not have sense as writer c
 concerned span of content. Such a usage of class names in the middle of a content (outside
 the content types listed above) MUST NOT be allowed and MUST NOT have any effect.
 
-As developed in the *identifiers construction* section ([§§](#D7)), any ID defined in the
+As developed in the *identifiers construction* section ([§§](#D7)), any *ID* defined in the
 content MUST be used instead of automatic one (with, eventually, modifications to fit the
 "slug" specifications).
 
 **Implementation Note:** In an HTML rendering, the output MUST be a tag with user defined
-class names as `class` attribute and ID as `id` attribute. In other output formats, some
+class names as `class` attribute and *ID* as `id` attribute. In other output formats, some
 class names SHOULD have an effect in the final rendering (by defining a special rendering
 for common class names for instance).
 
@@ -1304,7 +1343,7 @@ The global rule for such a notation is that:
 
 ### D.7. Identifiers construction {#D7}
 
-For the construction of the IDs described at [§§](#A9), an MDE parser MUST use a constant 
+For the construction of the *IDs* described at [§§](#A9), an MDE parser MUST use a constant 
 "*slugification*" process. Trying to build these specifications, we found three third-parties
 definitions useful:
 
@@ -1329,9 +1368,9 @@ In conclusion, in MDE, the construction of IDs MUST follow the rules below:
 -   a string all lower-case
 -   containing *letters* `[a-z]`, *digits* `[0-9]`, *hyphens* `-`, *underscores* `_`, *colons* `:` and *periods* `.`
 
-These rules MUST be applied when constructing an automatic ID AND when a user defined ID occurs
-[§§](#D6). When a writer specify an ID "by hand", parser MUST take that ID instead of creating an
-automatic one, but the ID MUST be transformed to follow above specifications if it is not the case.
+These rules MUST be applied when constructing an automatic *ID* AND when a user defined *ID* occurs
+([§§](#D6)). When a writer specify an *ID* "by hand", parser MUST take that *ID* instead of creating an
+automatic one, but the *ID* MUST be transformed to follow above specifications if it is not the case.
 
 **Example:** The example below is given as a demonstration. The final "slugify" process is NOT part
 of these specifications:
@@ -1340,7 +1379,7 @@ of these specifications:
     // => id=this-is-a-title
 
 
-### D.8. Automatic indexes {#D8}
+### D.8. Automatic indexations {#D8}
 
 ### D.8.a. Table of contents {#D8a}
 
@@ -1348,7 +1387,7 @@ Any MDE parser MUST handle a table of contents, extracting at least all titles o
 Global document's structure MUST be able to use both titles notations ([§§](#C5)) to build a 
 single table of contents.
 
-To do so, any title MUST have a unique ID as reference (like the `id` attribute of an HTML tag)
+To do so, any title MUST have a unique *ID* as reference (like the `id` attribute of an HTML tag)
 and this ID MUST follow the specifications at [§§](#D7).
 
 
@@ -1360,7 +1399,7 @@ following objects:
 -   any *table* ([§§](#C10))
 -   any *figure* ([§§](#C12))
 
-To do so, any table and figure MUST have a unique ID as reference (like the `id` attribute of an HTML tag)
+To do so, any table and figure MUST have a unique *ID* as reference (like the `id` attribute of an HTML tag)
 and this ID MUST follow the specifications at [§§](#D6).
 
 
@@ -1385,10 +1424,9 @@ These tags are:
 
 -   `TOC` for the *table of contents* ([§§](#D8a))
 -   `TOF` for the *table of figures* ([§§](#D8b))
--   `NOTES` for the *footnotes* ([§§](#D5)), which SHOULD be separated in three other tags:
-    -   `FOOTNOTES` for "classic" *footnotes* ([§§](#D5a))
-    -   `GLOSSARY` for glossary *footnotes* ([§§](#D5b))
-    -   `CITATIONS` for citations *footnotes* ([§§](#D5c))
+-   `NOTES` for the *footnotes* ([§§](#D5))
+-   `GLOSSARY` for *glossary footnotes* only (lexicon - [§§](#D5b))
+-   `BIBLIOGRPHY` for *citations footnotes* only (bibliographic index - [§§](#D5c))
 
 The construction of such tag MAY follow these rules:
 
@@ -1400,9 +1438,8 @@ The construction of such tag MAY follow these rules:
     \{% TOC %\}
     \{% TOF %\}
     \{% NOTES %\}
-    \{% FOOTNOTES %\}
     \{% GLOSSARY %\}
-    \{%CITATIONS%\}
+    \{%BIBLIOGRPHY%\}
 
 #### D.9.c. User configuration {#D9c}
 
@@ -1420,39 +1457,10 @@ For facility, it seems to be a good idea to allow writers to include external fi
 ##### D.9.d.2. Critic markup {#D9d2}
 
 As defined in *MultiMarkdown*, the **Critic Markup** rules CAN be useful when working on a Markdown
-document with a team. It allows to keep an information about addition, modifications and deletions
+document with a team. It allows to keep an information about additions, modifications and deletions
 in a content.
 
-Summary of the CriticMarkup rules:
-
--   an **addition** is written surrounded in a `{++ ++}` notation:
-
-        {++my addition++}
-
--   a **deletion** is written surrounded in a `{-- --}` notation:
-
-        {--my deletion--}
-
--   a **modification** is written surrounded in a `{~~ ~~}` notation showing the substitution with
-    `old text->new text`:
-
-        {~~old text->new text~~}
-
--   a **comment** is written surrounded in a `{>> <<}` notation:
-
-        {>>my comment<<}
-
--   **highlighting** a content is done by surrounding it in a `{== ==}` notation and adding a comment
-    to inform about why this is highlighted:
-
-        {==an important info==}{>>important because ...<<}
-
-For each of the notations above, an information about the author can be added simply adding a comment
-just after the notation containing the author name preceded by `@`:
-
-        {--my deletion--}{>>@authorname<<}
-
-For a full information, please see [criticmarkup.com][critic-markup].
+For a full information about the syntax, please see [criticmarkup.com][critic-markup].
 
 **Implementation Note:** When allowing the CriticMarkup syntax, an MDE parser MUST be prepared to
 handle different states like `old` and `new` and finally consider any modification as *validated*
