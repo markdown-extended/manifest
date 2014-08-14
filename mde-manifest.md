@@ -33,6 +33,7 @@ or contribution, please refer to [the dedicated section](#contribute).
 -   [Origins of Markdown Extended](#origins-of-markdown-extended)
 -   [Scope of these specifications](#scope-of-these-specifications)
 -   [Terms and definitions](#terms-and-definitions)
+-   [List of meta-characters](#list-of-meta-characters)
 -   [A. Basic concepts](#A)
     -   [A.1. Intention](#A1)
     -   [A.2. Global construction](#A2)
@@ -59,10 +60,12 @@ or contribution, please refer to [the dedicated section](#contribute).
         -   [B.5.c. Inline links](#B5c)
         -   [B.5.d. In-page links](#B5d)
         -   [B.5.e. Special links](#B5e)
-        -   [B.5.f. Referenced links](#B5f)
+        -   [B.5.f. Links with attributes](#B5f)
+        -   [B.5.g. Referenced links](#B5g)
     -   [B.6. Images](#B6)
         -   [B.6.a. Inline images](#B6a)
-        -   [B.6.b. Referenced images](#B6b)
+        -   [B.6.b. Images with attributes](#B6b)
+        -   [B.6.c. Referenced images](#B6c)
     -   [B.7. Footnotes](#B7)
     -   [B.8. Inline mathematics](#B8)
 -   [C. Structural rules](#C)
@@ -72,11 +75,20 @@ or contribution, please refer to [the dedicated section](#contribute).
     -   [C.4. Horizontal rules](#C4)
     -   [C.5. Titles](#C5)
         -   [C.5.a. ATX: sharps titles](#C5a)
+            - [C.5.a.1. Basics](#C5a1)
+            - [C.5.a.2. ATX titles with attributes](#C5a2)
         -   [C.5.b. Setext: underlined titles](#C5b)
+            - [C.5.b.1. Basics](#C5b1)
+            - [C.5.b.2. Sextet titles with attributes](#C5b2)
     -   [C.6. Pre-formatted texts](#C6)
         -   [C.6.a. Simple notation](#C6a)
         -   [C.6.b. Fenced code blocks](#C6b)
+            - [C.6.b.1. Basics](#C6b1)
+            - [C.6.b.2. Language information](#C6b2)
+            - [C.6.b.3. Fenced code blocks with attributes](#C6b3)
     -   [C.7. Citations](#C7)
+        -   [C.7.a. Basics](#C7a)
+        -   [C.7.b. Citation original URL](#C7a)
     -   [C.8. Lists](#C8)
         -   [C.8.a. Unordered lists](#C8a)
         -   [C.8.b. Ordered lists](#C8b)
@@ -85,27 +97,29 @@ or contribution, please refer to [the dedicated section](#contribute).
         -   [C.10.a. Basic table](#C10a)
         -   [C.10.b. Columns alignment](#C10b)
         -   [C.10.c. Cell grouping](#C10c)
-        -   [C.10.d. Table ID](#C10d)
-        -   [C.10.e. Table caption](#C10e)
-        -   [C.10.f. Table with multiple bodies](#C10f)
+        -   [C.10.d. Table caption](#C10d)
+        -   [C.10.e. Table with multiple bodies](#C10e)
+        -   [C.10.f. Table with attributes](#C10f)
     -   [C.11. Mathematics blocks](#C11)
     -   [C.12. Images blocks](#C12)
 -   [D. Miscellaneous rules](#D)
     -   [D.1. Meta data](#D1)
+        -   [D.1.a. Basics](#D1a)
+        -   [D.1.b. Meta-data value insertion](#D1b)
     -   [D.2. Escaping of meta-characters](#D2)
     -   [D.3. References](#D3)
-        -   [D.3.a. Basis of references](#D3a)
+        -   [D.3.a. Basics](#D3a)
         -   [D.3.b. Various types of references](#D3b)
-        -   [D.3.c. Identifiers construction](#D3c)
+        -   [D.3.c. Identifiers construction for REFIDs](#D3c)
     -   [D.4. Mathematics](#D4)
     -   [D.5. The special case of notes](#D5)
         -   [D.5.a. Footnotes](#D5a)
         -   [D.5.b. Glossary notes](#D5b)
-        -   [D.5.c. Citation notes](#D5c)
+        -   [D.5.c. Bibliographic notes](#D5c)
     -   [D.6. User defined attributes](#D6)
         -   [D.6.a. Tags attributes](#D6a)
         -   [D.6.b. Raw attributes](#D6b)
-    -   [D.7. Identifiers construction](#D7)
+    -   [D.7. Identifiers construction for IDs](#D7)
     -   [D.8. Automatic indexations](#D8)
         -   [D.8.a. Table of contents](#D8a)
         -   [D.8.b. Table of figures and tables](#D8b)
@@ -119,7 +133,7 @@ or contribution, please refer to [the dedicated section](#contribute).
 -   [Contribute](#contribute)
 
 
-Introduction
+Introduction {#introduction}
 ------------
 
 **[Markdown][wiki-markdown]** is originally a plain text formatting syntax created by 
@@ -135,7 +149,7 @@ so that each user does not need to adapt to the current implementation but can u
 everywhere.**
 
 
-Origins of Markdown Extended
+Origins of Markdown Extended {#origins-of-markdown-extended}
 ----------------------------
 
 The original idea of the Markdown syntax came from [John Gruber][daring-fireball],
@@ -151,7 +165,7 @@ Working on these specifications, the following implementations inspired us:
     of Markdown and the reason why I decided to write these specifications*)
 
 
-Scope of these specifications
+Scope of these specifications {#scope-of-these-specifications}
 -----------------------------
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", 
@@ -168,7 +182,7 @@ to allow it to be referenced and used in citations, implementations, documentati
 These MUST NOT change for a given release of the specifications.
 
 
-Terms and definitions
+Terms and definitions {#terms-and-definitions}
 ---------------------
 
 For the purposes of this document, the following terms and definitions apply:
@@ -218,6 +232,10 @@ be important while reading the specifications.
 
 **configuration** - This designates an optional set of options a parser can accept to define
 some of its behaviors.
+
+
+List of meta-characters {#list-of-meta-characters}
+-----------------------
 
 Below is a list of all meta-characters used for semantic rules in MDE (the word in *italic* 
 is the one we will use in this document):
@@ -503,6 +521,8 @@ original reason of this auto-escaping is that "*[underscores] caused too many pr
 Effectively, URLs often use underscores as a word separator and these ones MUST NOT be considered
 as typographic delimiters.
 
+This rule only concerns *underscores*. If a writer wants to emphase just a part of a word,
+he can do so using the *asterisks* notation.
 
 ### B.3. Abbreviations {#B3}
 
@@ -513,8 +533,9 @@ An abbreviation is written like a *reference* ([§§](#D3)) with a leading *aste
     -   a trailing *colon* `:` (without space)
 -   then the full text of the abbreviation after a space
 
-
-    *[HTML]: Hyper Text Markup Language
+~~~
+*[HTML]: Hyper Text Markup Language
+~~~
 
 The result SHOULD be informing about the full meaning of the term any time this whole term
 is found in the content as a whole word.
@@ -568,12 +589,13 @@ Links can be written *inline* in the text, separated in two parts:
 -   then, between *parenthesis* `(` and `)`, the URL of the link (relative or absolute) and 
     an OPTIONAL title wrapped in *double-quotes* `"` followed by an OPTIONAL list of attributes ([§§](#D6)).
 
+~~~
+[a simple link](http://test.com/)
 
-    [a simple link](http://test.com/)
+[a link with a title](http://test.com/ "My optional title")
 
-    [a link with a title](http://test.com/ "My optional title")
-
-    [a link with a title and some attributes](http://test.com/ "My optional title" attribute1=value attribute2=value)
+[a link with a title and some attributes](http://test.com/ "My optional title" attribute1=value attribute2=value)
+~~~
 
 #### B.5.d. In-page links {#B5d}
 
@@ -591,7 +613,20 @@ of links can evolve, there is no list of them here.
 **Implementation Note:** For instance, in an HTML rendering, an email address should be transformed 
 as a `mailto:...` link.
 
-#### B.5.f. Referenced links {#B5f}
+#### B.5.f. Links with attributes {#B5f}
+
+Links MUST allow *user defined attributes* ([§§](#D6a)):
+
+    [a simple link](http://test.com/){#link-id .link-class}
+
+    [a link with a title](http://test.com/ "My optional title"){#link-id .link-class}
+
+    [a link with a title and some attributes](http://test.com/ "My optional title" attribute1=value attribute2=value){#link-id .link-class}
+
+Note that there MUST NOT be a space between the closing *parenthesis* `)` of the link definition
+and the opening *curly bracket* `{` of the user defined attributes.
+
+#### B.5.g. Referenced links {#B5g}
 
 Links MUST allow the *references* ([§§](#D3)) notation:
 
@@ -606,6 +641,13 @@ is the exact same string as the link text:
     
     [Test.com]: http://test.com/ "My optional title"
 
+Referenced links MUST allow *user defined attributes* ([§§](#D6a)):
+
+    [Test.com]: http://test.com/ "My optional title" {#link-id .link-class}
+    
+As the reference definition MUST be written alone on a line, optional *spaces* CAN separate
+the reference's content and the attributes definition.
+
 ### B.6. Images {#B6}
 
 Basically, images follow the same notation as for *links* ([§§](#B5)) with a leading exclamation point.
@@ -618,14 +660,28 @@ Images can be written *inline* in the text, separated in two parts:
 -   then, between *parenthesis* `(` and `)`, the URL of the image (relative or absolute) and an 
     OPTIONAL title wrapped in *double-quotes* `"` followed by an OPTIONAL list of attributes ([§§](#D6)).
 
+~~~
+![alt text](http://test.com/data1/images/1.jpg)
 
-    ![alt text](http://test.com/data1/images/1.jpg)
+![alt text](http://test.com/data1/images/1.jpg "My optional title")
 
-    ![alt text](http://test.com/data1/images/1.jpg "My optional title")
+![alt text](http://test.com/data1/images/1.jpg "My optional title" class=myimageclass style="width: 40px;")
+~~~
 
-    ![alt text](http://test.com/data1/images/1.jpg "My optional title" class=myimageclass style="width: 40px;")
+#### B.6.b. Images with attributes {#B6b}
 
-#### B.6.b. Referenced images {#B6b}
+Links MUST allow *user defined attributes* ([§§](#D6a)):
+
+    ![alt text](http://test.com/data1/images/1.jpg){#image-id .image-class}
+
+    ![alt text](http://test.com/data1/images/1.jpg "My optional title"){#image-id .image-class}
+
+    ![alt text](http://test.com/data1/images/1.jpg "My optional title" class=myimageclass style="width: 40px;"){#image-id .image-class}
+
+Note that there MUST NOT be a space between the closing *parenthesis* `)` of the link definition
+and the opening *curly bracket* `{` of the user defined attributes.
+
+#### B.6.c. Referenced images {#B6c}
 
 Images MUST allow the *references* ([§§](#D3)) notation:
 
@@ -633,7 +689,7 @@ Images MUST allow the *references* ([§§](#D3)) notation:
     
     [imageid]: http://test.com/data1/images/1.jpg "My optional title"
 
-Just like for *links* ([§§](#B5f)), the image reference notation can be simplified if the
+Just like for *links* ([§§](#B5g)), the image reference notation can be simplified if the
 *REFID* (as described at [§§](#terms-and-definitions)) is the exact same string as the 
 "alternate" text:
 
@@ -641,6 +697,12 @@ Just like for *links* ([§§](#B5f)), the image reference notation can be simpli
     
     [image 1]: http://test.com/data1/images/1.jpg "My optional title"
 
+Referenced images MUST allow *user defined attributes* ([§§](#D6a)):
+
+    [image 1]: http://test.com/data1/images/1.jpg "My optional title" {#image-id .image-class}
+    
+As the reference definition MUST be written alone on a line, optional *spaces* CAN separate
+the reference's content and the attributes definition.
 
 ### B.7. Footnotes {#B7}
 
@@ -691,6 +753,9 @@ To insert a line break, write two or more *spaces* at the end of the line and pa
     Line 1 ...  
     Line 2 ...
 
+Note that hard breaks are only allowed on a line with a content. A line with only spaces (even
+2 or more) MUST NOT be considered as a hard break but as a blank line ([§§](#A5)).
+
 ### C.4. Horizontal rules {#C4}
 
 To insert an horizontal rule, write at least three *hyphens* `-`, *asterisks* `*` or *underscores* `_` 
@@ -702,14 +767,16 @@ alone on a line (spaces MUST not care):
 
 ### C.5. Titles {#C5}
 
-Titles are built using two notations: the "atx" and the "sextet". HTML tags have a limit
-of 6 levels (`h1` to `h6`) but a MDE parser MUST ignore this limit and be prepared for any
+Titles are built using two notations: "ATX" and "Sextet". HTML tags have a limit
+of 6 levels (`h1` to `h6`) but an MDE parser MUST ignore this limit and be prepared for any
 depth levels as writer requires in a document.
 
 The titles list of a document MAY be accessible to build a "table of contents" quickly.
 This is developed at [§§](#D8a).
 
 #### C.5.a. ATX: sharps titles {#C5a}
+
+##### C.5.a.1. Basics {#C5a1}
 
 An "ATX" title is written alone on a single line, preceded by as many *hash marks* `#` as the title level:
 
@@ -723,7 +790,21 @@ OPTIONALLY, ATX titles can be "closed" using a random number of *hash marks* at 
 
 **Implementation Note:** The "ATX" structure is taken from [the ATX markup][atx-markup].
 
+##### C.5.a.2. ATX titles with attributes {#C5a2}
+
+ATX titles MUST allow *user defined attributes* ([§§](#D6a)):
+
+    # Title level 1 (HTML tag `h1`) {#title-id .title-class}
+    ### Title level 3 (HTML tag `h3`) ## {#title-id .title-class}
+    ##### Title level 5 (HTML tag `h5`) {#title-id .title-class}#####
+
+As a title MUST be alone on a line, the attributes DOES NOT NEED to be unspaced from the text.
+The rule here is that any string wrapped between *curly brackets* `{` and `}` MUST be considered
+as attributes (which means before OR after the final optional hash marks).
+
 #### C.5.b. Setext: underlined titles {#C5b}
+
+##### C.5.b.1. Basics {#C5b1}
 
 The "dash" notation only concerns the two first levels of titles in a document. They are written
 underlined by *equal signs* `=` for the first level and *hyphens* `-` for the second:
@@ -737,10 +818,28 @@ underlined by *equal signs* `=` for the first level and *hyphens* `-` for the se
 The underlining line MUST NOT require to be as long as the title text, any number of
 equals or hyphens MUST work.
 
+    Title level 1 (HTML tag `h1`)
+    =
+
+    Title level 2 (HTML tag `h2`)
+    -
+
 **Writer Note:** If you know that a document will often be read "as-is" as plain text, the Setext notation
 MAY be chosen preferably to the ATX one as it seems more comprehensive.
 
 **Implementation Note:** The "sextet" structure is taken from [the Setext markup][setext-markup].
+
+##### C.5.b.2. Sextet titles with attributes {#C5b2}
+
+Sextet titles MUST allow *user defined attributes* ([§§](#D6a)):
+
+    Title level 1 (HTML tag `h1`) {#title-id .title-class}
+    ======================================================
+
+    Title level 2 (HTML tag `h2`) {#title-id .title-class}
+    -
+
+As a title MUST be alone on a line, the attributes DOES NOT NEED to be unspaced from the text.
 
 ### C.6. Pre-formatted texts {#C6}
 
@@ -756,6 +855,8 @@ MUST be indented as this is the only rule to identify that kind of content.
 
 #### C.6.b. Fenced code blocks {#C6b}
 
+##### C.6.b.1. Basics {#C6b1}
+
 A "fenced" code block can be written surrounded a content between two lines of *tildes* `~` 
 or *backticks* `\`` (at least 3):
 
@@ -765,6 +866,8 @@ or *backticks* `\`` (at least 3):
 
 **Implementation Note:** The rendering of such content MUST be the exact same as for "classic"
 pre-formatted content ([§§](#C6)).
+
+##### C.6.b.2. Language information {#C6b2}
 
 An information about the language used in the block can be defined following the first delimiter by the 
 language name (without space):
@@ -776,8 +879,25 @@ language name (without space):
 **Implementation Note:** In an HTML implementation, this feature permits to create a *language friendly* code block, 
 as recommended by the W3C in the [HTML5 specifications][w3c-html5-code-specifications].
 
+##### C.6.b.3. Fenced code blocks with attributes {#C6b3}
+
+Fenced code blocks MUST allow *user defined attributes* ([§§](#D6a)):
+
+    ~~~{#block-id .block-class}
+    My code here
+    ~~~
+    
+    ~~~html{#block-id .block-class}
+    My code here
+    ~~~
+
+When a language information si defined on the first line of *tildes* or *backticks*, the attributes
+definition MUST be written last (after the language information) and without space.
+
 
 ### C.7. Citations {#C7}
+
+#### C.7.a. Basics {#C7a}
 
 A blockquoted block is written preceding each line or only the first one of a paragraph by a *right angle bracket* `>`:
 
@@ -788,12 +908,6 @@ A blockquoted block is written preceding each line or only the first one of a pa
     without the superior sign on each line, but just at the beginning of the first one.
 
 Once a blockquote has begin (*e.g. as long as no blank line is passed*), the content will be part of it.
-
-To precise the URL of the original content cited, write this URL at the beginning of the first line
-between *parenthesis* `(` and `)`:
-
-    > (http://test.com/) This is my blockquote,
-    > with a content cited from the original "http://test.com" page ...
 
 Nested blockquotes can be written with consecutive left angle signs rather than indenting
 each one:
@@ -808,6 +922,14 @@ MUST be the same as:
 
 **Writer Note:** The notation of blockquotes is the "classic" *email-style* for citations, this
 is the reason why the indentation between the angle bracket and the content is NOT required.
+
+#### C.7.b. Citation original URL {#C7a}
+
+To precise the URL of the original content cited, write this URL at the beginning of the first line
+between *parenthesis* `(` and `)`:
+
+    > (http://test.com/) This is my blockquote,
+    > with a content cited from the original "http://test.com" page ...
 
 
 ### C.8. Lists {#C8}
@@ -855,10 +977,11 @@ A definition is written separated in at least two parts:
 -   then, the definition beginning on the second line, with a leading *colon* `:` followed by 
     at least 3 *spaces* (1 level of indentation)
 
-
-    Apple
-    :   Pomaceous fruit of plants of the genus Malus in
-        the family Rosaceae.
+~~~
+Apple
+:   Pomaceous fruit of plants of the genus Malus in
+    the family Rosaceae.
+~~~
 
 A term can have multiple definitions, separated by a *blank line* ([§§](#A5)):
 
@@ -908,11 +1031,12 @@ Alignment in columns can be specified by using *colons* `:` in the separators li
 -   a colon on the right of a separator's cell means a *right-aligned column*: `---:`
 -   two colons on the left and the right of a separator's cell means a *centered column*: `:--:`
 
-
-    | First Header  | Second Header | Third header |
-    | ------------- | ------------: | :----------: |
-    | Content Cell  | **Cell**      | **Cell**     |
-    | Content Cell  | **Cell**      | **Cell**     |
+~~~
+| First Header  | Second Header | Third header |
+| ------------- | ------------: | :----------: |
+| Content Cell  | **Cell**      | **Cell**     |
+| Content Cell  | **Cell**      | **Cell**     |
+~~~
 
 #### C.10.c. Cell grouping {#C10c}
 
@@ -926,24 +1050,10 @@ must cover columns, without spaces:
 
 **Implementation Note:** Cell grouping MUST be allowed in lines of content AND header line(s).
 
-#### C.10.d. Table ID {#C10d}
+#### C.10.d. Table caption {#C10d}
 
-Table *ID* (as described at [§§](#terms-and-definitions)) is written between following the 
-*user defined attributes* rule ([§§](#D6a)): between *curly brackets* `{` and `}` with a 
-leading *hash mark* `#` just before or just after the table, on a new single line:
-
-    |               | Grouping                    ||
-    | First Header  | Second Header | Third header |
-    | ------------- | ------------: | :----------: |
-    | Content Cell  |  *Long Cell*                ||
-    | Content Cell  | **Cell**      | **Cell**     |
-    {#table-id}
-
-This *ID* MUST be used to build the *table of figures and tables* ([§§](#D8b)).
-
-#### C.10.e. Table caption {#C10e}
-
-Table caption is written between *brackets* `[` and `]` just after the table ID ([§§](#C10d)):
+Table caption is written between *brackets* `[` and `]` just before or just after the table, 
+on a new single line:
 
     |               | Grouping                    ||
     | First Header  | Second Header | Third header |
@@ -952,18 +1062,10 @@ Table caption is written between *brackets* `[` and `]` just after the table ID 
     | Content Cell  | **Cell**      | **Cell**     |
     [ my table caption ]
 
-In the case of a table with an ID AND a caption, both MUST be written on the same line and the ID
-MUST be written first:
+A table *ID* (as described at [§§](#terms-and-definitions)) can also be defined. Please 
+refer to the dedicated section about attributes [§§](#D6).
 
-    |               | Grouping                    ||
-    | First Header  | Second Header | Third header |
-    | ------------- | ------------: | :----------: |
-    | Content Cell  |  *Long Cell*                ||
-    | Content Cell  | **Cell**      | **Cell**     |
-    {#table-id}[ my table caption ]
-
-
-#### C.10.f. Table with multiple bodies {#C10f}
+#### C.10.e. Table with multiple bodies {#C10e}
 
 Separate sets of content for a single table are written separating them with one *blank line* ([§§](#A5)):
 
@@ -977,6 +1079,23 @@ Separate sets of content for a single table are written separating them with one
     | And more      |           And more          ||
 
 **Implementation Note:** In HTML, the result should be a table with two `tbody` sections.
+
+#### C.10.f. Table with attributes {#C10f}
+
+Fenced code blocks MUST allow *user defined attributes* ([§§](#D6a)):
+
+    | First Header  | Second Header | Third header |
+    | ------------- | ------------: | :----------: |
+    | Content Cell  |  *Long Cell*                ||
+    | Content Cell  | **Cell**      | **Cell**     |
+    [ my table caption ] {#table-id .table-class}
+
+For a table with no caption, the attributes definition is written on a single line just before
+or after the table (without any blank line).
+
+For a table with a caption line, the attributes definition MUST be written on the same line
+as the caption. As each of these information are wrapped in different chains, the order or 
+spaces MUST NOT matter.
 
 ### C.11. Mathematics blocks {#C11}
 
@@ -1010,6 +1129,8 @@ D. Miscellaneous rules {#D}
 
 ### D.1. Meta data {#D1}
 
+#### D.1.a. Basics {#D1a}
+
 Meta-data can be added to an MDE document when necessary ; it can be the case to specify
 a special title for the document, its author or any kind of "meta" information.
 
@@ -1019,14 +1140,17 @@ the top) as a `var: val` pair:
 -   the meta-data name is written at the beginning of the line, followed by a *colon* `:` and a *space*
 -   the meta-data content can be multi-line
 
-
-    author: John Doe
+~~~
+author: John Doe
+~~~
 
 The name of a meta-data MUST be a kind of "slug": a single string without space which can be 
 considered as an identifier.
 
 Multiple meta-data can be written, beginning each item on a new line, and the "true" content
 of the document MUST begin after passing at least one blank line after meta-data.
+
+#### D.1.b. Meta-data value insertion {#D1b}
 
 Meta-data can also be used to define variables values available in the document. To use a
 meta-data value, use notation `[%var]`: the meta-data name preceded by a *percent sign* `%` 
@@ -1073,7 +1197,7 @@ So, in some cases, it is most relevant to move an information on a single line a
 document (at its bottom for instance) and only insert its *REFID* (as described at 
 [§§](#terms-and-definitions)) at its final place.
 
-#### D.3.a. Basis of references {#D3a}
+#### D.3.a. Basics {#D3a}
 
 The global construction of references is to replace the content by a *REFID* and write that
 content on another line anywhere.
@@ -1085,12 +1209,13 @@ on a single line, anywhere in the document (it MUST be skipped from final render
 -   a *colon* `:` without space after closing bracket
 -   then the value of the reference after a *space*
 
+~~~
+This is a paragraph with a [referenced link][linkid] ...
 
-    This is a paragraph with a [referenced link][linkid] ...
-    
-    ...
+...
 
-    [linkid]: http://test.com/ "My optional title"
+[linkid]: http://test.com/ "My optional title"
+~~~
 
 In the case above, the final rendering MUST be exactly the same as if it was written like:
 
@@ -1125,7 +1250,7 @@ different MDE's rules, following different constructions:
 
         [#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
 
-#### D.3.c. Identifiers construction {#D3c}
+#### D.3.c. Identifiers construction for REFIDs {#D3c}
 
 As described at [§§](#terms-and-definitions), we have to differentiate the *ID* ([§§](#D7))
 and the *REFID*, the *references identifier*, which does not have the same usage as classic *ID*
@@ -1220,13 +1345,14 @@ A *citation note* is written like a classic footnote but:
 -   the note content follows the same rules as for classic footnotes, but the *circumflex*
     is replaced by a *hash mark* `#`.
 
+~~~
+Paragraph with a citation note[p. XX][#Doe:1991].
 
-    Paragraph with a citation note[p. XX][#Doe:1991].
+...
 
-    ...
-
-    [#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
-    edition for instance ... (Web link) Retrieved September 30, 2011.
+[#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
+edition for instance ... (Web link) Retrieved September 30, 2011.
+~~~
 
 In a case where the page number is unknown (or not relevant) writer MUST write the first *brackets*
 `[` and `]` with an empty content:
@@ -1266,31 +1392,49 @@ Writers can use the following notation, placing it near concerned content:
     {#id}
     {.class-name}
     {.class-name #id}
+    {#id .class-name1 .class-name2}
 
 This notation can be decomposed in:
 
--   one or zero *ID* string preceded by a *hash mark* `#`
--   zero, one or more class names preceded by a *period* `.`
+-   one or zero *ID* string preceded by a *hash mark* `#` (without space)
+-   zero, one or more class names preceded by a *period* `.` (without space)
 -   each attribute separated from others by a *space*
 -   the whole string surrounded between *curly brackets* `{` and `}`
+
+The order of class names and ID MUST not matter:
+
+    {#id .class-name1 .class-name2}
+    {.class-name1 #id .class-name2}
+
+**Note:** The *hash mark* notation for ids or *period* notation for class names are very similar 
+to the selectors used by many javascript libraries (such as jQuery or Scriptaculous).
 
 Such notation concerns the following contents:
 
 -   the *titles* ([§§](#C5)):
 
-        ### My title content {#title-id}
+        ### My title content {#title-id .class}
+        ### My title content ##### {#title-id .class}
+        My title content {#title-id .class}
+        -----------------
 
 -   the *links* ([§§](#B5)):
 
-        [link text](http://test.com/){#link-id}
+        [link text](http://test.com/){#link-id .class}
+        [link text](http://test.com/ "My title" var1=val var2="val1 val2"){#link-id .class}
 
 -   the *images* ([§§](#B6) and [§§](#C12)):
 
-        ![alt text](http://test.com/img.ext){#image-id}
+        ![alt text](http://test.com/img.ext){#image-id .class}
+        ![alt text](http://test.com/img.ext "My title" var1=val var2="val1 val2"){#image-id .class}
 
 -   the *fenced code blocks* ([§§](#C6b)):
 
-        ~~~{.class-name}
+        ~~~{#block-id .class-name}
+        code block content
+        ~~~
+
+        ~~~html{#block-id .class-name}
         code block content
         ~~~
 
@@ -1298,17 +1442,32 @@ Such notation concerns the following contents:
 
         A paragraph with referenced [link][link-id] and ![image][image-id].
         
-        [link-id]: http://test.com/ {#link-id}
-        [image-id]: http://test.com/img.ext {#image-id}
+        [link-id]: http://test.com/ {#link-id .class}
+        [image-id]: http://test.com/img.ext {#image-id .class}
 
--   the *tables* ([§§](#C10d)):
+        A paragraph with referenced [link][link-id] and ![image][image-id].
+        
+        [link-id]: http://test.com/ "My title" var1=val var2="val1 val2" {#link-id .class}
+        [image-id]: http://test.com/img.ext "My title" var1=val var2="val1 val2" {#image-id .class}
+
+-   the *tables* ([§§](#C10)):
 
         |               | Grouping                    ||
         | First Header  | Second Header | Third header |
         | ------------- | ------------: | :----------: |
         | Content Cell  |  *Long Cell*                ||
         | Content Cell  | **Cell**      | **Cell**     |
-        {#tableid}
+        {#tableid .class}
+
+        |               | Grouping                    ||
+        | First Header  | Second Header | Third header |
+        | ------------- | ------------: | :----------: |
+        | Content Cell  |  *Long Cell*                ||
+        | Content Cell  | **Cell**      | **Cell**     |
+        {#tableid .class}[table caption]
+    
+    In the case of tables, the only restriction is that, if the table has a caption as defined
+    at ([§§](#C10d)), the attributes information MUST be on the same line as the caption.
 
 
 The usage of a user defined *ID* CAN be largely used for any type of content in an MDE document.
@@ -1341,7 +1500,7 @@ The global rule for such a notation is that:
     use *double-quoted* values `"` : `var="val1 val2"`
 
 
-### D.7. Identifiers construction {#D7}
+### D.7. Identifiers construction for IDs {#D7}
 
 For the construction of the *IDs* described at [§§](#A9), an MDE parser MUST use a constant 
 "*slugification*" process. Trying to build these specifications, we found three third-parties
@@ -1434,12 +1593,13 @@ The construction of such tag MAY follow these rules:
 -   surrounded between percent sign `%` and curly brackets `{` and `}`
 -   OPTIONAL spaces surrounding the tag name.
 
-
-    \{% TOC %\}
-    \{% TOF %\}
-    \{% NOTES %\}
-    \{% GLOSSARY %\}
-    \{%BIBLIOGRPHY%\}
+~~~
+\{% TOC %\}
+\{% TOF %\}
+\{% NOTES %\}
+\{% GLOSSARY %\}
+\{%BIBLIOGRPHY%\}
+~~~
 
 #### D.9.c. User configuration {#D9c}
 
@@ -1467,7 +1627,7 @@ handle different states like `old` and `new` and finally consider any modificati
 for a final rendering (the `new` status MUST be the default).
 
 
-Contribute
+Contribute {#contribute}
 ----------
 
 This document and the MDE's specification are opened for any kind of discussion, argumentation, 
