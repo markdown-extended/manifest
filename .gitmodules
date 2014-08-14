@@ -1,0 +1,9 @@
+[submodule "modules/markdown-extended"]
+	path = modules/markdown-extended
+	url = https://github.com/piwi/markdown-extended
+[submodule "modules/html5-quick-template"]
+	path = modules/html5-quick-template
+	url = https://github.com/piwi/html5-quick-template
+[submodule "test-suite"]
+	path = test-suite
+	url = https://github.com/markdown-extended/test-suite
