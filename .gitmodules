@@ -7,3 +7,6 @@
 [submodule "test-suite"]
 	path = test-suite
 	url = https://github.com/markdown-extended/test-suite
+[submodule "modules/markdown-mark"]
+	path = modules/markdown-mark
+	url = https://github.com/dcurtis/markdown-mark

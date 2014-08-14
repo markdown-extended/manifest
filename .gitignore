@@ -20,3 +20,6 @@ Desktop.ini
 
 # any "tmp*" file or dir anywhere
 *tmp*
+
+# special for MDE gh-pages
+index.html.template

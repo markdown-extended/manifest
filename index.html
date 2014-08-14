@@ -1,79 +1,1313 @@
 <!DOCTYPE html>
-<html>
-
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Manifest : The Markdown Extended specifications">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Manifest</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/markdown-extended/manifest">View on GitHub</a>
-
-          <h1 id="project_title">Manifest</h1>
-          <h2 id="project_tagline">The Markdown Extended specifications</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/markdown-extended/manifest/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/markdown-extended/manifest/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" id="lib-fontawesome">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>the MDE specifications</title>
+<style>
+body                            { padding-top: 70px; direction: ltr; }
+.navbar .container              { width: 100%; }
+.wrapper                        { padding-bottom: 20px; }
+aside, nav                      { margin: 12px; padding: 12px 20px; border-radius: 6px; max-width: 20%; }
+aside#secondary-contents        { margin: 15px 20px; padding: 0; position: relative; }
+.secondary-content              { margin: 2px; padding: 15px; border-radius: 4px; }
+.handler a                      { color: #777777; }
+aside, nav ul                   { padding-left: 22px; }
+.footer                         { font-size: 85%; background-color: #f5f5f5; color: #333333; padding: 12px; border-radius: 6px; position: relative; }
+h3                              { padding-left: .5em; }
+h4:not([id="toc"])              { padding-left: 1em; }
+h5                              { padding-left: 2em; }
+h6                              { padding-left: 3em; }
+.footnotes                      { font-size: .9em; }
+.highlight                      { background : #ff0; }
+.bg-info                        { background-color: #D9EDF7; }
+.bg-default                     { background-color: #f5f5f5; }
+.navbar-brand i                 { font-size: 22px; }
+form.navbar-form                { position: relative; }
+.navbar-form.navbar-right:last-child { margin-right: 0px; }
+input#search-field              { padding-right: 24px; }
+span.search-icon, span.search-icon-alt                { position: absolute; display: block; top: 10px; right: 24px; z-index: 100; cursor: pointer; }
+.dropdown-menu li > ul          { list-style-type: none; padding-left: 24px; }
+.dropdown-menu li > ul li       { margin: 0px; }
+.dropdown-menu li li > a        { display: block; padding: 3px 6px; clear: both; font-weight: normal; line-height: 1.428571429; color: #333333; white-space: nowrap; }
+.dropdown-menu li li > a:hover,
+.dropdown-menu li li > a:focus  { color: #262626; text-decoration: none; background-color: #f5f5f5; }
+.modal-body .jumbotron          { padding: 16px !important; margin: 0 !important; border-radius: 6px; }
+.modal-body .jumbotron h1       { font-size: 2em; margin-top: 10px; }
+body.no-js                      { padding-top: 0px; }
+body.no-js .hidden-no-js        { display: none; }
+body.no-js aside, body.no-js nav{ max-width: 100%; }
+body.no-js .alert-warning       { display: block; padding: 1em; background-color: #dddddd; color: red; text-align: center; }
+body.no-js ul.navbar-nav        { list-style-type: none; display: block; padding: 0; }
+body.no-js ul.navbar-nav li     { display: inline; padding: 0; }
+body.no-js ul.navbar-nav li.hidden-no-js { display: none; }
+body.no-js ul.navbar-nav a      { text-decoration: none; }
+body.no-js .modal               { border-top: 1px dotted #dddddd; font-size: .86em; }
+@media (min-width: 768px) {
+    body:not([class="no-js"]) .navbar-nav > li { float: left; }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    aside, nav                      { max-width: 40%; }
+    body.no-js aside, body.no-js nav{ max-width: 100%; }
+}
+@media (max-width: 767px) {
+    aside, nav                      { max-width: 100%; }
+    aside#secondary-contents        { margin: 10px; }
+    .secondary-content              { display: block; min-width: 100%; }
+    span.search-icon                { top: 40px; }
+    .responsive                     { width: 100%; overflow: auto; }
+    .navbar li a .visible-xs        { display: inline !important; }
+    .dropdown-menu li li > a        { color: #777777; }
+    .dropdown-menu li li > a:hover,
+    .dropdown-menu li li > a:focus  { background-color: transparent; }
+    .modal-body                     { padding: 10px; }
+    body.no-js aside, body.no-js nav{ max-width: 100%; }
+}
+@media print {
+    body                       { font-size: 10pt; padding-top: 0; }
+    aside#secondary-contents-print        { margin: 1em 0; clear: both; display: block; min-width: 100% !important; font-size: .9em; }
+    .secondary-content         { border-top: 1px dotted #dddddd; }
+    footer                     { margin-top: 1em; padding-top: 4px; border-top: 1px dotted #dddddd; font-size: .86em; }
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select:focus, textarea:focus, input:focus { font-size: 16px; }
+}
+</style>
+<style>
+</style>
+</head>
+<body data-offset="70" class="no-js">
+    <!--[if lt IE 7]>
+    <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close hidden-no-js" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Warning!</strong> You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.    </div>
+    <![endif]-->
+    <div class="alert alert-warning hidden">Your internet connection seems off, the page will be rendered as raw HTML.</div>
+    <a id="top"></a>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header navbar-left hidden-no-js">
+                <button id="main-navbar-handler" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="navigation menu">
+                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="./bin/generate-index.php" title="(re)fresh this page">
+                                            <img src="modules/markdown-mark/png/32x20-solid.png" />&nbsp;
+                                        the MDE specifications                </a>
+            </div>
+            <div id="main-navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden-no-js"><a href="#top" title="reach the top of this page"><i class="fa fa-angle-up"></i><span class="hidden-sm">&nbsp;Top</span></a></li>
+                    <li><a href="#bottom" title="reach the bottom of this page"><i class="fa fa-angle-down"></i><span class="hidden-sm">&nbsp;Bottom</span></a></li>
+                    <li class="active"><a title="See the MDE specifications sources on Github" href="http://github.com/markdown-extended/manifest">&nbsp;<i class="fa fa-github"></i>&nbsp;MDE</a></li>
+                </ul>
+                <form class="navbar-form navbar-right hidden-no-js" role="search">
+                    <span id="result-count" class="text-primary"></span>&nbsp;
+                    <span id="delete-search-alt" class="text-primary search-icon-alt visible-xs hidden">[clear search field]</span>
+                    <input id="search-field" class="form-control" type="search" tabindex="1" placeholder="search ..." title="in-page highlighting search field">
+                    <span id="icon-search" class="search-icon fa fa-search"></span>
+                    <span id="delete-search" class="text-primary search-icon fa fa-times hidden" title="clear search field"></span>
+                </form>
+            </div>
+        </div>
     </div>
+    <div id="wrapper" class="wrapper container-fluid">
+        <article>
+            <h1 id="markdown_extended_specifications">Markdown Extended specifications</h1><ul><li>version: 1.0-alpha</li><li>source: http://github.com/markdown-extended/manifest</li></ul><hr />
+<p><strong>Please note that this document is still a DRAFT of the final specifications: some work
+remains before the first published version and all its content may change before this publication.</strong></p>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<p>TODOS</p>
+<ul><li>global cleanup</li><li>english !!</li></ul><hr />
+<p>This document explains the "official" specifications of the <em>Markdown Extended</em> syntax
+("<strong>MDE</strong>" in the rest of this document). It intends to be a concise and complete set 
+of syntax's rules and tags to use to write under Markdown Extended and a reference to build 
+parsers  implementations. It can be considered as the <strong>Markdown Extended reference</strong> for
+any purpose. The goal of these specifications is NOT to explain <em>how to write a content</em> but
+<em>how to build a content</em> using the Markdown Extended syntax.</p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>This document is authored and maintained by Pierre Cassat (<a href="http://e-piwi.fr/" title="See online http://e-piwi.fr/">@pierowbmstr</a>)
+and licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="See online http://creativecommons.org/licenses/by/3.0/">Creative Commons - CC BY 3.0</a> ; it is opened for discussion
+or contribution, please refer to <a href="#contribute" title="Reach inpage section #contribute">the dedicated section</a>.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<p><strong>Table of contents:</strong></p>
+<ul><li><a href="#introduction" title="Reach inpage section #introduction">Introduction</a></li><li><a href="#origins-of-markdown-extended" title="Reach inpage section #origins-of-markdown-extended">Origins of Markdown Extended</a></li><li><a href="#scope-of-these-specifications" title="Reach inpage section #scope-of-these-specifications">Scope of these specifications</a></li><li><a href="#terms-and-definitions" title="Reach inpage section #terms-and-definitions">Terms and definitions</a></li><li><a href="#list-of-meta-characters" title="Reach inpage section #list-of-meta-characters">List of meta-characters</a></li><li><a href="#A" title="Reach inpage section #A">A. Basic concepts</a>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<ul><li><a href="#A1" title="Reach inpage section #A1">A.1. Intention</a></li><li><a href="#A2" title="Reach inpage section #A2">A.2. Global construction</a></li><li><a href="#A3" title="Reach inpage section #A3">A.3. MDE file format</a></li><li><a href="#A4" title="Reach inpage section #A4">A.4. Rules ranking</a></li><li><a href="#A5" title="Reach inpage section #A5">A.5. Blank lines</a></li><li><a href="#A6" title="Reach inpage section #A6">A.6. Indentation</a></li><li><a href="#A7" title="Reach inpage section #A7">A.7. Automatic escaping</a></li><li><a href="#A8" title="Reach inpage section #A8">A.8. Inline HTML</a>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<ul><li><a href="#A8a" title="Reach inpage section #A8a">A.8.a. Use with caution</a></li><li><a href="#A8b" title="Reach inpage section #A8b">A.8.b. HTML comments</a></li></ul></li><li><a href="#A9" title="Reach inpage section #A9">A.9. Identifiers</a></li></ul></li><li><a href="#B" title="Reach inpage section #B">B. Typographic rules</a>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<ul><li><a href="#B1" title="Reach inpage section #B1">B.1. Application scope</a></li><li><a href="#B2" title="Reach inpage section #B2">B.2. Emphasis</a>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<ul><li><a href="#B2a" title="Reach inpage section #B2a">B.2.a. Emphasis with underscores</a></li><li><a href="#B2b" title="Reach inpage section #B2b">B.2.b. Emphasis with asterisks</a></li><li><a href="#B2c" title="Reach inpage section #B2c">B.2.c. Emphasis auto-escaping</a></li></ul></li><li><a href="#B3" title="Reach inpage section #B3">B.3. Abbreviations</a></li><li><a href="#B4" title="Reach inpage section #B4">B.4. Code and variable names</a></li><li><a href="#B5" title="Reach inpage section #B5">B.5. Links</a>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<ul><li><a href="#B5a" title="Reach inpage section #B5a">B.5.a. Automatic links</a></li><li><a href="#B5b" title="Reach inpage section #B5b">B.5.b. Raw inline links</a></li><li><a href="#B5c" title="Reach inpage section #B5c">B.5.c. Inline links</a></li><li><a href="#B5d" title="Reach inpage section #B5d">B.5.d. In-page links</a></li><li><a href="#B5e" title="Reach inpage section #B5e">B.5.e. Special links</a></li><li><a href="#B5f" title="Reach inpage section #B5f">B.5.f. Links with attributes</a></li><li><a href="#B5g" title="Reach inpage section #B5g">B.5.g. Referenced links</a></li></ul></li><li><a href="#B6" title="Reach inpage section #B6">B.6. Images</a>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<ul><li><a href="#B6a" title="Reach inpage section #B6a">B.6.a. Inline images</a></li><li><a href="#B6b" title="Reach inpage section #B6b">B.6.b. Images with attributes</a></li><li><a href="#B6c" title="Reach inpage section #B6c">B.6.c. Referenced images</a></li></ul></li><li><a href="#B7" title="Reach inpage section #B7">B.7. Footnotes</a></li><li><a href="#B8" title="Reach inpage section #B8">B.8. Inline mathematics</a></li></ul></li><li><a href="#C" title="Reach inpage section #C">C. Structural rules</a>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<ul><li><a href="#C1" title="Reach inpage section #C1">C.1. Application scope</a></li><li><a href="#C2" title="Reach inpage section #C2">C.2. Paragraphs</a></li><li><a href="#C3" title="Reach inpage section #C3">C.3. Line breaks</a></li><li><a href="#C4" title="Reach inpage section #C4">C.4. Horizontal rules</a></li><li><a href="#C5" title="Reach inpage section #C5">C.5. Titles</a>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<ul><li><a href="#C5a" title="Reach inpage section #C5a">C.5.a. ATX: sharps titles</a>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
+<ul><li><a href="#C5a1" title="Reach inpage section #C5a1">C.5.a.1. Basics</a></li><li><a href="#C5a2" title="Reach inpage section #C5a2">C.5.a.2. ATX titles with attributes</a></li></ul></li><li><a href="#C5b" title="Reach inpage section #C5b">C.5.b. Setext: underlined titles</a>
+
+<ul><li><a href="#C5b1" title="Reach inpage section #C5b1">C.5.b.1. Basics</a></li><li><a href="#C5b2" title="Reach inpage section #C5b2">C.5.b.2. Sextet titles with attributes</a></li></ul></li></ul></li><li><a href="#C6" title="Reach inpage section #C6">C.6. Pre-formatted texts</a>
+
+<ul><li><a href="#C6a" title="Reach inpage section #C6a">C.6.a. Simple notation</a></li><li><a href="#C6b" title="Reach inpage section #C6b">C.6.b. Fenced code blocks</a>
+
+<ul><li><a href="#C6b1" title="Reach inpage section #C6b1">C.6.b.1. Basics</a></li><li><a href="#C6b2" title="Reach inpage section #C6b2">C.6.b.2. Language information</a></li><li><a href="#C6b3" title="Reach inpage section #C6b3">C.6.b.3. Fenced code blocks with attributes</a></li></ul></li></ul></li><li><a href="#C7" title="Reach inpage section #C7">C.7. Citations</a>
+
+<ul><li><a href="#C7a" title="Reach inpage section #C7a">C.7.a. Basics</a></li><li><a href="#C7a" title="Reach inpage section #C7a">C.7.b. Citation original URL</a></li></ul></li><li><a href="#C8" title="Reach inpage section #C8">C.8. Lists</a>
+
+<ul><li><a href="#C8a" title="Reach inpage section #C8a">C.8.a. Unordered lists</a></li><li><a href="#C8b" title="Reach inpage section #C8b">C.8.b. Ordered lists</a></li></ul></li><li><a href="#C9" title="Reach inpage section #C9">C.9. Terms definitions</a></li><li><a href="#C10" title="Reach inpage section #C10">C.10. Tables</a>
+
+<ul><li><a href="#C10a" title="Reach inpage section #C10a">C.10.a. Basic table</a></li><li><a href="#C10b" title="Reach inpage section #C10b">C.10.b. Columns alignment</a></li><li><a href="#C10c" title="Reach inpage section #C10c">C.10.c. Cell grouping</a></li><li><a href="#C10d" title="Reach inpage section #C10d">C.10.d. Table caption</a></li><li><a href="#C10e" title="Reach inpage section #C10e">C.10.e. Table with multiple bodies</a></li><li><a href="#C10f" title="Reach inpage section #C10f">C.10.f. Table with attributes</a></li></ul></li><li><a href="#C11" title="Reach inpage section #C11">C.11. Mathematics blocks</a></li><li><a href="#C12" title="Reach inpage section #C12">C.12. Images blocks</a></li></ul></li><li><a href="#D" title="Reach inpage section #D">D. Miscellaneous rules</a>
+
+<ul><li><a href="#D1" title="Reach inpage section #D1">D.1. Meta data</a>
+
+<ul><li><a href="#D1a" title="Reach inpage section #D1a">D.1.a. Basics</a></li><li><a href="#D1b" title="Reach inpage section #D1b">D.1.b. Meta-data value insertion</a></li></ul></li><li><a href="#D2" title="Reach inpage section #D2">D.2. Escaping of meta-characters</a></li><li><a href="#D3" title="Reach inpage section #D3">D.3. References</a>
+
+<ul><li><a href="#D3a" title="Reach inpage section #D3a">D.3.a. Basics</a></li><li><a href="#D3b" title="Reach inpage section #D3b">D.3.b. Various types of references</a></li><li><a href="#D3c" title="Reach inpage section #D3c">D.3.c. Identifiers construction for REFIDs</a></li></ul></li><li><a href="#D4" title="Reach inpage section #D4">D.4. Mathematics</a></li><li><a href="#D5" title="Reach inpage section #D5">D.5. The special case of notes</a>
+
+<ul><li><a href="#D5a" title="Reach inpage section #D5a">D.5.a. Footnotes</a></li><li><a href="#D5b" title="Reach inpage section #D5b">D.5.b. Glossary notes</a></li><li><a href="#D5c" title="Reach inpage section #D5c">D.5.c. Bibliographic notes</a></li></ul></li><li><a href="#D6" title="Reach inpage section #D6">D.6. User defined attributes</a>
+
+<ul><li><a href="#D6a" title="Reach inpage section #D6a">D.6.a. Tags attributes</a></li><li><a href="#D6b" title="Reach inpage section #D6b">D.6.b. Raw attributes</a></li></ul></li><li><a href="#D7" title="Reach inpage section #D7">D.7. Identifiers construction for IDs</a></li><li><a href="#D8" title="Reach inpage section #D8">D.8. Automatic indexations</a>
+
+<ul><li><a href="#D8a" title="Reach inpage section #D8a">D.8.a. Table of contents</a></li><li><a href="#D8b" title="Reach inpage section #D8b">D.8.b. Table of figures and tables</a></li></ul></li><li><a href="#D9" title="Reach inpage section #D9">D.9. Implementers specifics</a>
+
+<ul><li><a href="#D9a" title="Reach inpage section #D9a">D.9.a. Error handling</a></li><li><a href="#D9b" title="Reach inpage section #D9b">D.9.b. Structural tags</a></li><li><a href="#D9c" title="Reach inpage section #D9c">D.9.c. User configuration</a></li><li><a href="#D9d" title="Reach inpage section #D9d">D.9.d. Various</a>
+
+<ul><li><a href="#D9d1" title="Reach inpage section #D9d1">D.9.d.1. Other file inclusion</a></li><li><a href="#D9d2" title="Reach inpage section #D9d2">D.9.d.2. Critic markup</a></li></ul></li></ul></li></ul></li><li><a href="#contribute" title="Reach inpage section #contribute">Contribute</a></li></ul><h2 id="introduction">Introduction</h2>
+<p><strong><a href="http://en.wikipedia.org/wiki/Markdown" title="See online http://en.wikipedia.org/wiki/Markdown">Markdown</a></strong> is originally a plain text formatting syntax created by 
+<a href="http://en.wikipedia.org/wiki/John_Gruber" title="See online http://en.wikipedia.org/wiki/John_Gruber">John Gruber</a> and <a href="http://en.wikipedia.org/wiki/Aaron_Swartz" title="See online http://en.wikipedia.org/wiki/Aaron_Swartz">Aaron Swartz</a>. It allows to write some contents
+with an easy-to-read, easy-to-write set of rules for plain text format then to convert it in a rich format
+(basically HTML).</p>
+
+<p>Many developers have proposed their own implementation of the original syntax with specific
+evolutions and extensions. The goal of <strong>MDE</strong> is to define an official and homogeneous new
+version, as complete and rich as possible, while keeping only the relevant evolutions
+or more used rules. <strong>MDE can be considered by developers as the new standard for Markdown,
+so that each user does not need to adapt to the current implementation but can use these rules 
+everywhere.</strong></p>
+<h2 id="origins-of-markdown-extended">Origins of Markdown Extended</h2>
+<p>The original idea of the Markdown syntax came from <a href="http://daringfireball.net/" title="See online http://daringfireball.net/">John Gruber</a>,
+who defined its goal, the first Markdown syntax rules and coded a first parser
+as a <em>Perl</em> script. He also wrote <a href="http://daringfireball.net/projects/markdown/syntax" title="See online http://daringfireball.net/projects/markdown/syntax">the first manual of the syntax</a>.</p>
+
+<p>Working on these specifications, the following implementations inspired us:</p>
+<ul><li><a href="https://michelf.ca/projets/php-markdown/" title="See online https://michelf.ca/projets/php-markdown/"><strong>Markdown Extra</strong></a>, written by <a href="http://michelf.com/" title="See online http://michelf.com/">Michel Fortin</a>, coded in <em>PHP</em> script</li><li><a href="http://fletcherpenney.net/multimarkdown/" title="See online http://fletcherpenney.net/multimarkdown/"><strong>Multi Markdown</strong></a>, written by <a href="http://fletcherpenney.net/" title="See online http://fletcherpenney.net/">Fletcher T. Penney</a>, coded in <em>Perl</em> script</li><li><a href="http://github.com/egil/php-markdown-extra-extended" title="See online http://github.com/egil/php-markdown-extra-extended"><strong>PHP Markdown Extra Extended</strong></a>, written by <a href="http://egilhansen.com" title="See online http://egilhansen.com">Egil Hansen</a>, coded in <em>PHP</em> script</li><li><a href="http://github.com/piwi/markdown-extended" title="See online http://github.com/piwi/markdown-extended"><strong>PHP Markdown Extended</strong></a>, written by <a href="http://e-piwi.fr/" title="See online http://e-piwi.fr/">myself</a>, coded in <em>PHP</em> script (<em>this is my implementation
+of Markdown and the reason why I decided to write these specifications</em>)</li></ul><h2 id="scope-of-these-specifications">Scope of these specifications</h2>
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", 
+"RECOMMENDED", "MAY" and "OPTIONAL" in this document are to be interpreted as described in 
+<a href="http://tools.ietf.org/html/rfc2119" title="See online http://tools.ietf.org/html/rfc2119">RFC 2119</a>. By extension, any word in capital letters SHOULD be understood in its
+literal meaning.</p>
+
+<p>The present specifications of the syntax DOES NOT suppose about the final rendering of the 
+content. This rendering is the purpose of the <em>parsers</em> and specific applications. The "HTML" 
+final output CAN be used as a rendering example but MUST NOT be a specification reference.</p>
+
+<p>Each item of the sections below is identified by a structural ID composed like <code>A.B.C.</code> 
+to allow it to be referenced and used in citations, implementations, documentations etc.
+These MUST NOT change for a given release of the specifications.</p>
+<h2 id="terms-and-definitions">Terms and definitions</h2>
+<p>For the purposes of this document, the following terms and definitions apply:</p>
+
+<p><strong>MDE</strong> - shortcut for "Markdown Extended"</p>
+
+<p><strong>span element</strong> - A "span" element is a piece of content that does not concern an entire <em>block</em>
+; span elements are described in the <em>typographic rules</em> of these specifications (<a href="#B" title="Reach inpage section #B">§§</a>).</p>
+
+<p><strong>block element</strong> - A "block" element is a piece of content that concerns an entire <em>block</em> as
+described at <a href="#C1" title="Reach inpage section #C1">§§</a> ; block elements are described in the <em>structural rules</em> of these
+specifications (<a href="#C" title="Reach inpage section #C">§§</a>).</p>
+
+<p><strong>blank line</strong> - A "blank line" in MDE is any line that does not output anything ; this concept
+is developed in <a href="#A5" title="Reach inpage section #A5">§§</a>.</p>
+
+<p><strong>meta character</strong> - Any character used in at least one rule of the syntax is considered as a
+"meta" character ; they are listed below.</p>
+
+<p><strong>meta data</strong> - A "meta-data" is a piece of information written in a document (or loaded by
+parsers) but not actually rendered in final output ; this concept is developed in <a href="#D1" title="Reach inpage section #D1">§§</a>.</p>
+
+<p><strong>reference</strong> - A "reference" is a mark of any kind that refers to a definition written elsewhere 
+in the document (at its bottom for instance) ; this concept is developed in <a href="#D3" title="Reach inpage section #D3">§§</a>.</p>
+
+<p><strong>ID</strong> - This designates an <em>identifier string</em> as defined in the HTML language ; it is used in MDE
+to identify certain contents with a unique (and constant) string ; this concept is developed in <a href="#D7" title="Reach inpage section #D7">§§</a>.</p>
+
+<p><strong>REFID</strong> - This designates an <em>identifier string</em> used to identify each <em>reference</em> item ; the <em>REFID</em>
+follows different construction rules than the classic <em>ID</em> ; this concept is developed in <a href="#D3c" title="Reach inpage section #D3c">§§</a>.</p>
+
+<p><strong>indentation</strong> - In MDE like in many other languages, the "indentation" is made by writing
+a <em>tabulation</em> OR <em>four spaces</em> from last indentation limit (originally the left side of the 
+document, which is the "indentation zero" limit) ; this concept is developed in <a href="#A6" title="Reach inpage section #A6">§§</a>.</p>
+
+<p><strong>reader</strong> - In these specifications, "reader" designates the "final user", the persons who
+read an MDE document.</p>
+
+<p><strong>writer</strong> - In these specifications, "writer" designates the "syntax user", the persons who
+write contents using the MDE syntax.</p>
+
+<p><strong>parser</strong> - In these specifications, "parser" designates the application in charge to treat
+the original MDE content and transform it in a rich language ; the final rendering MUST NOT
+be important while reading the specifications.</p>
+
+<p><strong>implementation</strong> - This designates the same as "parser".</p>
+
+<p><strong>configuration</strong> - This designates an optional set of options a parser can accept to define
+some of its behaviors.</p>
+<h2 id="list-of-meta-characters">List of meta-characters</h2>
+<p>Below is a list of all meta-characters used for semantic rules in MDE (the word in <em>italic</em> 
+is the one we will use in this document):</p>
+<ul><li><code>\</code> : the <em>backslash</em></li><li><code>.</code> : the <em>dot</em></li><li><code>:</code> : the <em>colon</em></li><li><code>!</code> : the <em>exclamation point</em></li><li><code>#</code> : the <em>hash mark</em> or "sharp"</li><li><code>*</code> : the <em>asterisk</em> or "wildcard"</li><li><code>+</code> : the <em>plus sign</em></li><li><code>-</code> : the <em>hyphen</em> or "dash" or minus sign</li><li><code>_</code> : the <em>underscore</em></li><li>`&#96;` : the <em>backtick</em> quote</li><li><code>|</code> : the <em>pipe</em></li><li><code>(</code> and <code>)</code> : the <em>parentheses</em></li><li><code>[</code> and <code>]</code> : the <em>brackets</em></li><li><code>{</code> and <code>}</code> : the <em>curly brackets</em></li><li><code>&lt;</code> and <code>&gt;</code> : the <em>angle brackets</em> or "chevrons"</li></ul><h2 id="A">A. Basic concepts</h2>
+<p>The sections of this document will explain each tag to use for each writing rule. To begin, as a very
+first introduction to the MDE syntax, we MUST ALWAYS keep the following basis in mind:</p>
+<ul><li><strong>a Markdown content is written as plain text</strong>: 
+
+<ul><li>it MUST be working by any software reading file (such as <code>vi</code>)</li><li>it MUST be readable by a human "as-is" (this is the very first goal of Markdown)</li></ul></li><li><strong>a paragraph is created in Markdown passing a blank line</strong> (this rule is developed in <a href="#C2" title="Reach inpage section #C2">§§</a>)</li><li>as Markdown rules are written using some specific characters, <strong>these characters MAY be escaped</strong>
+to be used "as-is" (this is developed in <a href="#D2" title="Reach inpage section #D2">§§</a>)</li><li><strong>all the rules CAN be used in one single Markdown content</strong> and be parsed correctly
+(any conflict between rules MUST be avoided)</li><li>for convenience, <strong>the "references" notation MUST be allowed for a maximum of rules</strong>
+(this notation is explained in <a href="#D3" title="Reach inpage section #D3">§§</a>) as it permits to keep a content readable.</li></ul>
+<p>For information, developers and webmasters can use the <a href="http://dcurt.is/the-markdown-mark" title="See online http://dcurt.is/the-markdown-mark"><em>Markdown Mark</em> icon created by Dustin Curtis</a>
+to identify MDE files and syntax.</p>
+<h3 id="A1">A.1. Intention</h3>
+<p>The MDE rules MUST keep ALL original Markdown's rules valid as described on <a href="http://daringfireball.net/projects/markdown/syntax" title="See online http://daringfireball.net/projects/markdown/syntax">daringfireball.net</a>.</p>
+
+<p>As said in the <em>scope of these specifications</em> (<a href="#scope-of-these-specifications" title="Reach inpage section #scope-of-these-specifications">§§</a>),
+we WILL NOT give rendering rules here. Each parser MAY follow its own final rendering rules
+according to the MDE specifications (concerning the original MDE content) and concerned language.
+Thus, we MUST keep in mind that the final output MAY NOT be HTML only ; a parser can construct any 
+format of output (such as PDF, OpenDocument etc). This is a major difference with the original 
+John Gruber's Markdown parser, which only constructs HTML output.</p>
+<h3 id="A2">A.2. Global construction</h3>
+<p>The master idea of Markdown is the <strong>readability</strong> of the content. Which means: if a reader has a Markdown file
+and opens it with a program like <code>less</code> or <code>vi</code> (or any program that renders a file "as is"), he MUST
+be able to read its content with no other action.</p>
+
+<p>This idea basically means two things:</p>
+<ol><li>the semantic tags used to finally build a rich content SHOULD NOT prevent a clear reading
+of that content</li><li>a reader SHOULD have to only scroll down to continue reading (right/left scroll SHOULD be avoided)</li></ol>
+<p>Keeping readability using the semantic tags of the syntax is the purpose of these specifications ;
+we will here try to define the best rules to NOT prevent a clear reading but DO allow a maximum
+of rich final rendering. Keeping a document "one way scroll only" is simplified by the global
+construction of a Markdown content: the real <em>end of lines</em> of the content ARE NOT the final
+ones. Writers CAN, if they need to, render a final end of line (called "hard break" <a href="#C3" title="Reach inpage section #C3">§§</a>),
+but the first thing to keep in mind writing with the Markdown syntax is that you DO NOT NEED
+to write your paragraphs chained on a single line. You SHOULD choose a word-wrapping number (a number
+of characters a line must not exceed - something like 100 characters in this document) and
+pass to next line each time your current one goes to this number.</p>
+
+<p><strong>Writer Note:</strong> This is generally the case of the common <em>LICENSE</em> files: the text of the
+license is clearly readable because each line of content does not exceed a short number of
+characters.</p>
+<h3 id="A3">A.3. MDE file format</h3>
+<p>An MDE file MUST be considered as a <em>plain text</em> document. It is basically a raw plain text file just like
+a classic <code>.txt</code> file. It MAY be encoded in a "classic" file encoding such as <code>utf-8</code> or <code>iso-...</code>.</p>
+
+<p>Any MDE file MUST work with any software reading file contents.</p>
+
+<p><strong>Writer Note:</strong> The best practice is to always use the same extension for MDE files as it permits to identify them
+quickly and define some special treatments based on a file extension filtering ; the <code>.md</code>, <code>.mde</code> or <code>.markdown</code>
+extensions are given here as examples.</p>
+<h3 id="A4">A.4. Rules ranking</h3>
+<p>The syntax's rules of these specifications are separated in the following three types based on their utility:</p>
+<dl><dt><strong>Typography</strong></dt><dd>Rules concerning the rendering of typographic writing usages, such as bold
+emphasis or links ; this almost concerns a word, a group of words or an expression.
+The "typographic" rules are often called "span elements".
+See <a href="#B" title="Reach inpage section #B">§§</a>.</dd>
+<dt><strong>Structure</strong></dt><dd>Rules concerning a special rendering of a sentence or a group of sentences,
+such as citations or pre-formatted blocks.
+The "structural" rules are often called "block elements".
+See <a href="#C" title="Reach inpage section #C">§§</a>.</dd>
+<dt><strong>Miscellaneous</strong></dt><dd>Any rule that can not be classified in the two first categories.
+See <a href="#D" title="Reach inpage section #D">§§</a>.</dd></dl><h3 id="A5">A.5. Blank lines</h3>
+<p>A "blank line" in MDE is any line that does not output anything. A line with only spaces 
+or tabulations MUST be considered as a blank line.</p>
+<h3 id="A6">A.6. Indentation</h3>
+<p>The indentation level in MDE is <strong>1 tabulation</strong> or <strong>four spaces</strong>:</p>
+<pre>1 tab = 4 spaces = 1 indentation level</pre>
+<p>Any block of content that requires an indentation MAY allow any other syntax's rule to be
+used in that content, considering the position of the first character of the first indented 
+line as the new left side of its own indentation.</p>
+
+<p>The global rules for blocks sequences are:</p>
+<ul><li>passing 1 blank line MUST close last indented block (indentation level goes down by 1)</li><li>passing 2 blank lines MUST close ALL current indented blocks (indentation level goes back to 0)</li></ul>
+<p><strong>Example:</strong> A classic example is the case of a code block following a list item. If only one line is
+passed between both, the code block will be considered as part of the list item's content (and must
+be indented in consequence by 2: 2 tabulations or 8 spaces). If two blank lines are passed, the block 
+must be considered as a fresh new block (the list item is considered finished).</p>
+
+<p>Finally, for rules that requires a character AND an indentation, only the first line MUST 
+actually be indented, subsequent lines of the same block can either be indented or not. This
+is NOT true when the rule does not include a character (like for pre-formatted blocks - <a href="#C6a" title="Reach inpage section #C6a">§§</a>).</p>
+
+<p><strong>Writer Note:</strong> For a document often read "as is" as plain text, it MAY be a good idea to 
+always indent a block for readability.</p>
+<h3 id="A7">A.7. Automatic escaping</h3>
+<p>As developed by John Gruber in <a href="http://daringfireball.net/projects/markdown/syntax" title="See online http://daringfireball.net/projects/markdown/syntax">original Markdown's manual</a>, and because the
+first goal of Markdown was to build HTML rendering, some special characters considered as 
+"meta characters" in HTML MAY be automatically escaped to construct a valid HTML output.
+Even if we MUST NOT suppose about the final rendering here (<a href="#scope-of-these-specifications" title="Reach inpage section #scope-of-these-specifications">§§</a>),
+we also posed the condition that any original Markdown rule MUST be valid in MDE (<a href="#A1" title="Reach inpage section #A1">§§</a>).
+So we MUST keep the original auto-escaping of HTML meta characters.</p>
+
+<p>Outside a code span (<a href="#B4" title="Reach inpage section #B4">§§</a>) or a pre-formatted block (<a href="#C6" title="Reach inpage section #C6">§§</a>), and as long as the character
+is NOT part of an MDE tag, the following characters SHOULD be escaped when rendering an HTML output:</p>
+<ul><li>the <em>ampersand</em> <code>&amp;</code> SHOULD be rendered as <code>&amp;amp;</code></li><li>the <em>left angle</em> <code>&lt;</code> SHOULD be rendered as <code>&amp;lt;</code></li><li>the <em>right angle</em> <code>&gt;</code> SHOULD be rendered as <code>&amp;gt;</code></li></ul>
+<p><strong>Implementation Note:</strong> Parsers that rendered a non-HTML output SHOULD introduce the raw 
+original character in the final rendering.</p>
+<h3 id="A8">A.8. Inline HTML</h3>
+<p>On the same idea as for <em>automatic escaping</em> (<a href="#A7" title="Reach inpage section #A7">§§</a>), inline HTML MUST be authorized
+in an MDE content. BUT, a consequence of the fact that the final rendering MAY NOT be
+only HTML (<a href="#scope-of-these-specifications" title="Reach inpage section #scope-of-these-specifications">§§</a>) is that raw HTML tags MAY NOT be rendered
+as writer expects in other formats.</p>
+<h4 id="A8a">A.8.a. Use with caution</h4>
+<p>In conclusion, raw inline HTML MAY be avoided in an MDE content but parsers MUST be prepared
+to treat such contents.</p>
+
+<p><strong>Implementation Note:</strong> Without being a specification rule, we can conclude that parsers
+SHOULD be prepared to handle HTML tags for any final output. For any other format than HTML, 
+the best practice MAY be to keep the content "as is" skipping any HTML tag (but keeping the 
+text content).</p>
+<h4 id="A8b">A.8.b. HTML comments</h4>
+<p>HTML comments MUST be an exception as this is the best way to include a comment in an MDE
+content. All parsers MUST handle HTML comments as <em>comments</em> (in any language).</p>
+
+<p>As a reminder, the HTML comment tag is constructed surrounded between <code>&lt;!--</code> and <code>--&gt;</code> and
+can be multi-line:</p>
+<pre>&lt;!-- Comment content --&gt;</pre>
+<p><strong>Implementation Note:</strong> The final result of a comment is not really defined as it MAY depend
+on the rendering format. By default, the best practice SHOULD be to skip comments from final
+output as a comment may have been written just for not-visible information. Parsers rendering
+an HTML format CAN keep comments "as is" (present in the output) as they won't be displayed.</p>
+<h3 id="A9">A.9. Identifiers</h3>
+<p>An MDE parser MUST be able to reference some specific contents with identifiers (the <em>ID</em> as 
+described at <a href="#terms-and-definitions" title="Reach inpage section #terms-and-definitions">§§</a>). Each ID must be unique for the document and SHOULD 
+be constant to let readers retrieve a section with permanent links. The ID construction process 
+is described in a dedicated section <a href="#D7" title="Reach inpage section #D7">§§</a>.</p>
+
+<p>Basically, three types of contents MUST ALWAYS have an <em>ID</em>:</p>
+<ul><li>the <em>titles</em> (<a href="#C5" title="Reach inpage section #C5">§§</a>)</li><li>the <em>tables</em> (<a href="#C10" title="Reach inpage section #C10">§§</a>)</li><li>the <em>figures</em> (<a href="#C12" title="Reach inpage section #C12">§§</a>)</li></ul>
+<p>In some cases, the ID CAN be defined by the writer to be sure it will be constructed like he
+expects. Please see dedicated section <a href="#D6" title="Reach inpage section #D6">§§</a>.</p>
+<h2 id="B">B. Typographic rules</h2>
+<p>A rule is considered as <em>typographic</em> when it only concerns one or more words written inline
+in a text. As long as it does not concern a full block of text, a rule MUST be considered as 
+<em>typographic</em>.</p>
+<h3 id="B1">B.1. Application scope</h3>
+<p>A typographic rule MUST begin and end in the same block of text. It CAN begin at the beginning of
+the block and end at its end, but it MUST NOT concern more than one block.</p>
+
+<p>The example below is valid:</p>
+<pre>*A first block of content.*
+
+*Another* one ...</pre>
+<p>While the notation below is NOT valid:</p>
+<pre>*A first block of content.
+
+Another* one ...</pre><h3 id="B2">B.2. Emphasis</h3>
+<p>Bold and italic text emphasis MUST keep simple to use and read. The first idea was kept about
+these effects allowing two different typeface: the <em>underscore</em> <code>_</code> and the <em>asterisk</em> <code>*</code>.</p>
+<h4 id="B2a">B.2.a. Emphasis with underscores</h4>
+<p>Italic text is written surrounded by one character (1 <em>underscore</em> <code>_</code> on the left and 
+1 <em>underscore</em> <code>_</code> on the right without space):</p>
+<pre>_italic_</pre>
+<p>Bold text is written surrounded by two characters (2 <em>underscores</em> <code>__</code> on the left and 
+2 <em>underscores</em> <code>__</code> on the right without space):</p>
+<pre>__bold__</pre><h4 id="B2b">B.2.b. Emphasis with asterisks</h4>
+<p>Italic text is written surrounded by one character (1 <em>asterisk</em> <code>*</code> on the left and 
+1 <em>asterisk</em> <code>*</code> on the right without space):</p>
+<pre>*italic*</pre>
+<p>Bold text is written surrounded by two characters (2 <em>asterisks</em> <code>**</code> on the left and 
+2 <em>asterisks</em> <code>**</code> on the right without space):</p>
+<pre>**bold**</pre>
+<p><strong>Writer Note:</strong> For a document often read "as is" as plain text, the asterisk notation MAY be used
+preferably as it seems to let the reader understand word's importance.</p>
+<h4 id="B2c">B.2.c. Emphasis auto-escaping</h4>
+<p>In-words underscores MAY NOT be considered as emphasis delimiters ; for instance, 
+writing <code>my_underscored_words</code>, the <code>underscored</code> word MAY NOT be in italic but the whole
+expression MAY be kept "as-is". In other words, writing <code>__my_underscored_words__</code> MAY be
+rendered as the expression <code>my_underscored_words</code> written in bold text (<em>leading and trailing
+characters are considered as emphasis delimiters but internal characters are auto-escaped</em>).</p>
+
+<p>This rule is important in a case like <code>underscored_words followed by other_underscores</code>
+as it seems easier to let a parser match the two distant underscores as delimiters while this
+MAY NOT be the case (<em>underscores may be kept "as-is" in both expressions</em>).</p>
+
+<p><strong>Implementation Note:</strong> As concluded by Fletcher Penney in his work on MultiMarkdown, the
+original reason of this auto-escaping is that "<em>[underscores] caused too many problems with URL's</em>".
+Effectively, URLs often use underscores as a word separator and these ones MUST NOT be considered
+as typographic delimiters.</p>
+
+<p>This rule only concerns <em>underscores</em>. If a writer wants to emphase just a part of a word,
+he can do so using the <em>asterisks</em> notation.</p>
+<h3 id="B3">B.3. Abbreviations</h3>
+<p>An abbreviation is written like a <em>reference</em> (<a href="#D3" title="Reach inpage section #D3">§§</a>) with a leading <em>asterisk</em> <code>*</code>:</p>
+<ul><li>the abbreviation term at the beginning of the line between <em>brackets</em> <code>[</code> and <code>]</code> and with:
+
+<ul><li>a leading <em>asterisk</em> <code>*</code> (without space)</li><li>a trailing <em>colon</em> <code>:</code> (without space)</li></ul></li><li>then the full text of the abbreviation after a space</li></ul><pre>*[HTML]: Hyper Text Markup Language
+</pre>
+<p>The result SHOULD be informing about the full meaning of the term any time this whole term
+is found in the content as a whole word.</p>
+
+<p><strong>Example:</strong> In the example above (the "HTML" term), in an HTML rendering, the result SHOULD
+be an <code>abbr</code> tag each time the "HTML" string is found in the content as a full word. Thus, 
+this MUST NOT concern a string like "HTMLize" as it is not strictly "HTML".</p>
+<h3 id="B4">B.4. Code and variable names</h3>
+<p>Inline code and variables MUST keep simple to use and read. The first idea was kept about
+this span: surround the code or variable name between <em>backticks</em> `&#96;`. A code span MUST 
+allow spaces inside.</p>
+<pre>This variable `$var` can be accessed using the `-&gt; get(...)` method</pre><h3 id="B5">B.5. Links</h3>
+<p>A <em>link</em> concerns any kind of <em>hypertext link</em>: a full URL, an in-page link (a hash tag referencing
+a section of current document) and any other kind of "clickable" span in an HTML content,
+such as an email address, a phone number etc.</p>
+
+<p><strong>Implementation Note:</strong> A link MUST be rendered clickable for all output formats when it is
+possible. When it is not, the address of the link MUST be written in the output to let reader
+follow it if he wants.<br />
+For instance, a PDF rendering MUST embed clickable links, but an OpenDocument, which can not
+embed clickable interactions, MUST render a link with the original address visible.</p>
+<h4 id="B5a">B.5.a. Automatic links</h4>
+<p>Standalone URLs MUST NOT be automatically transformed in links if they are not written following one 
+of the rules below (<a href="#B5b" title="Reach inpage section #B5b">§§</a>, <a href="#B5c" title="Reach inpage section #B5c">§§</a> and <a href="#B5d" title="Reach inpage section #B5d">§§</a>). An URL written inline in a content with 
+no specific "link" tag is not a link, it is just a raw URL (in an HTML content, it MAY NOT be clickable).</p>
+<h4 id="B5b">B.5.b. Raw inline links</h4>
+<p>Making an URL (or any kind of text) clickable can be done by surrounding it between <em>angle brackets</em> <code>&lt;</code> and <code>&gt;</code>:</p>
+<pre>&lt;http://link.com/query&gt;</pre>
+<p>Any text written like that MUST be rendered clickable (with a special treatment if required,
+such as email addresses links - see <a href="#B5e" title="Reach inpage section #B5e">§§</a>).</p>
+<h4 id="B5c">B.5.c. Inline links</h4>
+<p>Links can be written <em>inline</em> in the text, separated in two parts:</p>
+<ul><li>the link text between <em>brackets</em> <code>[</code> and <code>]</code></li><li>then, between <em>parenthesis</em> <code>(</code> and <code>)</code>, the URL of the link (relative or absolute) and 
+an OPTIONAL title wrapped in <em>double-quotes</em> <code>"</code> followed by an OPTIONAL list of attributes (<a href="#D6" title="Reach inpage section #D6">§§</a>).</li></ul><pre>[a simple link](http://test.com/)
+
+[a link with a title](http://test.com/ "My optional title")
+
+[a link with a title and some attributes](http://test.com/ "My optional title" attribute1=value attribute2=value)
+</pre><h4 id="B5d">B.5.d. In-page links</h4>
+<p>In-page anchors can be accessed using the notation of inline links (<a href="#B5b" title="Reach inpage section #B5b">§§</a>) replacing the URL by the section hash:</p>
+<pre>[my section](#section-id)</pre>
+<p>See the dedicated section <a href="#D7" title="Reach inpage section #D7">§§</a> to learn how to define the hash reference of a part.</p>
+<h4 id="B5e">B.5.e. Special links</h4>
+<p>Some special treatments MAY be applied to special links such as email addresses. As these kinds
+of links can evolve, there is no list of them here.</p>
+
+<p><strong>Implementation Note:</strong> For instance, in an HTML rendering, an email address should be transformed 
+as a <code>mailto:...</code> link.</p>
+<h4 id="B5f">B.5.f. Links with attributes</h4>
+<p>Links MUST allow <em>user defined attributes</em> (<a href="#D6a" title="Reach inpage section #D6a">§§</a>):</p>
+<pre>[a simple link](http://test.com/){#link-id .link-class}
+
+[a link with a title](http://test.com/ "My optional title"){#link-id .link-class}
+
+[a link with a title and some attributes](http://test.com/ "My optional title" attribute1=value attribute2=value){#link-id .link-class}</pre>
+<p>Note that there MUST NOT be a space between the closing <em>parenthesis</em> <code>)</code> of the link definition
+and the opening <em>curly bracket</em> <code>{</code> of the user defined attributes.</p>
+<h4 id="B5g">B.5.g. Referenced links</h4>
+<p>Links MUST allow the <em>references</em> (<a href="#D3" title="Reach inpage section #D3">§§</a>) notation:</p>
+<pre>This is a paragraph with a [referenced link][linkid] ...
+
+[linkid]: http://test.com/ "My optional title"</pre>
+<p>This notation can be simplified if the <em>REFID</em> (as described at <a href="#terms-and-definitions" title="Reach inpage section #terms-and-definitions">§§</a>) 
+is the exact same string as the link text:</p>
+<pre>This is a paragraph with a link to [Test.com][] ...
+
+[Test.com]: http://test.com/ "My optional title"</pre>
+<p>Referenced links MUST allow <em>user defined attributes</em> (<a href="#D6a" title="Reach inpage section #D6a">§§</a>):</p>
+<pre>[Test.com]: http://test.com/ "My optional title" {#link-id .link-class}</pre>
+<p>As the reference definition MUST be written alone on a line, optional <em>spaces</em> CAN separate
+the reference's content and the attributes definition.</p>
+<h3 id="B6">B.6. Images</h3>
+<p>Basically, images follow the same notation as for <em>links</em> (<a href="#B5" title="Reach inpage section #B5">§§</a>) with a leading exclamation point.</p>
+<h4 id="B6a">B.6.a. Inline images</h4>
+<p>Images can be written <em>inline</em> in the text, separated in two parts:</p>
+<ul><li>the image alternated text between <em>brackets</em> <code>[</code> and <code>]</code> preceded by an <em>exclamation point</em> <code>!</code></li><li>then, between <em>parenthesis</em> <code>(</code> and <code>)</code>, the URL of the image (relative or absolute) and an 
+OPTIONAL title wrapped in <em>double-quotes</em> <code>"</code> followed by an OPTIONAL list of attributes (<a href="#D6" title="Reach inpage section #D6">§§</a>).</li></ul><pre>![alt text](http://test.com/data1/images/1.jpg)
+
+![alt text](http://test.com/data1/images/1.jpg "My optional title")
+
+![alt text](http://test.com/data1/images/1.jpg "My optional title" class=myimageclass style="width: 40px;")
+</pre><h4 id="B6b">B.6.b. Images with attributes</h4>
+<p>Links MUST allow <em>user defined attributes</em> (<a href="#D6a" title="Reach inpage section #D6a">§§</a>):</p>
+<pre>![alt text](http://test.com/data1/images/1.jpg){#image-id .image-class}
+
+![alt text](http://test.com/data1/images/1.jpg "My optional title"){#image-id .image-class}
+
+![alt text](http://test.com/data1/images/1.jpg "My optional title" class=myimageclass style="width: 40px;"){#image-id .image-class}</pre>
+<p>Note that there MUST NOT be a space between the closing <em>parenthesis</em> <code>)</code> of the link definition
+and the opening <em>curly bracket</em> <code>{</code> of the user defined attributes.</p>
+<h4 id="B6c">B.6.c. Referenced images</h4>
+<p>Images MUST allow the <em>references</em> (<a href="#D3" title="Reach inpage section #D3">§§</a>) notation:</p>
+<pre>This is a paragraph with an embedded image ![referenced image][imageid] ...
+
+[imageid]: http://test.com/data1/images/1.jpg "My optional title"</pre>
+<p>Just like for <em>links</em> (<a href="#B5g" title="Reach inpage section #B5g">§§</a>), the image reference notation can be simplified if the
+<em>REFID</em> (as described at <a href="#terms-and-definitions" title="Reach inpage section #terms-and-definitions">§§</a>) is the exact same string as the 
+"alternate" text:</p>
+<pre>This is a paragraph with an embedded image ![image 1][] ...
+
+[image 1]: http://test.com/data1/images/1.jpg "My optional title"</pre>
+<p>Referenced images MUST allow <em>user defined attributes</em> (<a href="#D6a" title="Reach inpage section #D6a">§§</a>):</p>
+<pre>[image 1]: http://test.com/data1/images/1.jpg "My optional title" {#image-id .image-class}</pre>
+<p>As the reference definition MUST be written alone on a line, optional <em>spaces</em> CAN separate
+the reference's content and the attributes definition.</p>
+<h3 id="B7">B.7. Footnotes</h3>
+<p>Footnotes may be considered as a "special case" as we MAY allow writers to distinguish
+simple footnotes from glossary and bibliographic notes. The construction rules of these three
+types MUST follow the same idea, with a special construction for glossary and bibliographic
+notes, which can be considered as special footnotes. Please refer to the dedicated 
+section about notes <a href="#D5" title="Reach inpage section #D5">§§</a>.</p>
+<h3 id="B8">B.8. Inline mathematics</h3>
+<p>Inline mathematics is written by surrounding the content between <em>escaped parenthesis</em> <code>\(</code> and <code>\)</code>:</p>
+<pre>\(...\)
+\(\alpha = (t_1 - t_0)/L\)</pre>
+<p>Mathematics notation is developed in a dedicated section <a href="#D4" title="Reach inpage section #D4">§§</a>.</p>
+<h2 id="C">C. Structural rules</h2>
+<p>A rule is considered as <em>structural</em> when it concerns a whole block of content.</p>
+<h3 id="C1">C.1. Application scope</h3>
+<p>A "block" of content is separated from others by:</p>
+<ul><li>the top or bottom sides of the document</li><li>a blank line (<a href="#A5" title="Reach inpage section #A5">§§</a>)</li></ul>
+<p>Any block of content MUST allow any other syntax's rule to be used and interpreted. This can
+create some nested indentations as described at <a href="#A6" title="Reach inpage section #A6">§§</a>.</p>
+<h3 id="C2">C.2. Paragraphs</h3>
+<p>To build a paragraph, just surround it between <em>blank lines</em> (at least one before and one after - <a href="#A5" title="Reach inpage section #A5">§§</a>).</p>
+<pre>Paragraph 1 ...
+
+Paragraph 2 ...</pre><h3 id="C3">C.3. Line breaks</h3>
+<p>To insert a line break, write two or more <em>spaces</em> at the end of the line and pass to next line.</p>
+<pre>Line 1 ...  
+Line 2 ...</pre>
+<p>Note that hard breaks are only allowed on a line with a content. A line with only spaces (even
+2 or more) MUST NOT be considered as a hard break but as a blank line (<a href="#A5" title="Reach inpage section #A5">§§</a>).</p>
+<h3 id="C4">C.4. Horizontal rules</h3>
+<p>To insert an horizontal rule, write at least three <em>hyphens</em> <code>-</code>, <em>asterisks</em> <code>*</code> or <em>underscores</em> <code>_</code> 
+alone on a line (spaces MUST not care):</p>
+<pre>***
+----
+_ _ _</pre><h3 id="C5">C.5. Titles</h3>
+<p>Titles are built using two notations: "ATX" and "Sextet". HTML tags have a limit
+of 6 levels (<code>h1</code> to <code>h6</code>) but an MDE parser MUST ignore this limit and be prepared for any
+depth levels as writer requires in a document.</p>
+
+<p>The titles list of a document MAY be accessible to build a "table of contents" quickly.
+This is developed at <a href="#D8a" title="Reach inpage section #D8a">§§</a>.</p>
+<h4 id="C5a">C.5.a. ATX: sharps titles</h4><h5 id="C5a1">C.5.a.1. Basics</h5>
+<p>An "ATX" title is written alone on a single line, preceded by as many <em>hash marks</em> <code>#</code> as the title level:</p>
+<pre># Title level 1 (HTML tag `h1`)
+
+### Title level 3 (HTML tag `h3`)</pre>
+<p>OPTIONALLY, ATX titles can be "closed" using a random number of <em>hash marks</em> at the end of the line:</p>
+<pre>### Title level 3 (HTML tag `h3`) ##</pre>
+<p><strong>Implementation Note:</strong> The "ATX" structure is taken from <a href="http://www.aaronsw.com/2002/atx/" title="See online http://www.aaronsw.com/2002/atx/">the ATX markup</a>.</p>
+<h5 id="C5a2">C.5.a.2. ATX titles with attributes</h5>
+<p>ATX titles MUST allow <em>user defined attributes</em> (<a href="#D6a" title="Reach inpage section #D6a">§§</a>):</p>
+<pre># Title level 1 (HTML tag `h1`) {#title-id .title-class}
+### Title level 3 (HTML tag `h3`) ## {#title-id .title-class}
+##### Title level 5 (HTML tag `h5`) {#title-id .title-class}#####</pre>
+<p>As a title MUST be alone on a line, the attributes DOES NOT NEED to be unspaced from the text.
+The rule here is that any string wrapped between <em>curly brackets</em> <code>{</code> and <code>}</code> MUST be considered
+as attributes (which means before OR after the final optional hash marks).</p>
+<h4 id="C5b">C.5.b. Setext: underlined titles</h4><h5 id="C5b1">C.5.b.1. Basics</h5>
+<p>The "dash" notation only concerns the two first levels of titles in a document. They are written
+underlined by <em>equal signs</em> <code>=</code> for the first level and <em>hyphens</em> <code>-</code> for the second:</p>
+<pre>Title level 1 (HTML tag `h1`)
+=============================
+
+Title level 2 (HTML tag `h2`)
+-----------------------------</pre>
+<p>The underlining line MUST NOT require to be as long as the title text, any number of
+equals or hyphens MUST work.</p>
+<pre>Title level 1 (HTML tag `h1`)
+=
+
+Title level 2 (HTML tag `h2`)
+-</pre>
+<p><strong>Writer Note:</strong> If you know that a document will often be read "as-is" as plain text, the Setext notation
+MAY be chosen preferably to the ATX one as it seems more comprehensive.</p>
+
+<p><strong>Implementation Note:</strong> The "sextet" structure is taken from <a href="http://docutils.sourceforge.net/mirror/setext.html" title="See online http://docutils.sourceforge.net/mirror/setext.html">the Setext markup</a>.</p>
+<h5 id="C5b2">C.5.b.2. Sextet titles with attributes</h5>
+<p>Sextet titles MUST allow <em>user defined attributes</em> (<a href="#D6a" title="Reach inpage section #D6a">§§</a>):</p>
+<pre>Title level 1 (HTML tag `h1`) {#title-id .title-class}
+======================================================
+
+Title level 2 (HTML tag `h2`) {#title-id .title-class}
+-</pre>
+<p>As a title MUST be alone on a line, the attributes DOES NOT NEED to be unspaced from the text.</p>
+<h3 id="C6">C.6. Pre-formatted texts</h3><h4 id="C6a">C.6.a. Simple notation</h4>
+<p>A pre-formatted block is written as a paragraph beginning lines with 4 <em>spaces</em> (<em>the pipe 
+of the example below is not included in the notation and represents line's 1st character</em>):</p>
+<pre>|    a pre formed content</pre>
+<p>Unlike indentation rules for blocks (<a href="#A6" title="Reach inpage section #A6">§§</a>), ALL lines of a pre-formatted block 
+MUST be indented as this is the only rule to identify that kind of content.</p>
+<h4 id="C6b">C.6.b. Fenced code blocks</h4><h5 id="C6b1">C.6.b.1. Basics</h5>
+<p>A "fenced" code block can be written surrounded a content between two lines of <em>tildes</em> <code>~</code> 
+or <em>backticks</em> `&#96;` (at least 3):</p>
+<pre>~~~
+My code here
+~~~</pre>
+<p><strong>Implementation Note:</strong> The rendering of such content MUST be the exact same as for "classic"
+pre-formatted content (<a href="#C6" title="Reach inpage section #C6">§§</a>).</p>
+<h5 id="C6b2">C.6.b.2. Language information</h5>
+<p>An information about the language used in the block can be defined following the first delimiter by the 
+language name (without space):</p>
+<pre>```html
+My HTML code here
+```</pre>
+<p><strong>Implementation Note:</strong> In an HTML implementation, this feature permits to create a <em>language friendly</em> code block, 
+as recommended by the W3C in the <a href="http://dev.w3.org/html5/spec-author-view/the-code-element.html#the-code-element" title="See online http://dev.w3.org/html5/spec-author-view/the-code-element.html#the-code-element">HTML5 specifications</a>.</p>
+<h5 id="C6b3">C.6.b.3. Fenced code blocks with attributes</h5>
+<p>Fenced code blocks MUST allow <em>user defined attributes</em> (<a href="#D6a" title="Reach inpage section #D6a">§§</a>):</p>
+<pre>~~~{#block-id .block-class}
+My code here
+~~~
+
+~~~html{#block-id .block-class}
+My code here
+~~~</pre>
+<p>When a language information si defined on the first line of <em>tildes</em> or <em>backticks</em>, the attributes
+definition MUST be written last (after the language information) and without space.</p>
+<h3 id="C7">C.7. Citations</h3><h4 id="C7a">C.7.a. Basics</h4>
+<p>A blockquoted block is written preceding each line or only the first one of a paragraph by a <em>right angle bracket</em> <code>&gt;</code>:</p>
+<pre>&gt; This is my blockquote,
+&gt; where we can include **other Markdown** tags ...
+
+&gt; We can also write our blockquotes
+without the superior sign on each line, but just at the beginning of the first one.</pre>
+<p>Once a blockquote has begin (<em>e.g. as long as no blank line is passed</em>), the content will be part of it.</p>
+
+<p>Nested blockquotes can be written with consecutive left angle signs rather than indenting
+each one:</p>
+<pre>&gt; This is my blockquote
+&gt; &gt; This is a nested blockquote</pre>
+<p>MUST be the same as:</p>
+<pre>&gt; This is my blockquote
+&gt;&gt; This is a nested blockquote</pre>
+<p><strong>Writer Note:</strong> The notation of blockquotes is the "classic" <em>email-style</em> for citations, this
+is the reason why the indentation between the angle bracket and the content is NOT required.</p>
+<h4 id="C7a_53ed13b1684b8">C.7.b. Citation original URL</h4>
+<p>To precise the URL of the original content cited, write this URL at the beginning of the first line
+between <em>parenthesis</em> <code>(</code> and <code>)</code>:</p>
+<pre>&gt; (http://test.com/) This is my blockquote,
+&gt; with a content cited from the original "http://test.com" page ...</pre><h3 id="C8">C.8. Lists</h3><h4 id="C8a">C.8.a. Unordered lists</h4>
+<p>An un-ordered list is written beginning each entry by an <em>asterisk</em> <code>*</code>, a <em>plus sign</em> <code>+</code> or an 
+<em>hyphen</em> <code>-</code> followed by 1 or more <em>space(s)</em>. The character used for each item of a list MUST NOT matter:</p>
+<pre>-   first item
+*   second item
+-   third item</pre>
+<p>To create sub-items, just indent the sub-list twice:</p>
+<pre>-   first item
+*   second item
+    - first sub-item
+    * second sub-item
+-   third item</pre><h4 id="C8b">C.8.b. Ordered lists</h4>
+<p>An ordered list is written beginning each entry by a number followed by a <em>period</em> <code>.</code> and 
+1 or more <em>space(s)</em>. The number used for each item of a list MUST NOT matter:</p>
+<pre>1.   first item
+1.   second item
+    1.  first sub-item
+    1.  second sub-item
+2.   third item</pre>
+<p><strong>Writer Note:</strong> A special attention MAY be attached when beginning a line with a raw hyphen, asterisk or plus or
+with a number followed by a point. For instance, to write the raw string <code>123. My text</code>, the
+point after the number MUST be escaped to not be parsed as an ordered list item:</p>
+<pre>123\. My text</pre><h3 id="C9">C.9. Terms definitions</h3>
+<p>A definition is written separated in at least two parts:</p>
+<ul><li>the term on the first line, with no leading space or character</li><li>then, the definition beginning on the second line, with a leading <em>colon</em> <code>:</code> followed by 
+at least 3 <em>spaces</em> (1 level of indentation)</li></ul><pre>Apple
+:   Pomaceous fruit of plants of the genus Malus in
+    the family Rosaceae.
+</pre>
+<p>A term can have multiple definitions, separated by a <em>blank line</em> (<a href="#A5" title="Reach inpage section #A5">§§</a>):</p>
+<pre>Apple
+:   Pomaceous fruit of plants of the genus Malus in
+    the family Rosaceae.
+
+:   Lorem ipsum.</pre>
+<p>Each definition can have multiple paragraphs:</p>
+<pre>Apple
+:   Pomaceous fruit of plants of the genus Malus in
+    the family Rosaceae.
+
+    Lorem ipsum.</pre><h3 id="C10">C.10. Tables</h3><h4 id="C10a">C.10.a. Basic table</h4>
+<p>The basic table syntax is as simple as trying to build a visual table in plain text:</p>
+<pre>| First Header  | Second Header    |
+| ------------- | ---------------- |
+| Content Cell  | Content *Cell*   |
+| Content Cell  | Content **Cell** |</pre>
+<p>The rules here are:</p>
+<ul><li>every table's line is written alone on a single line</li><li>the first lines are the headers of the table (most of the time one single line)</li><li>it is followed by a mandatory separator line of <em>hyphens</em> <code>-</code></li><li>each line below is a line of the table content</li><li>columns are separated by <em>pipes</em> <code>|</code> and each line may have the same number of pipes</li><li>spacing is not important except for visual facility</li><li>tables can be written without the leading pipes</li></ul>
+<p>Finally, the content of the cells can have other MDE's typographic features like emphasis (<a href="#B2" title="Reach inpage section #B2">§§</a>).</p>
+<h4 id="C10b">C.10.b. Columns alignment</h4>
+<p>Alignment in columns can be specified by using <em>colons</em> <code>:</code> in the separators line:</p>
+<ul><li>a colon on the left of a separator's cell means a <em>left-aligned column</em>: <code>:---</code></li><li>a colon on the right of a separator's cell means a <em>right-aligned column</em>: <code>---:</code></li><li>two colons on the left and the right of a separator's cell means a <em>centered column</em>: <code>:--:</code></li></ul><pre>| First Header  | Second Header | Third header |
+| ------------- | ------------: | :----------: |
+| Content Cell  | **Cell**      | **Cell**     |
+| Content Cell  | **Cell**      | **Cell**     |
+</pre><h4 id="C10c">C.10.c. Cell grouping</h4>
+<p>To build cell groups (one cell over more than one column) we write as many final pipes as the content 
+must cover columns, without spaces:</p>
+<pre>| First Header  | Second Header | Third header |
+| ------------- | ------------: | :----------: |
+| Content Cell  |  *Long Cell*                ||
+| Content Cell  | **Cell**      | **Cell**     |</pre>
+<p><strong>Implementation Note:</strong> Cell grouping MUST be allowed in lines of content AND header line(s).</p>
+<h4 id="C10d">C.10.d. Table caption</h4>
+<p>Table caption is written between <em>brackets</em> <code>[</code> and <code>]</code> just before or just after the table, 
+on a new single line:</p>
+<pre>|               | Grouping                    ||
+| First Header  | Second Header | Third header |
+| ------------- | ------------: | :----------: |
+| Content Cell  |  *Long Cell*                ||
+| Content Cell  | **Cell**      | **Cell**     |
+[ my table caption ]</pre>
+<p>A table <em>ID</em> (as described at <a href="#terms-and-definitions" title="Reach inpage section #terms-and-definitions">§§</a>) can also be defined. Please 
+refer to the dedicated section about attributes <a href="#D6" title="Reach inpage section #D6">§§</a>.</p>
+<h4 id="C10e">C.10.e. Table with multiple bodies</h4>
+<p>Separate sets of content for a single table are written separating them with one <em>blank line</em> (<a href="#A5" title="Reach inpage section #A5">§§</a>):</p>
+<pre>|               | Grouping                    ||
+| First Header  | Second Header | Third header |
+| ------------- | ------------: | :----------: |
+| Content Cell  |  *Long Cell*                ||
+| Content Cell  | **Cell**      | **Cell**     |
+
+| New section   |   More        |         Data |
+| And more      |           And more          ||</pre>
+<p><strong>Implementation Note:</strong> In HTML, the result should be a table with two <code>tbody</code> sections.</p>
+<h4 id="C10f">C.10.f. Table with attributes</h4>
+<p>Fenced code blocks MUST allow <em>user defined attributes</em> (<a href="#D6a" title="Reach inpage section #D6a">§§</a>):</p>
+<pre>| First Header  | Second Header | Third header |
+| ------------- | ------------: | :----------: |
+| Content Cell  |  *Long Cell*                ||
+| Content Cell  | **Cell**      | **Cell**     |
+[ my table caption ] {#table-id .table-class}</pre>
+<p>For a table with no caption, the attributes definition is written on a single line just before
+or after the table (without any blank line).</p>
+
+<p>For a table with a caption line, the attributes definition MUST be written on the same line
+as the caption. As each of these information are wrapped in different chains, the order or 
+spaces MUST NOT matter.</p>
+<h3 id="C11">C.11. Mathematics blocks</h3>
+<p>Block of mathematics formula is written surrounding the content between <em>escaped brackets</em> <code>\[</code> and <code>\]</code>
+(additionally to blank lines):</p>
+<pre>\[...\]
+\[\Delta = \frac{\partial U^*}{\partial F} = \frac{12F}{Eb} \int_0^L \frac{x^2}{(t_0 + \alpha x)^3} dx\]</pre>
+<p>Mathematics notation is developed in a dedicated section <a href="#D4" title="Reach inpage section #D4">§§</a>.</p>
+<h3 id="C12">C.12. Images blocks</h3>
+<p>Following the same notation as for <em>inline images</em> (<a href="#B6a" title="Reach inpage section #B6a">§§</a>), an image CAN be written
+as a single block alone on a line:</p>
+<pre>A paragraph ...
+
+![alt text](http://test.com/data1/images/1.jpg "My optional title" class=myimageclass style="width: 40px;")
+
+Another paragraph ...</pre>
+<p>This notation MUST be used to build the <em>table of figures and tables</em> (<a href="#D8b" title="Reach inpage section #D8b">§§</a>).</p>
+
+<p><strong>Implementation Note:</strong> In an HTML rendering, a block image MAY be rendered as a <code>figure</code>
+tag, as recommended by the W3C in the <a href="http://dev.w3.org/html5/spec-author-view/the-code-element.html#the-code-element" title="See online http://dev.w3.org/html5/spec-author-view/the-code-element.html#the-code-element">HTML5 specifications</a>.</p>
+<h2 id="D">D. Miscellaneous rules</h2><h3 id="D1">D.1. Meta data</h3><h4 id="D1a">D.1.a. Basics</h4>
+<p>Meta-data can be added to an MDE document when necessary ; it can be the case to specify
+a special title for the document, its author or any kind of "meta" information.</p>
+
+<p>A meta-data is added writing it at the very top of the document (without any blank line from
+the top) as a <code>var: val</code> pair:</p>
+<ul><li>the meta-data name is written at the beginning of the line, followed by a <em>colon</em> <code>:</code> and a <em>space</em></li><li>the meta-data content can be multi-line</li></ul><pre>author: John Doe
+</pre>
+<p>The name of a meta-data MUST be a kind of "slug": a single string without space which can be 
+considered as an identifier.</p>
+
+<p>Multiple meta-data can be written, beginning each item on a new line, and the "true" content
+of the document MUST begin after passing at least one blank line after meta-data.</p>
+<h4 id="D1b">D.1.b. Meta-data value insertion</h4>
+<p>Meta-data can also be used to define variables values available in the document. To use a
+meta-data value, use notation <code>[%var]</code>: the meta-data name preceded by a <em>percent sign</em> <code>%</code> 
+between brackets <code>[</code> and <code>]</code>.</p>
+<pre>mymeta: A value for the meta-data
+
+This is the document content, where I can call [%mymeta] value.</pre><h3 id="D2">D.2. Escaping of meta-characters</h3>
+<p>Escaping a meta-character in MDE only consists in preceding it by a <em>back-slash</em> <code>\</code>.</p>
+
+<p>The following characters MUST be escaped to be rendered as the raw character they are:</p>
+<ul><li><code>\\</code> : the backslash itself</li><li><code>\.</code> : the dot</li><li><code>\:</code> : the colon</li><li><code>\!</code> : the exclamation point</li><li><code>\#</code> : the hash mark</li><li><code>\*</code> : the asterisk</li><li><code>\+</code> : the plus sign</li><li><code>\-</code> : the hyphen</li><li><code>\_</code> : the underscore</li><li>`&#96;` : the backtick quote</li><li><code>\|</code> : the pipe</li><li><code>\(</code> and <code>\)</code> : the parentheses</li><li><code>\[</code> and <code>\]</code> : the brackets</li><li><code>\{</code> and <code>\}</code> : the curly brackets</li></ul>
+<p>BUT, as certain tags MUST be written using such notation (this is the case of mathematical 
+notations for instance, <a href="#B8" title="Reach inpage section #B8">§§</a> and <a href="#C11" title="Reach inpage section #C11">§§</a>), they SHOULD be escaped twice if they are
+used in couples (one opening and one closing character):</p>
+<ul><li><code>\\(</code> and <code>\\)</code> : the parentheses</li><li><code>\\[</code> and <code>\\]</code> : the brackets</li></ul><h3 id="D3">D.3. References</h3>
+<p>The idea of the "references" comes from the first idea of Markdown: let the content be readable "as is".</p>
+
+<p>So, in some cases, it is most relevant to move an information on a single line anywhere in the
+document (at its bottom for instance) and only insert its <em>REFID</em> (as described at 
+<a href="#terms-and-definitions" title="Reach inpage section #terms-and-definitions">§§</a>) at its final place.</p>
+<h4 id="D3a">D.3.a. Basics</h4>
+<p>The global construction of references is to replace the content by a <em>REFID</em> and write that
+content on another line anywhere.</p>
+
+<p>The <em>REFID</em> is written between <em>brackets</em> <code>[</code> and <code>]</code> in the content. The reference is written
+on a single line, anywhere in the document (it MUST be skipped from final rendering), with:</p>
+<ul><li>the <em>REFID</em> at the beginning of the line between <em>brackets</em> <code>[</code> and <code>]</code></li><li>a <em>colon</em> <code>:</code> without space after closing bracket</li><li>then the value of the reference after a <em>space</em></li></ul><pre>This is a paragraph with a [referenced link][linkid] ...
+
+...
+
+[linkid]: http://test.com/ "My optional title"
+</pre>
+<p>In the case above, the final rendering MUST be exactly the same as if it was written like:</p>
+<pre>This is a paragraph with a [referenced link](http://test.com/ "My optional title") ...
+
+...</pre><h4 id="D3b">D.3.b. Various types of references</h4>
+<p>As developed in other sections of these specifications, the "reference" notation is used for
+different MDE's rules, following different constructions:</p>
+<ol><li>
+<p>the classic reference as described in <a href="#D3a" title="Reach inpage section #D3a">§§</a>, which can be used for links and images:</p>
+<pre>[id]: http://test.com/ "Optional title"</pre></li><li>
+<p>the abbreviation reference as described in <a href="#B3" title="Reach inpage section #B3">§§</a>:</p>
+<pre>*[TERM]: Content of the abbreviated acronym.</pre></li><li>
+<p>the footnote reference as described in <a href="#D5a" title="Reach inpage section #D5a">§§</a>:</p>
+<pre>[^id]: Content of the footnote.</pre></li><li>
+<p>the glossary note reference as described in <a href="#D5b" title="Reach inpage section #D5b">§§</a>:</p>
+<pre>[^myid]: glossary: Term
+Actual content of the glossary footnote.</pre></li><li>
+<p>the citation note reference as described in <a href="#D5c" title="Reach inpage section #D5c">§§</a>:</p>
+<pre>[#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.</pre></li></ol><h4 id="D3c">D.3.c. Identifiers construction for REFIDs</h4>
+<p>As described at <a href="#terms-and-definitions" title="Reach inpage section #terms-and-definitions">§§</a>, we have to differentiate the <em>ID</em> (<a href="#D7" title="Reach inpage section #D7">§§</a>)
+and the <em>REFID</em>, the <em>references identifier</em>, which does not have the same usage as classic <em>ID</em>
+and may not follow the same construction rules. The <em>REFID</em> is the string written at the beginning
+of the line, between <em>brackets</em> <code>[</code> and <code>]</code>, in the notations listed above (<a href="#D3b" title="Reach inpage section #D3b">§§</a>).</p>
+
+<p>A <em>reference identifier</em> MUST be constructed, by default, as:</p>
+<ul><li>a string with or without space</li><li>with NO meta-caracter (<a href="#terms-and-definitions" title="Reach inpage section #terms-and-definitions">§§</a>) except when it is part of the identifier
+rule (see the list above for examples - <a href="#D3b" title="Reach inpage section #D3b">§§</a>).</li></ul><h3 id="D4">D.4. Mathematics</h3>
+<p>One of the goal of MDE (and globally the Markdown syntax) is to write documentation. In this
+idea, MDE parsers MUST be prepared to handle complex mathematical notations.</p>
+
+<p>Inline (<a href="#B8" title="Reach inpage section #B8">§§</a>) and block (<a href="#C11" title="Reach inpage section #C11">§§</a>) mathematical contents (the part inside both wrappers) 
+MUST follow the <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics" title="See online https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX syntax</a>.</p>
+
+<p><strong>Implementation Note:</strong> The final rendering of the mathematical notations can be the scope of 
+a third-party application but an MDE parser MUST integrate such third-party natively.</p>
+<h3 id="D5">D.5. The special case of notes</h3>
+<p>Footnotes in a text are a way to increase its meaning, external references, some required
+definitions for the global comprehension, without overcrowding it. They are often used in
+books and official contents.</p>
+
+<p>We can distinguish three types of footnotes in a content, depending on their intention:</p>
+<ul><li><strong>a simple footnote</strong> is a short additional content that would have no place in the content,</li><li><strong>a glossary note</strong> is an explanation about a technical term or a glossary entry,</li><li><strong>a bibliographic note</strong>, which refers to another book or work, is a hard reference to let the
+reader find the original source.</li></ul>
+<p>Any footnote MUST be callable multiple times in a single documents using the same note <em>REFID</em>, without
+creating a new footnote entry at each call.</p>
+
+<p><strong>Implementation Note:</strong> Parsers MAY allow, in any output format, to let reader access to a footnote
+text where it appears in the document content. If the footnote text is written elsewhere (at the
+document bottom for instance), a link MAY be proposed to go back in the content.</p>
+<h4 id="D5a">D.5.a. Footnotes</h4>
+<p>To create a <em>footnote</em> reference, just write its <em>REFID</em> like <code>[^ID]</code>: a <em>circumflex</em> <code>^</code> before the <em>REFID</em> string,
+between <em>brackets</em> <code>[</code> and <code>]</code> in the content, then write the footnote content as a <em>reference</em> (<a href="#D3" title="Reach inpage section #D3">§§</a>):</p>
+<pre>Paragraph with a footnote[^myid].
+
+...
+
+[^myid]: Content of the footnote.</pre>
+<p>A footnote can also be written inline like:</p>
+<pre>Paragraph with a footnote[^Content of the footnote.].</pre><h4 id="D5b">D.5.b. Glossary notes</h4>
+<p>A glossary note is most like a definition. It is attached to a specific term and tries to give
+one or more explanation(s) of it. Glossary notes have to be considered as <em>definitions list</em>,
+except that they will all be placed like footnotes (at the end of the content for instance).</p>
+
+<p>A <em>glossary footnote</em> is written like a classic <em>footnote</em> but the first line of the note content
+contains concerned term, preceded by the string <code>glossary:</code> and OPTIONALLY followed by a <em>character</em>
+between <em>parenthesis</em> <code>(</code> and <code>)</code> that will be used to sort the term in an alphabetical lexicon:</p>
+<pre>Paragraph with a glossary note[^myid].
+
+...
+
+[^myid]: glossary: Term (x)
+Actual content of the glossary footnote.</pre>
+<p>The differentiation between classic and glossary footnotes allows to build a <em>lexicon</em> of a
+document referencing only glossary notes (<a href="#D9b" title="Reach inpage section #D9b">§§</a>).</p>
+<h4 id="D5c">D.5.c. Bibliographic notes</h4>
+<p>A bibliographic note is a fully referenced external work. This kind of notes is often used
+in academic or scientific works. The point is that we have to follow some <em>academic rules</em>
+for bibliographic notes, basically to cite enough information to let the reader find concerned
+work easily.</p>
+
+<p>A <em>citation note</em> is written like a classic footnote but:</p>
+<ul><li>the <em>REFID</em> of the note is constructed in two parts like <code>[p. XX][#Doe:1991]</code>:
+
+<ul><li>the page number between <em>brackets</em> <code>[</code> and <code>]</code> (this content of this part is OPTIONAL)</li><li>the reference <em>REFID</em>, constructed like classic footnotes (<a href="#D5a" title="Reach inpage section #D5a">§§</a>) but preceded by a <em>hash mark</em> <code>#</code></li></ul></li><li>the note content follows the same rules as for classic footnotes, but the <em>circumflex</em>
+is replaced by a <em>hash mark</em> <code>#</code>.</li></ul><pre>Paragraph with a citation note[p. XX][#Doe:1991].
+
+...
+
+[#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
+edition for instance ... (Web link) Retrieved September 30, 2011.
+</pre>
+<p>In a case where the page number is unknown (or not relevant) writer MUST write the first <em>brackets</em>
+<code>[</code> and <code>]</code> with an empty content:</p>
+<pre>Paragraph with a citation note[][#Doe:1991].
+
+...
+
+[#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
+edition for instance ... (Web link) Retrieved September 30, 2011.</pre>
+<p>In a case where writers need to reference a citation without using it in the content, the <code>[not cited]</code>
+prefix MUST be used and MUST be case insensitive:</p>
+<pre>Paragraph with no citation note.
+
+...
+
+[Not Cited][#Doe:1991]: FirstName LastName (October 5, 1991). *Title of the work*.
+edition for instance ... (Web link) Retrieved September 30, 2011.</pre>
+<p><strong>Implementation Note:</strong> Parsers MAY have to follow some typographic <em>academic rules</em> for bibliographic
+notes, such as naming the authors in bold, writing the title of the work in italic etc.</p>
+
+<p>The differentiation between classic and citation footnotes allows to build a <em>bibliographic index</em> of a
+document referencing only citation notes (<a href="#D9b" title="Reach inpage section #D9b">§§</a>).</p>
+<h3 id="D6">D.6. User defined attributes</h3><h4 id="D6a">D.6.a. Tags attributes</h4>
+<p>A special notation allows writers to define some specific attributes, taken from the HTML 
+markup language: some <strong>class names</strong> and some <strong>identifiers</strong>.</p>
+
+<p>Writers can use the following notation, placing it near concerned content:</p>
+<pre>{#id}
+{.class-name}
+{.class-name #id}
+{#id .class-name1 .class-name2}</pre>
+<p>This notation can be decomposed in:</p>
+<ul><li>one or zero <em>ID</em> string preceded by a <em>hash mark</em> <code>#</code> (without space)</li><li>zero, one or more class names preceded by a <em>period</em> <code>.</code> (without space)</li><li>each attribute separated from others by a <em>space</em></li><li>the whole string surrounded between <em>curly brackets</em> <code>{</code> and <code>}</code></li></ul>
+<p>The order of class names and ID MUST not matter:</p>
+<pre>{#id .class-name1 .class-name2}
+{.class-name1 #id .class-name2}</pre>
+<p><strong>Note:</strong> The <em>hash mark</em> notation for ids or <em>period</em> notation for class names are very similar 
+to the selectors used by many javascript libraries (such as jQuery or Scriptaculous).</p>
+
+<p>Such notation concerns the following contents:</p>
+<ul><li>
+<p>the <em>titles</em> (<a href="#C5" title="Reach inpage section #C5">§§</a>):</p>
+<pre>### My title content {#title-id .class}
+### My title content ##### {#title-id .class}
+My title content {#title-id .class}
+-----------------</pre></li><li>
+<p>the <em>links</em> (<a href="#B5" title="Reach inpage section #B5">§§</a>):</p>
+<pre>[link text](http://test.com/){#link-id .class}
+[link text](http://test.com/ "My title" var1=val var2="val1 val2"){#link-id .class}</pre></li><li>
+<p>the <em>images</em> (<a href="#B6" title="Reach inpage section #B6">§§</a> and <a href="#C12" title="Reach inpage section #C12">§§</a>):</p>
+<pre>![alt text](http://test.com/img.ext){#image-id .class}
+![alt text](http://test.com/img.ext "My title" var1=val var2="val1 val2"){#image-id .class}</pre></li><li>
+<p>the <em>fenced code blocks</em> (<a href="#C6b" title="Reach inpage section #C6b">§§</a>):</p>
+<pre>~~~{#block-id .class-name}
+code block content
+~~~
+
+~~~html{#block-id .class-name}
+code block content
+~~~</pre></li><li>
+<p>the <em>references</em> (<a href="#D3" title="Reach inpage section #D3">§§</a>):</p>
+<pre>A paragraph with referenced [link][link-id] and ![image][image-id].
+
+[link-id]: http://test.com/ {#link-id .class}
+[image-id]: http://test.com/img.ext {#image-id .class}
+
+A paragraph with referenced [link][link-id] and ![image][image-id].
+
+[link-id]: http://test.com/ "My title" var1=val var2="val1 val2" {#link-id .class}
+[image-id]: http://test.com/img.ext "My title" var1=val var2="val1 val2" {#image-id .class}</pre></li><li>
+<p>the <em>tables</em> (<a href="#C10" title="Reach inpage section #C10">§§</a>):</p>
+<pre>|               | Grouping                    ||
+| First Header  | Second Header | Third header |
+| ------------- | ------------: | :----------: |
+| Content Cell  |  *Long Cell*                ||
+| Content Cell  | **Cell**      | **Cell**     |
+{#tableid .class}
+
+|               | Grouping                    ||
+| First Header  | Second Header | Third header |
+| ------------- | ------------: | :----------: |
+| Content Cell  |  *Long Cell*                ||
+| Content Cell  | **Cell**      | **Cell**     |
+{#tableid .class}[table caption]</pre>
+<p>In the case of tables, the only restriction is that, if the table has a caption as defined
+at (<a href="#C10d" title="Reach inpage section #C10d">§§</a>), the attributes information MUST be on the same line as the caption.</p>
+</li></ul>
+<p>The usage of a user defined <em>ID</em> CAN be largely used for any type of content in an MDE document.
+This allows to reference a part of a content for in-page links writing:</p>
+<pre>This is a paragraph with an anchor{#my-anchor} I can access with a [link](#my-anchor) ...</pre>
+<p>Note that writing class names on the same model would not have sense as writer can't define
+concerned span of content. Such a usage of class names in the middle of a content (outside
+the content types listed above) MUST NOT be allowed and MUST NOT have any effect.</p>
+
+<p>As developed in the <em>identifiers construction</em> section (<a href="#D7" title="Reach inpage section #D7">§§</a>), any <em>ID</em> defined in the
+content MUST be used instead of automatic one (with, eventually, modifications to fit the
+"slug" specifications).</p>
+
+<p><strong>Implementation Note:</strong> In an HTML rendering, the output MUST be a tag with user defined
+class names as <code>class</code> attribute and <em>ID</em> as <code>id</code> attribute. In other output formats, some
+class names SHOULD have an effect in the final rendering (by defining a special rendering
+for common class names for instance).</p>
+<h4 id="D6b">D.6.b. Raw attributes</h4>
+<p>In some notations, writers can add raw attributes to contents. This basically concerns only
+<em>links</em> (<a href="#B5" title="Reach inpage section #B5">§§</a>) and <em>images</em> (<a href="#B6" title="Reach inpage section #B6">§§</a> and <a href="#C12" title="Reach inpage section #C12">§§</a>).</p>
+
+<p>The global rule for such a notation is that:</p>
+<ul><li>when the attribute value is unique, the simple notation <code>var=val</code> is allowed</li><li>when the attribute value is "long" (includes multiple words), the notation MUST
+use <em>double-quoted</em> values <code>"</code> : <code>var="val1 val2"</code></li></ul><h3 id="D7">D.7. Identifiers construction for IDs</h3>
+<p>For the construction of the <em>IDs</em> described at <a href="#A9" title="Reach inpage section #A9">§§</a>, an MDE parser MUST use a constant 
+"<em>slugification</em>" process. Trying to build these specifications, we found three third-parties
+definitions useful:</p>
+<ul><li>
+<p>the <a href="https://docs.djangoproject.com/en/dev/ref/models/fields/#slugfield" title="See online https://docs.djangoproject.com/en/dev/ref/models/fields/#slugfield">Django "slug" field</a> specification:</p>
+<blockquote>  
+  <p>A short label for something, containing only letters, numbers, underscores or hyphens.</p>
+</blockquote></li><li>
+<p>the <a href="http://www.w3.org/TR/html4/types.html#type-id" title="See online http://www.w3.org/TR/html4/types.html#type-id">HTML4 "id" attribute</a> specification:</p>
+<blockquote>  
+  <p>ID [...] tokens must begin with a letter ([A-Za-z]) and may be followed by any number 
+  of letters, digits ([0-9]), hyphens ("-"), underscores ("_"), colons (":"), and periods (".").</p>
+</blockquote></li><li>
+<p>the <a href="http://www.w3schools.com/tags/att_global_id.asp" title="See online http://www.w3schools.com/tags/att_global_id.asp">W3C "id" attribute</a> definition:</p>
+<blockquote>  
+  <p>[...] In HTML, all values are case-insensitive.</p>
+</blockquote></li></ul>
+<p>In conclusion, in MDE, the construction of IDs MUST follow the rules below:</p>
+<ul><li>a string all lower-case</li><li>containing <em>letters</em> <code>[a-z]</code>, <em>digits</em> <code>[0-9]</code>, <em>hyphens</em> <code>-</code>, <em>underscores</em> <code>_</code>, <em>colons</em> <code>:</code> and <em>periods</em> <code>.</code></li></ul>
+<p>These rules MUST be applied when constructing an automatic <em>ID</em> AND when a user defined <em>ID</em> occurs
+(<a href="#D6" title="Reach inpage section #D6">§§</a>). When a writer specify an <em>ID</em> "by hand", parser MUST take that <em>ID</em> instead of creating an
+automatic one, but the <em>ID</em> MUST be transformed to follow above specifications if it is not the case.</p>
+
+<p><strong>Example:</strong> The example below is given as a demonstration. The final "slugify" process is NOT part
+of these specifications:</p>
+<pre>### This is a title
+// =&gt; id=this-is-a-title</pre><h3 id="D8">D.8. Automatic indexations</h3><h3 id="D8a">D.8.a. Table of contents</h3>
+<p>Any MDE parser MUST handle a table of contents, extracting at least all titles of a document.
+Global document's structure MUST be able to use both titles notations (<a href="#C5" title="Reach inpage section #C5">§§</a>) to build a 
+single table of contents.</p>
+
+<p>To do so, any title MUST have a unique <em>ID</em> as reference (like the <code>id</code> attribute of an HTML tag)
+and this ID MUST follow the specifications at <a href="#D7" title="Reach inpage section #D7">§§</a>.</p>
+<h3 id="D8b">D.8.b. Table of figures and tables</h3>
+<p>Any MDE parser MUST handle a table of figures and tables of the document, extracting the
+following objects:</p>
+<ul><li>any <em>table</em> (<a href="#C10" title="Reach inpage section #C10">§§</a>)</li><li>any <em>figure</em> (<a href="#C12" title="Reach inpage section #C12">§§</a>)</li></ul>
+<p>To do so, any table and figure MUST have a unique <em>ID</em> as reference (like the <code>id</code> attribute of an HTML tag)
+and this ID MUST follow the specifications at <a href="#D6" title="Reach inpage section #D6">§§</a>.</p>
+<h3 id="D9">D.9. Implementers specifics</h3>
+<p>This section will describe some features and rules the MDE's parsers MUST implement (except
+where noted).</p>
+<h4 id="D9a">D.9.a. Error handling</h4>
+<p>MDE parsers MUST be prepared to handle syntax errors informing the writer about what caused
+the error and, OPTIONALLY, how to fix it. The error information MAY be a simple phrase with
+a line number or the tag's type that causes the error.</p>
+<h4 id="D9b">D.9.b. Structural tags</h4>
+<p>A parser SHOULD let the writer choose its rendering structure by allowing him to use <em>structural
+tags</em> that SHOULD be replaced by corresponding block (mostly indexes) if it is defined and
+not empty.</p>
+
+<p>These tags are:</p>
+<ul><li><code>TOC</code> for the <em>table of contents</em> (<a href="#D8a" title="Reach inpage section #D8a">§§</a>)</li><li><code>TOF</code> for the <em>table of figures</em> (<a href="#D8b" title="Reach inpage section #D8b">§§</a>)</li><li><code>NOTES</code> for the <em>footnotes</em> (<a href="#D5" title="Reach inpage section #D5">§§</a>)</li><li><code>GLOSSARY</code> for <em>glossary footnotes</em> only (lexicon - <a href="#D5b" title="Reach inpage section #D5b">§§</a>)</li><li><code>BIBLIOGRPHY</code> for <em>citations footnotes</em> only (bibliographic index - <a href="#D5c" title="Reach inpage section #D5c">§§</a>)</li></ul>
+<p>The construction of such tag MAY follow these rules:</p>
+<ul><li>the name of the tag (from the list above) in capital letters</li><li>surrounded between percent sign <code>%</code> and curly brackets <code>{</code> and <code>}</code></li><li>OPTIONAL spaces surrounding the tag name.</li></ul><pre>\{% TOC %\}
+\{% TOF %\}
+\{% NOTES %\}
+\{% GLOSSARY %\}
+\{%BIBLIOGRPHY%\}
+</pre><h4 id="D9c">D.9.c. User configuration</h4>
+<p>An MDE's parser SHOULD propose any user to define some preferences with a table of options.</p>
+<h4 id="D9d">D.9.d. Various</h4>
+<p>The rules described in this section are NOT part of the specifications, these are just ideas and
+commonly used features.</p>
+<h5 id="D9d1">D.9.d.1. Other file inclusion</h5>
+<p>For facility, it seems to be a good idea to allow writers to include external files.</p>
+<h5 id="D9d2">D.9.d.2. Critic markup</h5>
+<p>As defined in <em>MultiMarkdown</em>, the <strong>Critic Markup</strong> rules CAN be useful when working on a Markdown
+document with a team. It allows to keep an information about additions, modifications and deletions
+in a content.</p>
+
+<p>For a full information about the syntax, please see <a href="http://criticmarkup.com/" title="See online http://criticmarkup.com/">criticmarkup.com</a>.</p>
+
+<p><strong>Implementation Note:</strong> When allowing the CriticMarkup syntax, an MDE parser MUST be prepared to
+handle different states like <code>old</code> and <code>new</code> and finally consider any modification as <em>validated</em>
+for a final rendering (the <code>new</code> status MUST be the default).</p>
+<h2 id="contribute">Contribute</h2>
+<p>This document and the MDE's specification are opened for any kind of discussion, argumentation, 
+translation and any other modification.</p>
+
+<p>If you'd like to leave feedback, please <a href="http://github.com/markdown-extended/manifest/issues" title="See online http://github.com/markdown-extended/manifest/issues">open an appropriate issue on GitHub</a>.
+You could first search in existing tickets if your comment does not already exists. If your
+ticket concerns a specific rule, please include its reference in its title like <code>X.Y.Z. Ticket title ...</code>.</p>
+
+<p>The source of this document is maintained under a GIT version-control repository publicly hosted on <a href="http://github.com" title="See online http://github.com">GitHub</a>.
+If you want to participate in any way, just <a href="http://help.github.com/articles/fork-a-repo" title="See online http://help.github.com/articles/fork-a-repo">fork and edit</a> the original repository 
+and ask for a <a href="http://help.github.com/articles/using-pull-requests" title="See online http://help.github.com/articles/using-pull-requests">pull request</a> opening the appropriate issue ticket. GitHub embeds 
+many tools and procedures to allow a quick and simple "<em>fork/pull request</em>" process.</p>
+
+<p>If you want to contribute by translating this document, follow the steps above and create a 
+copy of the original <code>mde-manifest.md</code> file named like <code>mde-manifest.LN.md</code> where <code>LN</code> is
+your language code following the <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php" title="See online http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO 639-1 list</a>.</p>
+
+<p>And finally, THANK YOU for being involved ;)</p>
+
+            <hr class="hidden-print" />
+            <footer class="text-right text-muted"><p class="small">
+                            Last update of this content at Thu, 14 Aug 2014 19:31:36 +0000.&nbsp;                </p></footer>
+        </article>
+        <div class="clearfix"></div>
+        <footer>
+            <div class="footer printer-footer">
+                <div class="pull-right text-right">
+                        Content rendered from a <a href="http://github.com/piwi/markdown-extended" title="github.com/piwi/markdown-extended">Markdown Extended</a> content&nbsp;&dash;&nbsp;<a href="?plain" title="See plain text version of this content">See raw content</a><br>
+                        Page generated from an <a href="http://github.com/piwi/html5-quick-template" title="html5-quick-template 1.2.1">html5-quick-template</a>.<br>Page built with the help of open source stuff such as <a href="http://jquery.com/" title="jquery.com">jQuery</a>, <a href="http://getbootstrap.com/" title="getbootstrap.com">Bootstrap</a> and <a href="http://fortawesome.github.io/Font-Awesome" title="fortawesome.github.io/Font-Awesome">Font Awesome</a>.                </div>
+                <div class="pull-left responsive hidden-print">
+                    <div class="clearfix visible-xs"><br /></div>
+                    <div>
+                        <ul class="nav nav-pills">
+                            <li class="handler"><a id="profiler-handler" class="no-hash profiler-component" data-toggle="collapse" href="javascript:showHide('profiler');" data-jq-title="show / hide the profiler" data-jq-href="#profiler"><i class="fa fa-cogs"></i>&nbsp;Profiler</a></li>
+                            <li class="handler"><a href="javascript:showHide('hqt-about');" class="no-hash" data-toggle="modal" data-target="#messagebox" data-jq-title="open the about box"><i class="fa fa-info-circle"></i>&nbsp;About</a></li>
+                                <li class="handler"><a href="https://github.com/markdown-extended/manifest/tree/gh-pages" title="read the app manual online"><i class="fa fa-globe"></i>&nbsp;Manual</a></li>
+                                <li class="handler hidden"><a href="#top" title="reach the top of this page"><i class="fa fa-angle-up"></i><span class="hidden-sm">&nbsp;Top</span></a></li>
+                        </ul>
+                        <div id="profiler" class="profiler-component collapse" style="display: none;" data-jq-style=""><small class="hidden">[<a href="javascript:showHide('profiler');">close</a>]</small>
+                            <dl class="dl-horizontal">
+                                <dt>request</dt><dd><a id="profiler-request" class="insert-request"></a></dd>
+                                <dt>apps</dt><dd id="profiler-apps">html5-quick-template 1.2.1</dd>
+                                <dt>date</dt><dd id="profiler-date">2014-08-14T21:53:21+02:00 (Europe/Berlin)</dd>
+                                <dt>browser / device</dt><dd id="profiler-user-agent"></dd>
+                                <dt>server OS</dt><dd id="profiler-server">Darwin MacBook-Pro-de-Pierre.local 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  3 21:27:35 PDT 2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64</dd>
+                                            <dt>MDE</dt>
+                                <dd id="profiler-mde">PHP Markdown Extended 0.1-gamma</dd>
+                                        </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </footer>
+        <footer class="visible-print">
+            <p class="small">Together, have a responsible approach: do not print this page unless necessary.<br>This page comes from the Internet at: <span id="printer-request"></span></p>
+        </footer>
     </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Manifest maintained by <a href="https://github.com/markdown-extended">markdown-extended</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
+    <div class="clearfix"></div>
+    <a id="bottom"></a>
+    <div id="messagebox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageboxlabel" aria-hidden="true">
+        <div class="modal-dialog"><div class="modal-content">
+            <div class="hidden-no-js modal-header"><button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true" title="close this box">x</button><h4 class="modal-title" id="messageboxlabel"><i class="fa fa-info-circle"></i>&nbsp;About the app</h4></div>
+            <div class="modal-body" id="hqt-about" style="display: none;" data-jq-style=""><small class="hidden">[<a href="javascript:showHide('hqt-about');">close</a>]</small><div class="jumbotron"><h1 class="text-center">the MDE manifest</h1><p class="text-center">The new way of writing for the web</p><dl class="dl-horizontal"><dt>license</dt><dd><a href="http://creativecommons.org/licenses/by/3.0/" title="See online">Creative Commons BY 3.0</a></dd><dt>maintainer</dt><dd><a href="http://github.com/piwi" title="See online">@pierowbmstr</a></dd><dt>sources &amp; updates</dt><dd><a href="http://github.com/markdown-extended/manifest" title="See online">http://github.com/markdown-extended/manifest</a></dd><dt>third-parties</dt><dd><ul class="list-unstyled"><li><a href="http://github.com/piwi/markdown-extended" title="See online: http://github.com/piwi/markdown-extended">PHP Markdown Extended 0.1-gamma</a> (<a href="http://opensource.org/licenses/BSD-3-Clause" title="See online">BSD 3.0 license</a>)</li><li><a href="http://github.com/piwi/html5-quick-template" title="See online: http://github.com/piwi/html5-quick-template">html5 quick template</a> (v. <em>1.2.1</em> - <a href="http://www.apache.org/licenses/LICENSE-2.0.html" title="See online">Apache 2.0 license</a>)</li><li><a href="http://jquery.com/" title="See online: http://jquery.com/">jQuery</a> (v. <em>1.11.0</em> - <a href="http://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt" title="See online">MIT license</a>)</li><li><a href="http://getbootstrap.com/" title="See online: http://getbootstrap.com/">Bootstrap</a> (v. <em>3.1.1</em> - <a href="http://www.apache.org/licenses/LICENSE-2.0" title="See online">Apache license v2.0</a>)</li><li><a href="http://fortawesome.github.io/Font-Awesome" title="See online: http://fortawesome.github.io/Font-Awesome">Font Awesome</a> (v. <em>4.0.3</em> - <a href="http://scripts.sil.org/OFL" title="See online">SIL OFL 1.1 license</a>)</li><li><a href="http://code.google.com/p/html5shiv/" title="See online: http://code.google.com/p/html5shiv/">HTML5shiv</a> (v. <em>3.7.0</em> - <a href="http://www.opensource.org/licenses/mit-license.php" title="See online">MIT license</a>)</li><li><a href="http://github.com/scottjehl/Respond" title="See online: http://github.com/scottjehl/Respond">Respond.js</a> (v. <em>1.4.2</em> - <a href="http://www.opensource.org/licenses/mit-license.php" title="See online">MIT license</a>)</li></ul></dd></dl><small>To follow specifications updates or transmit a bug, please have a look at the GitHub repository at <a href="http://github.com/markdown-extended/manifest" title="See sources on GitHub">markdown-extended/manifest</a>.</small></div></div>
+            <div class="hidden-no-js modal-footer hidden"></div>
+        </div></div>
     </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js" id="lib-jquery"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" id="lib-bootstrap"></script>
+<script>
+var _query          = document.location.search.substr(1);
+var _searchString   = _query.substr(_query.indexOf("search=")).split("&")[0].split("=")[1];
+document.getElementById("profiler-user-agent").innerHTML = navigator.userAgent;
+document.getElementById("profiler-request").innerHTML    = document.location.href;
+document.getElementById("printer-request").innerHTML     = document.location.href;
+function showHide(elementid){
+    if (!window.jQuery) { document.getElementById(elementid).style.display = (document.getElementById(elementid).style.display == 'none' ? '' : 'none'); document.location.hash = elementid; }
+}
+function getScriptVersion(script_id) {
+    var script = $("#"+script_id), script_src = script.attr("src"), script_href = script.attr("href"),
+        matcher = new RegExp(/\d+(?:\.\d+)+/g), vers = null;
+    if (script_src!==undefined && script_src.length) vers = script_src.match(matcher);
+    else if (script_href!==undefined && script_href.length) vers = script_href.match(matcher);
+    return vers;
+}
+function clearSearchField(full) {
+    if (full) {
+        $("#search-field").val("");
+        $("#result-count").text("");
+        if (_searchString) { document.location.href = document.location.href.replace("search="+_searchString, ''); }
+    }
+    $("#icon-search").removeClass("hidden");
+    $("#delete-search, #delete-search-alt").addClass("hidden");
+    $("#wrapper").removeHighlight();
+}
+function scrollToAnchor(href) {
+    href = typeof(href) == "string" ? href : $(this).attr("href");
+    if (!href) return; if (href.charAt(0) == "#") {
+        var $target = $(href); if ($target.length) {
+            $('html, body').animate({ scrollTop: $target.offset().top - 70 }, "slow");
+            if (history && "pushState" in history) { history.pushState({}, document.title, window.location.pathname + href); }
+        }
+    }
+}
+function scrollToAnchorCollapsible(el) {
+    var tgt = $($(el).attr("href")); if (tgt && !tgt.hasClass("in")) { tgt.collapse('show'); }
+}
+function closeNavbarMenu() {
+    if ($("#main-navbar-handler").is(':visible')) { $("#main-navbar-handler").trigger('click'); }
+}
 
-    
+/*
+ highlight v4 - Highlights arbitrary terms - MIT license - Johann Burkard
+ <http://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html>
+ */
+jQuery.fn.highlight=function(c){function e(b,c){var d=0;if(3==b.nodeType){var a=b.data.toUpperCase().indexOf(c);if(0<=a){d=document.createElement("span");d.className="highlight";a=b.splitText(a);a.splitText(c.length);var f=a.cloneNode(!0);d.appendChild(f);a.parentNode.replaceChild(d,a);d=1}}else if(1==b.nodeType&&b.childNodes&&!/(script|style)/i.test(b.tagName))for(a=0;a<b.childNodes.length;++a)a+=e(b.childNodes[a],c);return d}return this.length&&c&&c.length?this.each(function(){e(this,c.toUpperCase())}): this};jQuery.fn.removeHighlight=function(){return this.find("span.highlight").each(function(){this.parentNode.firstChild.nodeName;with(this.parentNode)replaceChild(this.firstChild,this),normalize()}).end()};
 
-  </body>
+$(function() {
+    $("body").removeClass("no-js");
+    $("*").each(function(i,el){
+        $.each(el.attributes, function(j,attr) {
+            if(attr.name.indexOf("data-jq-") == 0) { $(el).attr(attr.name.replace("data-jq-", ""), $(el).attr(attr.name)); $(el).attr(attr.name, ""); }
+        });
+    });
+    window.onbeforeprint = function() {
+        var _sc_original = $("#secondary-contents"), _sc_target = $("#secondary-contents-print");
+        if (_sc_original) { _sc_target.html(_sc_original.html()); }
+    };
+    window.onafterprint = function() {
+        var _sc_target = $("#secondary-contents-print");
+        if (_sc_target) { _sc_target.html(""); }
+    };
+    $("a:not(.no-hash, .anchor-to-collapsible)").on("click", scrollToAnchor);
+    $("a.anchor-to-collapsible").on("click", function(){ scrollToAnchorCollapsible($(this)); scrollToAnchor($(this).attr("href")); });
+    $("#main-navbar a:not(.dropdown-toggle)").on("click", closeNavbarMenu);
+    $("#profiler-apps").html(
+        $("#profiler-apps").html()
+        +" | jQuery "+jQuery.fn.jquery
+        +" | Bootstrap "+getScriptVersion("lib-bootstrap")
+        +" | FontAwesome "+getScriptVersion("lib-fontawesome")
+    );
+    var _profilerString = _query.substr(_query.indexOf("profiler=")).split("&")[0].split("=")[1];
+        if (_profilerString==undefined || _profilerString!='on') { $(".profiler-component").hide(); }
+            if (_profilerString && _profilerString=='off') { $(".profiler-component").hide(); }
+        $("#delete-search, #delete-search-alt").click(function() { clearSearchField(true); });
+    $(document).keyup(function(e) { if (e.keyCode == 27) { clearSearchField(true); } });
+    $("#delete-search").attr("title", $("#delete-search").attr("title")+" [ESC]");
+    var searchField = {};
+    searchField.input = $("#search-field");
+    searchField.performSearch = function() {
+        clearSearchField();
+        var phrase = searchField.input.val().replace(/^\s+|\s+$/g, ""), count=0, matches, phrase_regex;
+        phrase = phrase.replace(/\s+/g, "|");
+        if (phrase.length == 0) { clearSearchField(true); return; }
+        if (phrase.length < 3) { return; }
+        $("#icon-search").addClass("hidden");
+        $("#delete-search, #delete-search-alt").removeClass("hidden");
+        phrase_regex = ["\\b(", phrase, ")"].join("");
+        matches = $("#wrapper").html().match(new RegExp(phrase_regex, "gi"));
+        count = matches ? (matches.length) : 0;
+        $("#wrapper").highlight(phrase);
+        $("#result-count").text(count + " results");
+        searchField.search = null;
+    };
+    searchField.input.keyup(function(e) {
+        if (searchField.search) { clearTimeout(searchField.search); }
+        searchField.search = setTimeout(searchField.performSearch, 300);
+    });
+    if (_searchString) {
+        $("#search-field").val(_searchString).select().focus();
+        searchField.performSearch();
+    } else {
+        searchField.search;
+    }
+});
+</script>
+<script>
+</script>
+</body>
 </html>
