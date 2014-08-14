@@ -79,6 +79,9 @@ if (!file_exists($mde_console)) {
 // MDE version
 $mde_version = exec('php '.$mde_console.' -qV');
 
+// page URL
+$self = 'index.html';
+
 // page last update
 $update = '{% DATE %}';
 
@@ -95,7 +98,7 @@ $content = '{% BODY %}';
 //$notes = '{% NOTES %}';
 
 // additional header meta tags
-$metas = '{% META %}';
+//$metas = '{% META %}';
 
 // MDE repository
 $stamp_url = 'http://github.com/markdown-extended/manifest';
@@ -103,6 +106,11 @@ $stamp_title = 'See the MDE specifications sources on Github';
 
 // page notice
 $page_notice = 'Content rendered from a <a href="http://github.com/piwi/markdown-extended" title="github.com/piwi/markdown-extended">Markdown Extended</a> content&nbsp;&dash;&nbsp;<a href="?plain" title="See plain text version of this content">See raw content</a>';
+
+// page menu
+$menu = array(
+    array('url'=>'test-suite/', 'title'=>'See the full test suite of the specifications', 'content'=>'Test-Suite'),
+);
 
 // MathJax.js
 //$scripts = array('http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML');
@@ -112,12 +120,12 @@ $settings = array();
 //$settings['app_mode'] = 'dev';
 //$settings['charset'] = '{% CHARSET %}';
 $settings['brand_icon'] = '<img src="modules/markdown-mark/png/32x20-solid.png" />';
-$settings['brand_title'] = 'the MDE specifications';
+$settings['brand_title'] = 'the MDE manifest';
 $settings['menu_item_content_stamp'] = function() use (&$stamp_url, &$stamp_title) {
     $icon = hqt_safestring(hqt_setting('menu_item_content_stamp_icon'));
     return '<a title="'.hqt_safestring($stamp_title).'" href="'.hqt_safestring($stamp_url).'">'.$icon.'MDE</a>';
 };
-$settings['navbar_items'] = array(/*'toc',*/ 'top', 'bottom');
+$settings['navbar_items'] = array('menu', 'toc', 'top', 'bottom');
 $settings['language_strings'] = array();
 $settings['language_strings']['toc_block_header'] = '';
 $settings['language_strings']['notes_block_header'] = '';
