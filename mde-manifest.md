@@ -553,6 +553,12 @@ allow spaces inside.
 
     This variable `$var` can be accessed using the `-> get(...)` method
 
+Any character of a code span MUST be rendered "as is" in the final output, as the raw 
+litteral written character.
+
+**Implementation Notes:** In an HTML output rendering, any character must be transformed to
+its HTML entity equivalent (for instance, the left angle `<` must be rendered as `&lt;`) to
+be finally rendered by the browser as what was written.
 
 ### B.5. Links {#B5}
 
@@ -853,6 +859,13 @@ of the example below is not included in the notation and represents line's 1st c
 Unlike indentation rules for blocks ([§§](#A6)), ALL lines of a pre-formatted block 
 MUST be indented as this is the only rule to identify that kind of content.
 
+Any character of a code span MUST be rendered "as is" in the final output, as the raw 
+litteral written character.
+
+**Implementation Notes:** In an HTML output rendering, any character must be transformed to
+its HTML entity equivalent (for instance, the left angle `<` must be rendered as `&lt;`) to
+be finally rendered by the browser as what was written.
+
 #### C.6.b. Fenced code blocks {#C6b}
 
 ##### C.6.b.1. Basics {#C6b1}
@@ -866,6 +879,13 @@ or *backticks* `\`` (at least 3):
 
 **Implementation Note:** The rendering of such content MUST be the exact same as for "classic"
 pre-formatted content ([§§](#C6)).
+
+Any character of a code span MUST be rendered "as is" in the final output, as the raw 
+litteral written character.
+
+**Implementation Notes:** In an HTML output rendering, any character must be transformed to
+its HTML entity equivalent (for instance, the left angle `<` must be rendered as `&lt;`) to
+be finally rendered by the browser as what was written.
 
 ##### C.6.b.2. Language information {#C6b2}
 
