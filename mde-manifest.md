@@ -23,6 +23,8 @@ parsers  implementations. It can be considered as the **Markdown Extended refere
 any purpose. The goal of these specifications is NOT to explain *how to write a content* but
 *how to build a content* using the Markdown Extended syntax.
 
+To begin, please read the [introduction](#introduction).
+
 This document is authored and maintained by Pierre Cassat ([@pierowbmstr][e-piwi])
 and licensed under [Creative Commons - CC BY 3.0][cc-by-3] ; it is opened for discussion
 or contribution, please refer to [the dedicated section](#contribute).
@@ -44,7 +46,8 @@ or contribution, please refer to [the dedicated section](#contribute).
     -   [A.7. Automatic escaping](#A7)
     -   [A.8. Inline HTML](#A8)
         -   [A.8.a. Use with caution](#A8a)
-        -   [A.8.b. HTML comments](#A8b)
+        -   [A.8.b. Parsing markdown in HTML](#A8b)
+        -   [A.8.c. HTML comments](#A8c)
     -   [A.9. Identifiers](#A9)
 -   [B. Typographic rules](#B)
     -   [B.1. Application scope](#B1)
@@ -288,6 +291,16 @@ Thus, we MUST keep in mind that the final output MAY NOT be HTML only ; a parser
 format of output (such as PDF, OpenDocument etc). This is a major difference with the original 
 John Gruber's Markdown parser, which only constructs HTML output.
 
+The rules we have tried to impose on us by writing these specifications are:
+
+-   to allow a writer to construct a content as rich as possible, without being so strict
+    about notations ; some information MUST be writable after OR before a mark, with OR without
+    a space separator etc. to let the writer free to concentrate on the content (more than on
+    the rules themselves)
+-   to allow a reader to understand quite well the content intentions (the various marks roles)
+    and, most important, to be able to read a content without having a big effort to deploy
+    to ignore the various syntax's marks.
+
 ### A.2. Global construction {#A2}
 
 The master idea of Markdown is the **readability** of the content. Which means: if a reader has a Markdown file
@@ -325,7 +338,7 @@ Any MDE file MUST work with any software reading file contents.
 quickly and define some special treatments based on a file extension filtering ; the `.md`, `.mde` or `.markdown`
 extensions are given here as examples.
 
-### A.4. Rules ranking {#A4}
+### A.4. Rules ranking and precedence {#A4}
 
 The syntax's rules of these specifications are separated in the following three types based on their utility:
 
@@ -345,6 +358,8 @@ The syntax's rules of these specifications are separated in the following three 
 :   Any rule that can not be classified in the two first categories.
     See [§§](#D).
 
+The first rule to keep in mind is that the *structural* construction MUST be parsed BEFORE
+the *typographic* one. In other words, blocks rules have precedence over inline ones.
 
 ### A.5. Blank lines {#A5}
 
@@ -353,23 +368,32 @@ or tabulations MUST be considered as a blank line.
 
 ### A.6. Indentation {#A6}
 
+#### A.6.a. The MDE indentation level {#A6a}
+
 The indentation level in MDE is **1 tabulation** or **four spaces**:
 
     1 tab = 4 spaces = 1 indentation level
+
+#### A.6.b. Indentation rules {#A6b}
 
 Any block of content that requires an indentation MAY allow any other syntax's rule to be
 used in that content, considering the position of the first character of the first indented 
 line as the new left side of its own indentation.
 
-The global rules for blocks sequences are:
+The syntax's rules that DOES NOT require an indentation can begin at less than 4 spaces from
+last indentation limit. For instance, an ATX title ([§§](#C5a)) can be indented with 3 spaces
+if writer feels it would be better:
 
--   passing 1 blank line MUST close last indented block (indentation level goes down by 1)
--   passing 2 blank lines MUST close ALL current indented blocks (indentation level goes back to 0)
+    |   # title
 
-**Example:** A classic example is the case of a code block following a list item. If only one line is
-passed between both, the code block will be considered as part of the list item's content (and must
-be indented in consequence by 2: 2 tabulations or 8 spaces). If two blank lines are passed, the block 
-must be considered as a fresh new block (the list item is considered finished).
+But if the same title is indented by 4 spaces, it is considered as a code block and not as
+a title:
+
+    |    # title
+
+**Implementation Note:** an indentation composed of less than the MDE indentation level is
+often called `less_than_a_tab` in parsers implementations. It generally means "*three spaces 
+or less*".
 
 Finally, for rules that requires a character AND an indentation, only the first line MUST 
 actually be indented, subsequent lines of the same block can either be indented or not. This
@@ -377,6 +401,22 @@ is NOT true when the rule does not include a character (like for pre-formatted b
 
 **Writer Note:** For a document often read "as is" as plain text, it MAY be a good idea to 
 always indent a block for readability.
+
+#### A.6.c. Indentation and blank lines {#A6c}
+
+The global rules for blocks sequences are:
+
+-   passing 1 blank line MUST close last indented block (indentation level goes down by 1),
+    except if the next block is indented exactly like last one and current block allows paragraphing
+    (this is the case of list items for instance - [§§](#C8))
+-   passing 2 blank lines MUST close ALL current indented blocks (indentation level goes back to 0),
+    except in a *fenced code block* ([§§](#C6b)), where the content MUST be rendered "as is" 
+    (the two blank lines must therefore be rendered as two blank lines).
+
+**Example:** A classic example is the case of a code block following a list item. If only one line is
+passed between both, the code block will be considered as part of the list item's content (and must
+be indented in consequence by 2: 2 tabulations or 8 spaces). If two blank lines are passed, the block 
+must be considered as a fresh new block (the list item is considered finished).
 
 
 ### A.7. Automatic escaping {#A7}
@@ -415,7 +455,20 @@ SHOULD be prepared to handle HTML tags for any final output. For any other forma
 the best practice MAY be to keep the content "as is" skipping any HTML tag (but keeping the 
 text content).
 
-#### A.8.b. HTML comments {#A8b}
+#### A.8.b. Parsing markdown in HTML {#A8b}
+
+If a writer really needs to use an HTML notation in an MDE document, he can "ask" to this
+content to be parsed adding a `markdown="1"` attribute.
+
+For instance, the content below will be rendered "as is":
+
+    <div>This will be rendered with **raw asterisks**.</div>
+
+While this will rendered as an MDE content (with `strong` tag instead of asterisks):
+
+    <div markdown="1">This will be rendered with **a strong tag**.</div>
+
+#### A.8.c. HTML comments {#A8c}
 
 HTML comments MUST be an exception as this is the best way to include a comment in an MDE
 content. All parsers MUST handle HTML comments as *comments* (in any language).
@@ -475,7 +528,7 @@ While the notation below is NOT valid:
 ### B.2. Emphasis {#B2}
 
 Bold and italic text emphasis MUST keep simple to use and read. The first idea was kept about
-these effects allowing two different typeface: the *underscore* `_` and the *asterisk* `*`.
+these effects allowing two different typefaces: the *underscore* `_` and the *asterisk* `*`.
 
 #### B.2.a. Emphasis with underscores {#B2a}
 
@@ -741,6 +794,12 @@ A "block" of content is separated from others by:
 -   the top or bottom sides of the document
 -   a blank line ([§§](#A5))
 
+So the rule here is that for any block of content that CAN be written on multiple-lines, 
+it MUST be written with blank lines before AND after. Basically, this is not the case for
+"ATX" titles ([§§](#C5a)) and horizontal rules ([§§](#C4)).
+
+**Note:** This MAY increase readability of the content as it will separate each block clearly.
+
 Any block of content MUST allow any other syntax's rule to be used and interpreted. This can
 create some nested indentations as described at [§§](#A6).
 
@@ -771,11 +830,24 @@ alone on a line (spaces MUST not care):
     ----
     _ _ _
 
+**Note:** Even if "spaces must not care" in the horizontal rules notations above, writers CAN NOT
+begin a line with more than 3 *spaces* as it will be considered as a code block and so not parsed
+as an horizontal rule.
+
 ### C.5. Titles {#C5}
 
-Titles are built using two notations: "ATX" and "Sextet". HTML tags have a limit
+Titles are built using two notations: "ATX" and "Sextet". The HTML `h` tag have a limit
 of 6 levels (`h1` to `h6`) but an MDE parser MUST ignore this limit and be prepared for any
 depth levels as writer requires in a document.
+
+**Implementation Note:** In an HTML output rendering, when the title level is up to 6, a parser
+SHOULD write the title's content in a way that it shows this is a title (in the document structure)
+but without using the `h` HTML tag.
+
+A title MUST be written on a single line, except the underlining line of the "Sextet" notation ([§§](#C5b)).
+
+Any title content MUST be rendered skipping any leading or trailing *spaces*. This allows writers
+to add as many *space(s)* as they require around a title content.
 
 The titles list of a document MAY be accessible to build a "table of contents" quickly.
 This is developed at [§§](#D8a).
@@ -784,11 +856,22 @@ This is developed at [§§](#D8a).
 
 ##### C.5.a.1. Basics {#C5a1}
 
-An "ATX" title is written alone on a single line, preceded by as many *hash marks* `#` as the title level:
+An "ATX" title is written alone on a single line, preceded by as many *hash marks* `#` as 
+the title level and a mandatory *space* separator:
 
     # Title level 1 (HTML tag `h1`)
 
     ### Title level 3 (HTML tag `h3`)
+
+The mandatory space between the *hash mark* and the title's content allows to differentiate
+a title from the notation below (a commit number at the beginning of a line for instance):
+
+    #123456 a text
+
+As the number of trailing and leading spaces MUST NOT matter ([§§](#C5)), the rule can be written like:
+
+-   an "ATX" title MUST have one or more *space(s)* separator between the *hash mark* and
+    the title text.
 
 OPTIONALLY, ATX titles can be "closed" using a random number of *hash marks* at the end of the line:
 
@@ -849,6 +932,14 @@ As a title MUST be alone on a line, the attributes DOES NOT NEED to be unspaced 
 
 ### C.6. Pre-formatted texts {#C6}
 
+In MDE (like in the original Markdown syntax) a "pre-formatted content" is considered as
+a "pre-formatted code block", which means that, in an HTML output, the result SHOULD be
+a `<pre><code> ... </code></pre>` tag rather than a simple `<pre> ... </pre>`.
+
+**Implementation Note:** For more information, please read the following HTML5 specifications:
+-   [specification of the `code` element](w3c-html5-code-specifications)
+-   [specification of the `pre` element](w3c-html5-pre-specifications)
+
 #### C.6.a. Simple notation {#C6a}
 
 A pre-formatted block is written as a paragraph beginning lines with 4 *spaces* (*the pipe 
@@ -859,8 +950,23 @@ of the example below is not included in the notation and represents line's 1st c
 Unlike indentation rules for blocks ([§§](#A6)), ALL lines of a pre-formatted block 
 MUST be indented as this is the only rule to identify that kind of content.
 
-Any character of a code span MUST be rendered "as is" in the final output, as the raw 
-litteral written character.
+Following the *indentation and blank lines* rules ([§§](#A6c)), passing two blank lines or more
+between two code blocks MUST finally render two separated code blocks.
+
+**Implementation Note:** This means that, in an HTML output, the following MDE content:
+
+    |    a pre formed content
+    |
+    |
+    |    another pre formed content
+
+MUST be rendered as:
+
+    <pre>a pre formed content</pre>
+    <pre>another pre formed content</pre>
+
+Any character of a pre-formatted code block MUST be rendered "as is" in the final output, 
+as the raw litteral written character.
 
 **Implementation Notes:** In an HTML output rendering, any character must be transformed to
 its HTML entity equivalent (for instance, the left angle `<` must be rendered as `&lt;`) to
@@ -880,7 +986,26 @@ or *backticks* `\`` (at least 3):
 **Implementation Note:** The rendering of such content MUST be the exact same as for "classic"
 pre-formatted content ([§§](#C6)).
 
-Any character of a code span MUST be rendered "as is" in the final output, as the raw 
+Like specified in the *indentation and blank lines* rules ([§§](#A6c)), passing two blank lines
+or more inside a fenced code block MUST NOT be considered as blocks separator but as raw blank lines.
+
+**Implementation Note:** This means that, in an HTML output, the following MDE content:
+
+    ~~~
+    a pre formed content
+
+
+    another pre formed content
+    ~~~
+
+MUST be rendered as:
+
+    <pre>a pre formed content
+    
+    
+    another pre formed content</pre>
+
+Any character of a fenced code block MUST be rendered "as is" in the final output, as the raw 
 litteral written character.
 
 **Implementation Notes:** In an HTML output rendering, any character must be transformed to
@@ -897,7 +1022,7 @@ language name (without space):
     ```
 
 **Implementation Note:** In an HTML implementation, this feature permits to create a *language friendly* code block, 
-as recommended by the W3C in the [HTML5 specifications][w3c-html5-code-specifications].
+as recommended by the W3C in the [HTML5 `code` element specification][w3c-html5-code-specifications].
 
 ##### C.6.b.3. Fenced code blocks with attributes {#C6b3}
 
@@ -927,7 +1052,7 @@ A blockquoted block is written preceding each line or only the first one of a pa
     > We can also write our blockquotes
     without the superior sign on each line, but just at the beginning of the first one.
 
-Once a blockquote has begin (*e.g. as long as no blank line is passed*), the content will be part of it.
+Once a blockquote has begin (*e.g. as long as no blank line is passed*), the content MUST be part of it.
 
 Nested blockquotes can be written with consecutive left angle signs rather than indenting
 each one:
@@ -953,6 +1078,31 @@ between *parenthesis* `(` and `)`:
 
 
 ### C.8. Lists {#C8}
+
+A list is made by writing a character (for unordered one) or a number (for ordered one) at
+the beginning of a line and then writing the content after 1 level of indentation. This means
+that at least 3 *spaces* MUST be present after that character:
+
+    1 character + 3 spaces = 4 characters = 1 indentation level
+
+As described at [§§](#A6), the indentation is only required for the first line of a list item:
+
+    -   a list item
+        on two lines
+
+MUST be the same as:
+
+    -   a list item
+    on two lines
+
+Following the indentation level idea, a sub-item is created by adding 1 level of indentation
+to the last one. It means that, for a list sub-item, the character (originally written at the
+beginning of the line) MUST be written after 1 level of indentation that represents its
+parent list item, and then the rule of indentation applies again:
+
+    -   a parent list item (first level of indentation)
+        -   a sub-item in that parent (second level of indentation)
+    -   continuation of the original list items
 
 #### C.8.a. Unordered lists {#C8a}
 
@@ -1690,6 +1840,7 @@ And finally, THANK YOU for being involved ;)
 [github-pull-doc]: http://help.github.com/articles/using-pull-requests
 [latex-maths-doc]: https://en.wikibooks.org/wiki/LaTeX/Mathematics
 [w3c-html5-code-specifications]: http://dev.w3.org/html5/spec-author-view/the-code-element.html#the-code-element
+[w3c-html5-pre-specifications]: http://dev.w3.org/html5/spec-author-view/the-pre-element.html#the-pre-element
 [cc-by-3]: http://creativecommons.org/licenses/by/3.0/
 [iso-639-1]: http://www.loc.gov/standards/iso639-2/php/code_list.php
 [rfc-2119]: http://tools.ietf.org/html/rfc2119
