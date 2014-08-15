@@ -167,6 +167,8 @@ Working on these specifications, the following implementations inspired us:
 -   [**PHP Markdown Extended**][php-markdown-extended], written by [myself][e-piwi], coded in *PHP* script (*this is my implementation
     of Markdown and the reason why I decided to write these specifications*)
 
+We also relied on the great work of [John MacFarlane][john-macfarlane]: [Standard Markdown Spec][standard-markdown-spec].
+
 
 Scope of these specifications {#scope-of-these-specifications}
 -----------------------------
@@ -217,6 +219,9 @@ to identify certain contents with a unique (and constant) string ; this concept 
 **REFID** - This designates an *identifier string* used to identify each *reference* item ; the *REFID*
 follows different construction rules than the classic *ID* ; this concept is developed in [§§](#D3c).
 
+**EOL** - For "end of line" ; in an MDE document, this can be either a "CR" `\r`, "LF" `\n` or 
+"CRLF" `\r\n` character depending on the platform.
+
 **indentation** - In MDE like in many other languages, the "indentation" is made by writing
 a *tabulation* OR *four spaces* from last indentation limit (originally the left side of the 
 document, which is the "indentation zero" limit) ; this concept is developed in [§§](#A6).
@@ -235,6 +240,15 @@ be important while reading the specifications.
 
 **configuration** - This designates an optional set of options a parser can accept to define
 some of its behaviors.
+
+For the purposes of this document, the following notations apply:
+
+**∙** - This character is used when necessary to represent a *space* character.
+
+**->** - This notation is used when necessary to represent a *tabulation* character.
+
+**|** - This character is used when necessary to represent the left side of the document or
+the character zero of a line.
 
 
 List of meta-characters {#list-of-meta-characters}
@@ -282,7 +296,8 @@ to identify MDE files and syntax.
 
 ### A.1. Intention {#A1}
 
-The MDE rules MUST keep ALL original Markdown's rules valid as described on [daringfireball.net][markdown-manual].
+The MDE rules MUST keep ALL original Markdown's rules valid as described on [daringfireball.net][markdown-manual]
+for retro-compatibility.
 
 As said in the *scope of these specifications* ([§§](#scope-of-these-specifications)),
 we WILL NOT give rendering rules here. Each parser MAY follow its own final rendering rules
@@ -370,9 +385,13 @@ or tabulations MUST be considered as a blank line.
 
 #### A.6.a. The MDE indentation level {#A6a}
 
-The indentation level in MDE is **1 tabulation** or **four spaces**:
+The indentation level in MDE is **1 tabulation** or **four spaces**. When a syntax rule 
+embeds characters, these characters are counted to estimate the indentation:
 
     1 tab = 4 spaces = 1 indentation level
+    1 character + 3 spaces = 4 characters = 1 indentation level
+    2 characters + 2 spaces = 4 characters = 1 indentation level
+    ...
 
 #### A.6.b. Indentation rules {#A6b}
 
@@ -382,14 +401,15 @@ line as the new left side of its own indentation.
 
 The syntax's rules that DOES NOT require an indentation can begin at less than 4 spaces from
 last indentation limit. For instance, an ATX title ([§§](#C5a)) can be indented with 3 spaces
-if writer feels it would be better:
+if writer feels it would be better (in the example above, the *space* character is represented 
+by a `∙`):
 
-    |   # title
+    |∙∙∙# title
 
 But if the same title is indented by 4 spaces, it is considered as a code block and not as
-a title:
+a title (in the example above, the *space* character is represented by a `∙`):
 
-    |    # title
+    |∙∙∙∙# title
 
 **Implementation Note:** an indentation composed of less than the MDE indentation level is
 often called `less_than_a_tab` in parsers implementations. It generally means "*three spaces 
@@ -945,7 +965,7 @@ a `<pre><code> ... </code></pre>` tag rather than a simple `<pre> ... </pre>`.
 A pre-formatted block is written as a paragraph beginning lines with 4 *spaces* (*the pipe 
 of the example below is not included in the notation and represents line's 1st character*):
 
-    |    a pre formed content
+    |∙∙∙∙a pre formed content
 
 Unlike indentation rules for blocks ([§§](#A6)), ALL lines of a pre-formatted block 
 MUST be indented as this is the only rule to identify that kind of content.
@@ -1100,9 +1120,9 @@ to the last one. It means that, for a list sub-item, the character (originally w
 beginning of the line) MUST be written after 1 level of indentation that represents its
 parent list item, and then the rule of indentation applies again:
 
-    -   a parent list item (first level of indentation)
-        -   a sub-item in that parent (second level of indentation)
-    -   continuation of the original list items
+    -∙∙∙a parent list item (first level of indentation)
+    ∙∙∙∙-∙∙∙a sub-item in that parent (second level of indentation)
+    -∙∙∙continuation of the original list items
 
 #### C.8.a. Unordered lists {#C8a}
 
@@ -1828,12 +1848,14 @@ And finally, THANK YOU for being involved ;)
 [michel-fortin]: http://michelf.com/
 [fletcher-penney]: http://fletcherpenney.net/
 [egil-hansen]: http://egilhansen.com
+[john-macfarlane]: https://github.com/jgm
 [e-piwi]: http://e-piwi.fr/
 [markdown]: http://daringfireball.net/projects/markdown/
 [markdown-extra]: https://michelf.ca/projets/php-markdown/
 [multi-markdown]: http://fletcherpenney.net/multimarkdown/
 [php-markdown-extra-extended]: http://github.com/egil/php-markdown-extra-extended
 [php-markdown-extended]: http://github.com/piwi/markdown-extended
+[standard-markdown-spec]: http://jgm.github.io/stmd/spec.html
 [markdown-manual]: http://daringfireball.net/projects/markdown/syntax
 [github]: http://github.com
 [github-fork-doc]: http://help.github.com/articles/fork-a-repo
