@@ -1,0 +1,15 @@
+[submodule "modules/markdown-extended"]
+	path = modules/markdown-extended
+	url = https://github.com/piwi/markdown-extended
+[submodule "modules/html5-quick-template"]
+	path = modules/html5-quick-template
+	url = https://github.com/piwi/html5-quick-template
+[submodule "test-suite"]
+	path = test-suite
+	url = https://github.com/markdown-extended/test-suite
+[submodule "modules/markdown-mark"]
+	path = modules/markdown-mark
+	url = https://github.com/dcurtis/markdown-mark
+[submodule "modules/php-cli-functions"]
+	path = modules/php-cli-functions
+	url = https://github.com/piwi/php-cli-functions.git
