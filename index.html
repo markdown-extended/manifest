@@ -102,9 +102,6 @@ body.no-js .modal               { border-top: 1px dotted #dddddd; font-size: .86
                                         the MDE manifest                </a>
             </div>
             <div id="main-navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-left">
-                        <li><a href="test-suite/" title="See the full test suite of the specifications">Test-Suite</a></li>
-                    </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden-no-js"><a href="#top" title="reach the top of this page"><i class="fa fa-angle-up"></i><span class="hidden-sm">&nbsp;Top</span></a></li>
                     <li><a href="#bottom" title="reach the bottom of this page"><i class="fa fa-angle-down"></i><span class="hidden-sm">&nbsp;Bottom</span></a></li>
@@ -839,7 +836,7 @@ each one:</p>
 &gt;&gt; This is a nested blockquote</pre>
 <p><strong>Writer Note:</strong> The notation of blockquotes is the "classic" <em>email-style</em> for citations, this
 is the reason why the indentation between the angle bracket and the content is NOT required.</p>
-<h4 id="D7a_53f114a28e753">D.7.b. Original URL information</h4>
+<h4 id="D7a_545638946425f">D.7.b. Original URL information</h4>
 <p>To precise the URL of the original content cited:</p>
 <ul><li>write this URL at the beginning of the first line between <em>parenthesis</em> <code>(</code> and <code>)</code>.</li></ul>
 <p>Example:</p>
@@ -1397,14 +1394,14 @@ your language code following the <a href="http://www.loc.gov/standards/iso639-2/
 
             <hr class="hidden-print" />
             <footer class="text-right text-muted"><p class="small">
-                            Last update of this content at Sun, 17 Aug 2014 20:45:14 +0000.&nbsp;                </p></footer>
+                            Last update of this content at Sun, 02 Nov 2014 13:51:48 +0000.&nbsp;                </p></footer>
         </article>
         <div class="clearfix"></div>
         <footer>
             <div class="footer printer-footer">
                 <div class="pull-right text-right">
-                        Content rendered from a <a href="http://github.com/piwi/markdown-extended" title="github.com/piwi/markdown-extended">Markdown Extended</a> content&nbsp;&dash;&nbsp;<a href="?plain" title="See plain text version of this content">See raw content</a><br>
-                        Page generated from an <a href="http://github.com/piwi/html5-quick-template" title="html5-quick-template 1.2.3">html5-quick-template</a>.<br>Page built with the help of open source stuff such as <a href="http://jquery.com/" title="jquery.com">jQuery</a>, <a href="http://getbootstrap.com/" title="getbootstrap.com">Bootstrap</a> and <a href="http://fortawesome.github.io/Font-Awesome" title="fortawesome.github.io/Font-Awesome">Font Awesome</a>.                </div>
+                        Content rendered from a <a href="http://github.com/piwi/markdown-extended" title="github.com/piwi/markdown-extended">Markdown Extended</a> content&nbsp;&dash;&nbsp;<a href="mde-manifest.md" title="See plain text version of this content">See raw content</a><br>
+                        Page generated from an <a href="http://github.com/piwi/html5-quick-template" title="html5-quick-template 1.2.6">html5-quick-template</a>.<br>Page built with the help of open source stuff such as <a href="http://jquery.com/" title="jquery.com">jQuery</a>, <a href="http://getbootstrap.com/" title="getbootstrap.com">Bootstrap</a> and <a href="http://fortawesome.github.io/Font-Awesome" title="fortawesome.github.io/Font-Awesome">Font Awesome</a>.                </div>
                 <div class="pull-left responsive hidden-print">
                     <div class="clearfix visible-xs"><br /></div>
                     <div>
@@ -1416,12 +1413,15 @@ your language code following the <a href="http://www.loc.gov/standards/iso639-2/
                         </ul>
                         <div id="profiler" class="profiler-component collapse" style="display: none;" data-jq-style=""><small class="hidden">[<a href="javascript:showHide('profiler');">close</a>]</small>
                             <dl class="dl-horizontal">
-                                <dt>request</dt><dd><a id="profiler-request" class="insert-request"></a></dd>
-                                <dt>apps</dt><dd id="profiler-apps">html5-quick-template 1.2.3</dd>
-                                <dt>date</dt><dd id="profiler-date">2014-08-17T22:46:26+02:00 (Europe/Berlin)</dd>
-                                <dt>browser / device</dt><dd id="profiler-user-agent"></dd>
-                                <dt>server OS</dt><dd id="profiler-server">Darwin MacBook-Pro-de-Pierre.local 13.3.0 Darwin Kernel Version 13.3.0: Tue Jun  3 21:27:35 PDT 2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64</dd>
-                                            <dt>MDE</dt>
+                        <dt>request</dt>
+            <dd id="profiler-request"><a id="profiler-request" class="insert-request"></a></dd>
+                    <dt>apps</dt>
+            <dd id="profiler_apps">html5-quick-template 1.2.6</dd>
+                    <dt>date</dt>
+            <dd id="profiler_date">2014-11-02T13:58:44+00:00 (UTC)</dd>
+                    <dt>browser / device</dt>
+            <dd id="profiler-user-agent"></dd>
+                                                        <dt>MDE</dt>
                                 <dd id="profiler-mde">PHP Markdown Extended 0.1-gamma</dd>
                                         </dl>
                         </div>
@@ -1518,7 +1518,6 @@ $(function() {
         +" | FontAwesome "+getScriptVersion("lib-fontawesome")
     );
     var _profilerString = _query.substr(_query.indexOf("profiler=")).split("&")[0].split("=")[1];
-        if (_profilerString==undefined || _profilerString!='on') { $(".profiler-component").hide(); }
             if (_profilerString && _profilerString=='off') { $(".profiler-component").hide(); }
         $("#delete-search, #delete-search-alt").click(function() { clearSearchField(true); });
     $(document).keyup(function(e) { if (e.keyCode == 27) { clearSearchField(true); } });
