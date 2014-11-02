@@ -20,3 +20,6 @@ Desktop.ini
 
 # any "tmp*" file or dir anywhere
 *tmp*
+
+# no index.html in draft branch
+index.html
