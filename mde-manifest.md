@@ -1,7 +1,7 @@
 Markdown Extended specifications
 ================================ 
 
-* version: 1.0-alpha
+* version: 1.0.0-alpha
 * source: http://github.com/markdown-extended/manifest
 
 ----
