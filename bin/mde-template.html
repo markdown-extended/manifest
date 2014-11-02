@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="{% CHARSET %}">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" id="lib-fontawesome">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>the MDE manifest</title>
+<style>
+body                            { padding-top: 70px; direction: ltr; }
+.navbar .container              { width: 100%; }
+.wrapper                        { padding-bottom: 20px; }
+aside, nav                      { margin: 12px; padding: 12px 20px; border-radius: 6px; max-width: 20%; }
+aside#secondary-contents        { margin: 15px 20px; padding: 0; position: relative; }
+.secondary-content              { margin: 2px; padding: 15px; border-radius: 4px; }
+.handler a                      { color: #777777; }
+aside, nav ul                   { padding-left: 22px; }
+.footer                         { font-size: 85%; background-color: #f5f5f5; color: #333333; padding: 12px; border-radius: 6px; position: relative; }
+h3                              { padding-left: .5em; }
+h4:not([id="toc"])              { padding-left: 1em; }
+h5                              { padding-left: 2em; }
+h6                              { padding-left: 3em; }
+.footnotes                      { font-size: .9em; }
+.highlight                      { background : #ff0; }
+.bg-info                        { background-color: #D9EDF7; }
+.bg-default                     { background-color: #f5f5f5; }
+.navbar-brand i                 { font-size: 22px; }
+form.navbar-form                { position: relative; }
+.navbar-form.navbar-right:last-child { margin-right: 0px; }
+input#search-field              { padding-right: 24px; }
+span.search-icon, span.search-icon-alt                { position: absolute; display: block; top: 10px; right: 24px; z-index: 100; cursor: pointer; }
+.dropdown-menu li > ul          { list-style-type: none; padding-left: 24px; }
+.dropdown-menu li > ul li       { margin: 0px; }
+.dropdown-menu li li > a        { display: block; padding: 3px 6px; clear: both; font-weight: normal; line-height: 1.428571429; color: #333333; white-space: nowrap; }
+.dropdown-menu li li > a:hover,
+.dropdown-menu li li > a:focus  { color: #262626; text-decoration: none; background-color: #f5f5f5; }
+.modal-body .jumbotron          { padding: 16px !important; margin: 0 !important; border-radius: 6px; }
+.modal-body .jumbotron h1       { font-size: 2em; margin-top: 10px; }
+body.no-js                      { padding-top: 0px; }
+body.no-js .hidden-no-js        { display: none; }
+body.no-js aside, body.no-js nav{ max-width: 100%; }
+body.no-js .alert-warning       { display: block; padding: 1em; background-color: #dddddd; color: red; text-align: center; }
+body.no-js ul.navbar-nav        { list-style-type: none; display: block; padding: 0; }
+body.no-js ul.navbar-nav li     { display: inline; padding: 0; }
+body.no-js ul.navbar-nav li.hidden-no-js { display: none; }
+body.no-js ul.navbar-nav a      { text-decoration: none; }
+body.no-js .modal               { border-top: 1px dotted #dddddd; font-size: .86em; }
+@media (min-width: 768px) {
+    body:not([class="no-js"]) .navbar-nav > li { float: left; }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    aside, nav                      { max-width: 40%; }
+    body.no-js aside, body.no-js nav{ max-width: 100%; }
+}
+@media (max-width: 767px) {
+    aside, nav                      { max-width: 100%; }
+    aside#secondary-contents        { margin: 10px; }
+    .secondary-content              { display: block; min-width: 100%; }
+    span.search-icon                { top: 40px; }
+    .responsive                     { width: 100%; overflow: auto; }
+    .navbar li a .visible-xs        { display: inline !important; }
+    .dropdown-menu li li > a        { color: #777777; }
+    .dropdown-menu li li > a:hover,
+    .dropdown-menu li li > a:focus  { background-color: transparent; }
+    .modal-body                     { padding: 10px; }
+    body.no-js aside, body.no-js nav{ max-width: 100%; }
+}
+@media print {
+    body                       { font-size: 10pt; padding-top: 0; }
+    aside#secondary-contents-print        { margin: 1em 0; clear: both; display: block; min-width: 100% !important; font-size: .9em; }
+    .secondary-content         { border-top: 1px dotted #dddddd; }
+    footer                     { margin-top: 1em; padding-top: 4px; border-top: 1px dotted #dddddd; font-size: .86em; }
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select:focus, textarea:focus, input:focus { font-size: 16px; }
+}
+</style>
+<style>
+</style>
+</head>
+<body data-offset="70" class="no-js">
+    <!--[if lt IE 7]>
+    <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close hidden-no-js" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Warning!</strong> You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.    </div>
+    <![endif]-->
+    <div class="alert alert-warning hidden">Your internet connection seems off, the page will be rendered as raw HTML.</div>
+    <a id="top"></a>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header navbar-left hidden-no-js">
+                <button id="main-navbar-handler" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="navigation menu">
+                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html" title="(re)fresh this page">
+                                            <img src="modules/markdown-mark/png/32x20-solid.png" />&nbsp;
+                                        the MDE manifest                </a>
+            </div>
+            <div id="main-navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden-no-js"><a href="#top" title="reach the top of this page"><i class="fa fa-angle-up"></i><span class="hidden-sm">&nbsp;Top</span></a></li>
+                    <li><a href="#bottom" title="reach the bottom of this page"><i class="fa fa-angle-down"></i><span class="hidden-sm">&nbsp;Bottom</span></a></li>
+                    <li class="active"><a title="See the MDE specifications sources on Github" href="http://github.com/markdown-extended/manifest">&nbsp;<i class="fa fa-github"></i>&nbsp;MDE</a></li>
+                </ul>
+                <form class="navbar-form navbar-right hidden-no-js" role="search">
+                    <span id="result-count" class="text-primary"></span>&nbsp;
+                    <span id="delete-search-alt" class="text-primary search-icon-alt visible-xs hidden">[clear search field]</span>
+                    <input id="search-field" class="form-control" type="search" tabindex="1" placeholder="search ..." title="in-page highlighting search field">
+                    <span id="icon-search" class="search-icon fa fa-search"></span>
+                    <span id="delete-search" class="text-primary search-icon fa fa-times hidden" title="clear search field"></span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="wrapper" class="wrapper container-fluid">
+        <article>
+            {% BODY %}            <hr class="hidden-print" />
+            <footer class="text-right text-muted"><p class="small">
+                            Last update of this content at {% DATE %}.&nbsp;                </p></footer>
+        </article>
+        <div class="clearfix"></div>
+        <footer>
+            <div class="footer printer-footer">
+                <div class="pull-right text-right">
+                        Content rendered from a <a href="http://github.com/piwi/markdown-extended" title="github.com/piwi/markdown-extended">Markdown Extended</a> content&nbsp;&dash;&nbsp;<a href="mde-manifest.md" title="See plain text version of this content">See raw content</a><br>
+                        Page generated from an <a href="http://github.com/piwi/html5-quick-template" title="html5-quick-template 1.2.6">html5-quick-template</a>.<br>Page built with the help of open source stuff such as <a href="http://jquery.com/" title="jquery.com">jQuery</a>, <a href="http://getbootstrap.com/" title="getbootstrap.com">Bootstrap</a> and <a href="http://fortawesome.github.io/Font-Awesome" title="fortawesome.github.io/Font-Awesome">Font Awesome</a>.                </div>
+                <div class="pull-left responsive hidden-print">
+                    <div class="clearfix visible-xs"><br /></div>
+                    <div>
+                        <ul class="nav nav-pills">
+                            <li class="handler"><a id="profiler-handler" class="no-hash profiler-component" data-toggle="collapse" href="javascript:showHide('profiler');" data-jq-title="show / hide the profiler" data-jq-href="#profiler"><i class="fa fa-cogs"></i>&nbsp;Profiler</a></li>
+                            <li class="handler"><a href="javascript:showHide('hqt-about');" class="no-hash" data-toggle="modal" data-target="#messagebox" data-jq-title="open the about box"><i class="fa fa-info-circle"></i>&nbsp;About</a></li>
+                                <li class="handler"><a href="https://github.com/markdown-extended/manifest/tree/gh-pages" title="read the app manual online"><i class="fa fa-globe"></i>&nbsp;Manual</a></li>
+                                <li class="handler hidden"><a href="#top" title="reach the top of this page"><i class="fa fa-angle-up"></i><span class="hidden-sm">&nbsp;Top</span></a></li>
+                        </ul>
+                        <div id="profiler" class="profiler-component collapse" style="display: none;" data-jq-style=""><small class="hidden">[<a href="javascript:showHide('profiler');">close</a>]</small>
+                            <dl class="dl-horizontal">
+                        <dt>request</dt>
+            <dd id="profiler-request"><a id="profiler-request" class="insert-request"></a></dd>
+                    <dt>apps</dt>
+            <dd id="profiler_apps">html5-quick-template 1.2.6</dd>
+                    <dt>date</dt>
+            <dd id="profiler_date">2014-11-02T13:58:44+00:00 (UTC)</dd>
+                    <dt>browser / device</dt>
+            <dd id="profiler-user-agent"></dd>
+                                                        <dt>MDE</dt>
+                                <dd id="profiler-mde">PHP Markdown Extended 0.1-gamma</dd>
+                                        </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </footer>
+        <footer class="visible-print">
+            <p class="small">Together, have a responsible approach: do not print this page unless necessary.<br>This page comes from the Internet at: <span id="printer-request"></span></p>
+        </footer>
+    </div>
+    <div class="clearfix"></div>
+    <a id="bottom"></a>
+    <div id="messagebox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageboxlabel" aria-hidden="true">
+        <div class="modal-dialog"><div class="modal-content">
+            <div class="hidden-no-js modal-header"><button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true" title="close this box">x</button><h4 class="modal-title" id="messageboxlabel"><i class="fa fa-info-circle"></i>&nbsp;About the app</h4></div>
+            <div class="modal-body" id="hqt-about" style="display: none;" data-jq-style=""><small class="hidden">[<a href="javascript:showHide('hqt-about');">close</a>]</small><div class="jumbotron"><h1 class="text-center">the MDE manifest</h1><p class="text-center">The new way of writing for the web</p><dl class="dl-horizontal"><dt>license</dt><dd><a href="http://creativecommons.org/licenses/by/3.0/" title="See online">Creative Commons BY 3.0</a></dd><dt>maintainer</dt><dd><a href="http://github.com/piwi" title="See online">@pierowbmstr</a></dd><dt>sources &amp; updates</dt><dd><a href="http://github.com/markdown-extended/manifest" title="See online">http://github.com/markdown-extended/manifest</a></dd><dt>third-parties</dt><dd><ul class="list-unstyled"><li><a href="http://github.com/piwi/markdown-extended" title="See online: http://github.com/piwi/markdown-extended">PHP Markdown Extended 0.1-gamma</a> (<a href="http://opensource.org/licenses/BSD-3-Clause" title="See online">BSD 3.0 license</a>)</li><li><a href="http://github.com/piwi/html5-quick-template" title="See online: http://github.com/piwi/html5-quick-template">html5 quick template</a> (v. <em>1.2.1</em> - <a href="http://www.apache.org/licenses/LICENSE-2.0.html" title="See online">Apache 2.0 license</a>)</li><li><a href="http://jquery.com/" title="See online: http://jquery.com/">jQuery</a> (v. <em>1.11.0</em> - <a href="http://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt" title="See online">MIT license</a>)</li><li><a href="http://getbootstrap.com/" title="See online: http://getbootstrap.com/">Bootstrap</a> (v. <em>3.1.1</em> - <a href="http://www.apache.org/licenses/LICENSE-2.0" title="See online">Apache license v2.0</a>)</li><li><a href="http://fortawesome.github.io/Font-Awesome" title="See online: http://fortawesome.github.io/Font-Awesome">Font Awesome</a> (v. <em>4.0.3</em> - <a href="http://scripts.sil.org/OFL" title="See online">SIL OFL 1.1 license</a>)</li><li><a href="http://code.google.com/p/html5shiv/" title="See online: http://code.google.com/p/html5shiv/">HTML5shiv</a> (v. <em>3.7.0</em> - <a href="http://www.opensource.org/licenses/mit-license.php" title="See online">MIT license</a>)</li><li><a href="http://github.com/scottjehl/Respond" title="See online: http://github.com/scottjehl/Respond">Respond.js</a> (v. <em>1.4.2</em> - <a href="http://www.opensource.org/licenses/mit-license.php" title="See online">MIT license</a>)</li></ul></dd></dl><small>To follow specifications updates or transmit a bug, please have a look at the GitHub repository at <a href="http://github.com/markdown-extended/manifest" title="See sources on GitHub">markdown-extended/manifest</a>.</small></div></div>
+            <div class="hidden-no-js modal-footer hidden"></div>
+        </div></div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js" id="lib-jquery"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" id="lib-bootstrap"></script>
+<script>
+var _query          = document.location.search.substr(1);
+var _searchString   = _query.substr(_query.indexOf("search=")).split("&")[0].split("=")[1];
+document.getElementById("profiler-user-agent").innerHTML = navigator.userAgent;
+document.getElementById("profiler-request").innerHTML    = document.location.href;
+document.getElementById("printer-request").innerHTML     = document.location.href;
+function showHide(elementid){
+    if (!window.jQuery) { document.getElementById(elementid).style.display = (document.getElementById(elementid).style.display == 'none' ? '' : 'none'); document.location.hash = elementid; }
+}
+function getScriptVersion(script_id) {
+    var script = $("#"+script_id), script_src = script.attr("src"), script_href = script.attr("href"),
+        matcher = new RegExp(/\d+(?:\.\d+)+/g), vers = null;
+    if (script_src!==undefined && script_src.length) vers = script_src.match(matcher);
+    else if (script_href!==undefined && script_href.length) vers = script_href.match(matcher);
+    return vers;
+}
+function clearSearchField(full) {
+    if (full) {
+        $("#search-field").val("");
+        $("#result-count").text("");
+        if (_searchString) { document.location.href = document.location.href.replace("search="+_searchString, ''); }
+    }
+    $("#icon-search").removeClass("hidden");
+    $("#delete-search, #delete-search-alt").addClass("hidden");
+    $("#wrapper").removeHighlight();
+}
+function scrollToAnchor(href) {
+    href = typeof(href) == "string" ? href : $(this).attr("href");
+    if (!href) return; if (href.charAt(0) == "#") {
+        var $target = $(href); if ($target.length) {
+            $('html, body').animate({ scrollTop: $target.offset().top - 70 }, "slow");
+            if (history && "pushState" in history) { history.pushState({}, document.title, window.location.pathname + href); }
+        }
+    }
+}
+function scrollToAnchorCollapsible(el) {
+    var tgt = $($(el).attr("href")); if (tgt && !tgt.hasClass("in")) { tgt.collapse('show'); }
+}
+function closeNavbarMenu() {
+    if ($("#main-navbar-handler").is(':visible')) { $("#main-navbar-handler").trigger('click'); }
+}
+
+/*
+ highlight v4 - Highlights arbitrary terms - MIT license - Johann Burkard
+ <http://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html>
+ */
+jQuery.fn.highlight=function(c){function e(b,c){var d=0;if(3==b.nodeType){var a=b.data.toUpperCase().indexOf(c);if(0<=a){d=document.createElement("span");d.className="highlight";a=b.splitText(a);a.splitText(c.length);var f=a.cloneNode(!0);d.appendChild(f);a.parentNode.replaceChild(d,a);d=1}}else if(1==b.nodeType&&b.childNodes&&!/(script|style)/i.test(b.tagName))for(a=0;a<b.childNodes.length;++a)a+=e(b.childNodes[a],c);return d}return this.length&&c&&c.length?this.each(function(){e(this,c.toUpperCase())}): this};jQuery.fn.removeHighlight=function(){return this.find("span.highlight").each(function(){this.parentNode.firstChild.nodeName;with(this.parentNode)replaceChild(this.firstChild,this),normalize()}).end()};
+
+$(function() {
+    $("body").removeClass("no-js");
+    $("*").each(function(i,el){
+        $.each(el.attributes, function(j,attr) {
+            if(attr.name.indexOf("data-jq-") == 0) { $(el).attr(attr.name.replace("data-jq-", ""), $(el).attr(attr.name)); $(el).attr(attr.name, ""); }
+        });
+    });
+    window.onbeforeprint = function() {
+        var _sc_original = $("#secondary-contents"), _sc_target = $("#secondary-contents-print");
+        if (_sc_original) { _sc_target.html(_sc_original.html()); }
+    };
+    window.onafterprint = function() {
+        var _sc_target = $("#secondary-contents-print");
+        if (_sc_target) { _sc_target.html(""); }
+    };
+    $("a:not(.no-hash, .anchor-to-collapsible)").on("click", scrollToAnchor);
+    $("a.anchor-to-collapsible").on("click", function(){ scrollToAnchorCollapsible($(this)); scrollToAnchor($(this).attr("href")); });
+    $("#main-navbar a:not(.dropdown-toggle)").on("click", closeNavbarMenu);
+    $("#profiler-apps").html(
+        $("#profiler-apps").html()
+        +" | jQuery "+jQuery.fn.jquery
+        +" | Bootstrap "+getScriptVersion("lib-bootstrap")
+        +" | FontAwesome "+getScriptVersion("lib-fontawesome")
+    );
+    var _profilerString = _query.substr(_query.indexOf("profiler=")).split("&")[0].split("=")[1];
+            if (_profilerString && _profilerString=='off') { $(".profiler-component").hide(); }
+        $("#delete-search, #delete-search-alt").click(function() { clearSearchField(true); });
+    $(document).keyup(function(e) { if (e.keyCode == 27) { clearSearchField(true); } });
+    $("#delete-search").attr("title", $("#delete-search").attr("title")+" [ESC]");
+    var searchField = {};
+    searchField.input = $("#search-field");
+    searchField.performSearch = function() {
+        clearSearchField();
+        var phrase = searchField.input.val().replace(/^\s+|\s+$/g, ""), count=0, matches, phrase_regex;
+        phrase = phrase.replace(/\s+/g, "|");
+        if (phrase.length == 0) { clearSearchField(true); return; }
+        if (phrase.length < 3) { return; }
+        $("#icon-search").addClass("hidden");
+        $("#delete-search, #delete-search-alt").removeClass("hidden");
+        phrase_regex = ["\\b(", phrase, ")"].join("");
+        matches = $("#wrapper").html().match(new RegExp(phrase_regex, "gi"));
+        count = matches ? (matches.length) : 0;
+        $("#wrapper").highlight(phrase);
+        $("#result-count").text(count + " results");
+        searchField.search = null;
+    };
+    searchField.input.keyup(function(e) {
+        if (searchField.search) { clearTimeout(searchField.search); }
+        searchField.search = setTimeout(searchField.performSearch, 300);
+    });
+    if (_searchString) {
+        $("#search-field").val(_searchString).select().focus();
+        searchField.performSearch();
+    } else {
+        searchField.search;
+    }
+});
+</script>
+<script>
+</script>
+</body>
+</html>

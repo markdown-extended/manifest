@@ -1,85 +1,45 @@
-#!/usr/bin/env php
 <?php
 #
-# PHP-script to re-generate the index.html file
+# Global settings for builders
 #
 
-// PHP settings not required for template usage
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 1);
-$dtmz = @date_default_timezone_get();
-@date_default_timezone_set($dtmz?:'Europe/Paris');
-
-// lib
-function settings($var, $val = null, $default = null)
-{
-    static $settings = array();
-    if (!empty($val)) {
-        $settings[$var] = $val;
-    } else {
-        return (array_key_exists($var, $settings) ? $settings[$var] : $default);
-    }
-}
-
-function usage()
-{
-    $args                   = settings('argv');
-    $html5_quick_template   = settings('html5_quick_template');
-    $mde_console            = settings('mde_console');
-    $mde_manifest           = settings('mde_manifest');
-    echo <<<EOT
-
-usage:  php  {$args[0]}  <manifest.md>  <html5-quick-template-path>  <mde-console-path>
-
-defaults from DOCUMENT_ROOT:
-    <manifest.md>                   : {$mde_manifest}
-    <html5-quick-template-path>     : {$html5_quick_template}
-    <mde-console-path>              : {$mde_console}
-
-
-EOT;
-}
-
-function error($str)
-{
-    echo "ERROR > ".$str.PHP_EOL; usage(); exit();
-}
-
-function info($str)
-{
-    echo "OK > ".$str.PHP_EOL; exit();
-}
+// PHP settings
+ini_set('display_errors', 0);
+set_error_handler('error_handler');
+set_exception_handler('exception');
 
 // defaults
-settings('argv', $argv);
 settings('document_root', __DIR__.'/../');
+settings('version_files', array('mde_manifest'));
 settings('html5_quick_template', 'modules/html5-quick-template/html5-quick-template.html.php');
 settings('mde_console', 'modules/markdown-extended/bin/markdown-extended');
-settings('mde_manifest', 'mde-manifest.md');
-settings('tmp_target_file', 'index.html.template');
+settings('template_file', 'bin/mde-template.html');
 settings('target_file', 'index.html');
+settings('mde_manifest', 'mde-manifest.md');
+settings('php_bin', 'php');
 
-// usage info
-if (count($argv)>1 && in_array($argv[1], array('help', '-h', '--help'))) {
-    usage(); exit();
+// MDE source
+$documentation = realpath(settings('document_root').settings('mde_manifest'));
+if (!file_exists($documentation)) {
+    error("original documentation file '$documentation' not found!");
 }
 
 // template file path
-$html5_quick_template = (isset($argv[1]) ? $argv[1] : realpath(settings('document_root').settings('html5_quick_template')));
+$html5_quick_template = realpath(settings('document_root').settings('html5_quick_template'));
 if (!file_exists($html5_quick_template)) {
     error("quick template app '$html5_quick_template' not found!");
 }
 
 // MDE binaries path
-$mde_console = (isset($argv[2]) ? $argv[2] : realpath(settings('document_root').settings('mde_console')));
+$mde_console = realpath(settings('document_root').settings('mde_console'));
 if (!file_exists($mde_console)) {
     error("Markdown Extended console '$mde_console' not found!");
 }
 
 // MDE version
-$mde_version = exec('php '.$mde_console.' -qV');
+$mde_version = exec(settings('php_bin').' '.$mde_console.' -qV');
 
-// page URL
+// brand header link
 $self = 'index.html';
 
 // page last update
@@ -105,7 +65,7 @@ $stamp_url = 'http://github.com/markdown-extended/manifest';
 $stamp_title = 'See the MDE specifications sources on Github';
 
 // page notice
-$page_notice = 'Content rendered from a <a href="http://github.com/piwi/markdown-extended" title="github.com/piwi/markdown-extended">Markdown Extended</a> content&nbsp;&dash;&nbsp;<a href="?plain" title="See plain text version of this content">See raw content</a>';
+$page_notice = 'Content rendered from a <a href="http://github.com/piwi/markdown-extended" title="github.com/piwi/markdown-extended">Markdown Extended</a> content&nbsp;&dash;&nbsp;<a href="mde-manifest.md" title="See plain text version of this content">See raw content</a>';
 
 // page menu
 $menu = array(
@@ -117,15 +77,15 @@ $menu = array(
 
 // options
 $settings = array();
-//$settings['app_mode'] = 'dev';
-//$settings['charset'] = '{% CHARSET %}';
+$settings['app_mode'] = 'dev';
+$settings['charset'] = '{% CHARSET %}';
 $settings['brand_icon'] = '<img src="modules/markdown-mark/png/32x20-solid.png" />';
 $settings['brand_title'] = 'the MDE manifest';
 $settings['menu_item_content_stamp'] = function() use (&$stamp_url, &$stamp_title) {
     $icon = hqt_safestring(hqt_setting('menu_item_content_stamp_icon'));
     return '<a title="'.hqt_safestring($stamp_title).'" href="'.hqt_safestring($stamp_url).'">'.$icon.'MDE</a>';
 };
-$settings['navbar_items'] = array('menu', 'toc', 'top', 'bottom');
+$settings['navbar_items'] = array(/*'menu',*/ 'toc', 'top', 'bottom');
 $settings['language_strings'] = array();
 $settings['language_strings']['toc_block_header'] = '';
 $settings['language_strings']['notes_block_header'] = '';
@@ -150,24 +110,11 @@ $settings['app_dependencies'] = array(
 );
 $settings['app_about_notice'] = 'To follow specifications updates or transmit a bug, please have a look at the GitHub repository at <a href="http://github.com/markdown-extended/manifest" title="See sources on GitHub">markdown-extended/manifest</a>.';
 $settings['app_manual_url'] = 'https://github.com/markdown-extended/manifest/tree/gh-pages';
-
-// generate HTML template
-ob_start();
-require $html5_quick_template;
-$_tpl = ob_get_contents();
-ob_end_clean();
-
-// write it in $target_file
-$target_file        = settings('document_root').settings('target_file');
-$tmp_target_file    = settings('document_root').settings('tmp_target_file');
-$mde_manifest       = settings('document_root').settings('mde_manifest');
-if ($ok = file_put_contents($tmp_target_file, $_tpl, LOCK_EX)) {
-    echo "OK > template updated in file '$tmp_target_file' with string of length ".strlen($_tpl).PHP_EOL;
-    if ($ok = exec('php '.$mde_console.' -t='.$tmp_target_file.' -o='.$target_file.' '.$mde_manifest)) {
-        echo "OK > index updated in file '$target_file' parsing '$mde_manifest'".PHP_EOL;
-    } else {
-        error("an error occured while trying to write in file '$target_file'!");
-    }
-} else {
-    error("an error occured while trying to write in file '$tmp_target_file'!");
-}
+$settings['profiler_stack'] = array(
+    'profiler-request' => function() {
+            return '<a id="' . hqt_internalid('profiler-request') . '" class="insert-request"></a>';
+        },
+    'profiler_apps' => function() { return HQT_NAME.' '.HQT_VERSION; },
+    'profiler_date' => date('c') . ' (' . @date_default_timezone_get() . ')',
+    'profiler-user-agent' => '',
+);
