@@ -11,8 +11,9 @@ remains before the first published version and all its content may change before
 
 TODOS
 
-- global cleanup
-- english !!
+- global cleanup & review
+- english !! (mistakes and vocabulary)
+- the "@TODO" tag shows actual todos
 
 ----
 
@@ -853,7 +854,7 @@ To insert a line break:
 
 Example:
 
-    Line 1 ...  
+    Line 1 ...∙∙
     Line 2 ...
 
 Note that hard breaks are only allowed on a line with a content. A line with only spaces (even
@@ -1627,6 +1628,8 @@ F. Miscellaneous rules {#F}
 ---------------------------
 
 ### F.1. Application scope {#F1}
+
+@TODO
 
 ### F.2. Escaping of meta-characters {#F2}
 
