@@ -20,3 +20,10 @@ Desktop.ini
 
 # any "tmp*" file or dir anywhere
 *tmp*
+
+# the vendor dependencies
+app/vendor/*
+app/bin/*
+app/composer.lock
+!app/bin/make-index.php
+!app/bin/version.php
