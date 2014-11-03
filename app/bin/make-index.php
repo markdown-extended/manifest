@@ -4,15 +4,15 @@
 # PHP-script to re-generate the MDE quick template
 #
 
-// required cli_library
-if (file_exists($cli_library = __DIR__.'/../modules/php-cli-functions/cli-functions.php')) {
-    require_once $cli_library;
+// required autoloader
+if (file_exists($autoload = __DIR__.'/../vendor/autoload.php')) {
+    require_once $autoload;
 } else {
-    die("> ERROR !! - cli_library '$cli_library' not found!");
+    die("> ERROR !! - composer autoloader '$autoload' not found!".PHP_EOL."You need to install Composer's dependencies!");
 }
 
 // required settings
-if (file_exists($opts = __DIR__.'/settings.php')) {
+if (file_exists($opts = __DIR__.'/../src/settings.php')) {
     require_once $opts;
 } else {
     die("> ERROR !! - settings '$opts' not found!");
@@ -56,9 +56,9 @@ $_tpl = ob_get_contents();
 ob_end_clean();
 
 // write it in $target_file
-$target_file        = settings('document_root').settings('target_file');
-$tmp_target_file    = settings('document_root').settings('template_file');
-$mde_manifest       = settings('document_root').settings('mde_manifest');
+$target_file        = settings('target_file');
+$tmp_target_file    = settings('template_file');
+$mde_manifest       = settings('mde_manifest');
 if ($ok = file_put_contents($tmp_target_file, $_tpl, LOCK_EX)) {
     info("template updated in file '$tmp_target_file' with string of length ".strlen($_tpl));
     if ($ok = exec('php '.$mde_console.' -t='.$tmp_target_file.' -o='.$target_file.' '.$mde_manifest)) {

@@ -23,3 +23,10 @@ Desktop.ini
 
 # no index.html in draft branch
 index.html
+
+# the vendor dependencies
+app/vendor/*
+app/bin/*
+app/composer.lock
+!app/bin/make-index.php
+!app/bin/version.php

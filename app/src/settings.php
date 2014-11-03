@@ -8,30 +8,40 @@ ini_set('display_errors', 0);
 set_error_handler('error_handler');
 set_exception_handler('exception');
 
+// required cli_library
+if (file_exists($cli_library = __DIR__.'/../bin/cli-functions.php')) {
+    require_once $cli_library;
+} else {
+    die("> ERROR !! - cli_library '$cli_library' not found!");
+}
+
 // defaults
-settings('document_root', __DIR__.'/../');
-settings('version_files', array('mde_manifest'));
-settings('html5_quick_template', 'modules/html5-quick-template/html5-quick-template.html.php');
-settings('mde_console', 'modules/markdown-extended/bin/markdown-extended');
-settings('template_file', 'bin/mde-template.html');
-settings('target_file', 'index.html');
-settings('mde_manifest', 'mde-manifest.md');
-settings('php_bin', 'php');
+settings('app_root',            realpath(__DIR__.'/..'));
+settings('document_root',       realpath(settings('app_root').'/..'));
+settings('app_vendor',          realpath(settings('app_root').'/vendor'));
+settings('app_bin',             realpath(settings('app_root').'/bin'));
+settings('html5_quick_template',realpath(settings('app_vendor').'/piwi/html5-quick-template/html5-quick-template.html.php'));
+settings('mde_console',         realpath(settings('app_bin').'/markdown-extended'));
+settings('template_file',       settings('app_root').'/bin/mde-template.html');
+settings('target_file',         realpath(settings('document_root').'/index.html'));
+settings('mde_manifest',        realpath(settings('document_root').'/mde-manifest.md'));
+settings('version_files',       array('mde_manifest'));
+settings('php_bin',             'php');
 
 // MDE source
-$documentation = realpath(settings('document_root').settings('mde_manifest'));
+$documentation = settings('mde_manifest');
 if (!file_exists($documentation)) {
     error("original documentation file '$documentation' not found!");
 }
 
 // template file path
-$html5_quick_template = realpath(settings('document_root').settings('html5_quick_template'));
+$html5_quick_template = settings('html5_quick_template');
 if (!file_exists($html5_quick_template)) {
     error("quick template app '$html5_quick_template' not found!");
 }
 
 // MDE binaries path
-$mde_console = realpath(settings('document_root').settings('mde_console'));
+$mde_console = settings('mde_console');
 if (!file_exists($mde_console)) {
     error("Markdown Extended console '$mde_console' not found!");
 }
@@ -85,7 +95,7 @@ $settings['menu_item_content_stamp'] = function() use (&$stamp_url, &$stamp_titl
     $icon = hqt_safestring(hqt_setting('menu_item_content_stamp_icon'));
     return '<a title="'.hqt_safestring($stamp_title).'" href="'.hqt_safestring($stamp_url).'">'.$icon.'MDE</a>';
 };
-$settings['navbar_items'] = array(/*'menu',*/ 'toc', 'top', 'bottom');
+$settings['navbar_items'] = array('menu', 'toc', 'top', 'bottom');
 $settings['language_strings'] = array();
 $settings['language_strings']['toc_block_header'] = '';
 $settings['language_strings']['notes_block_header'] = '';
