@@ -22,9 +22,9 @@ settings('app_vendor',          realpath(settings('app_root').'/vendor'));
 settings('app_bin',             realpath(settings('app_root').'/bin'));
 settings('html5_quick_template',realpath(settings('app_vendor').'/piwi/html5-quick-template/html5-quick-template.html.php'));
 settings('mde_console',         realpath(settings('app_bin').'/markdown-extended'));
-settings('template_file',       settings('app_root').'/bin/mde-template.html');
-settings('target_file',         realpath(settings('document_root').'/index.html'));
 settings('mde_manifest',        realpath(settings('document_root').'/mde-manifest.md'));
+settings('template_file',       settings('app_root').'/bin/mde-template.html');
+settings('target_file',         settings('document_root').'/index.html');
 settings('version_files',       array('mde_manifest'));
 settings('php_bin',             'php');
 

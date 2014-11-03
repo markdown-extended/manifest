@@ -4,15 +4,15 @@
 # PHP-script to manage manifest's version number
 #
 
-// required cli_library
-if (file_exists($cli_library = __DIR__.'/../modules/php-cli-functions/cli-functions.php')) {
-    require_once $cli_library;
+// required autoloader
+if (file_exists($autoload = __DIR__.'/../vendor/autoload.php')) {
+    require_once $autoload;
 } else {
-    die("> ERROR !! - cli_library '$cli_library' not found!");
+    die("> ERROR !! - composer autoloader '$autoload' not found!".PHP_EOL."You need to install Composer's dependencies!");
 }
 
 // required settings
-if (file_exists($opts = __DIR__.'/settings.php')) {
+if (file_exists($opts = __DIR__.'/../src/settings.php')) {
     require_once $opts;
 } else {
     die("> ERROR !! - settings '$opts' not found!");
@@ -52,12 +52,11 @@ if (count($argv)>1 && in_array($argv[1], array('-q', '--quiet'))) {
 
 // let's go
 extract(settings());
-$documentation = realpath(settings('document_root').settings('mde_manifest'));
-$ctt = file_get_contents($documentation);
+$ctt = file_get_contents($mde_manifest);
 if (preg_match('/^\* version: ([[:alnum:]|\.|-]+)$/im', $ctt, $result) && count($result)>1) {
     $old_version = $result[1];
 } else {
-    error("can't guess version number from file '$documentation'");
+    error("can't guess version number from file '$mde_manifest'");
 }
 if (isset($argv[1]) && $argv[1]=='update') {
 //    $old_version = str_replace('@dev', '', $old_version);
@@ -70,7 +69,7 @@ if (isset($argv[1]) && $argv[1]=='update') {
     info("new version is: ".$new_version);
 
     foreach ($version_files as $fname) {
-        $f = realpath(settings('document_root').$$fname);
+        $f = $$fname;
         if (!empty($f)) {
             if ($ok = file_put_contents(
                 $f, str_replace($old_version, $new_version, file_get_contents($f))
