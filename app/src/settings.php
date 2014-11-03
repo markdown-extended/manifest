@@ -79,7 +79,7 @@ $page_notice = 'Content rendered from a <a href="http://github.com/piwi/markdown
 
 // page menu
 $menu = array(
-    array('url'=>'test-suite/', 'title'=>'See the full test suite of the specifications', 'content'=>'Test-Suite'),
+    array('url'=>'modules/test-suite/', 'title'=>'See the full test suite of the specifications', 'content'=>'Test-Suite'),
 );
 
 // MathJax.js
