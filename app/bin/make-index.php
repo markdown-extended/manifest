@@ -49,6 +49,11 @@ if (count($argv)>1 && in_array($argv[1], array('-x', '--debug'))) {
     exit();
 }
 
+// verbose mode if so
+if (count($argv)>1 && in_array($argv[1], array('-v', '--verbose'))) {
+    settings('verbose', true);
+}
+
 // generate HTML template
 ob_start();
 require $html5_quick_template;
@@ -56,16 +61,27 @@ $_tpl = ob_get_contents();
 ob_end_clean();
 
 // write it in $target_file
-$target_file        = settings('target_file');
-$tmp_target_file    = settings('template_file');
-$mde_manifest       = settings('mde_manifest');
-if ($ok = file_put_contents($tmp_target_file, $_tpl, LOCK_EX)) {
-    info("template updated in file '$tmp_target_file' with string of length ".strlen($_tpl));
-    if ($ok = exec('php '.$mde_console.' -t='.$tmp_target_file.' -o='.$target_file.' '.$mde_manifest)) {
+extract(settings());
+if ($ok = file_put_contents($template_file, $_tpl, LOCK_EX)) {
+    info("template updated in file '$template_file' with string of length ".strlen($_tpl));
+    $cmd = settings('php_bin').' '.$mde_console
+        .(isset($verbose) && $verbose ? ' -v' : '')
+        .' -t='.$template_file
+        .' -o='.$target_file
+        .' -c='.$mde_config
+        .' -f="'.$mde_output_format.'" '
+        .$mde_manifest;
+    if ($ok = exec($cmd, $output, $status) || $status == 0) {
+        if (isset($verbose) && $verbose) {
+            echo join(PHP_EOL, $output);
+        }
         info("index updated in file '$target_file' parsing '$mde_manifest'");
     } else {
+        if (isset($verbose) && $verbose) {
+            echo join(PHP_EOL, $output);
+        }
         error("an error occurred while trying to write in file '$target_file'!");
     }
 } else {
-    error("an error occurred while trying to write in file '$tmp_target_file'!");
+    error("an error occurred while trying to write in file '$template_file'!");
 }

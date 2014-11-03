@@ -1,19 +1,19 @@
 <?php
 
-namespace AboutMde;
+namespace MdeManifest;
 
 use MarkdownExtended\MarkdownExtended;
 use MarkdownExtended\API\OutputFormatInterface;
-use MarkdownExtended\API\OutputFormat\AbstractOutputFormat;
+//use MarkdownExtended\API\OutputFormat\AbstractOutputFormat;
 use MarkdownExtended\Helper as MDE_Helper;
 use MarkdownExtended\Exception as MDE_Exception;
 use MarkdownExtended\OutputFormat\HTML;
-use AboutMde\AboutMdeOutputHelper;
+use MdeManifest\MdeManifestOutputHelper;
 
 /**
  * All '$_defaults' entries can be overwritten in config.
  */
-class AboutMdeOutput extends HTML implements OutputFormatInterface
+class MdeManifestOutput extends HTML implements OutputFormatInterface
 {
 
     /**
@@ -108,7 +108,7 @@ class AboutMdeOutput extends HTML implements OutputFormatInterface
 
     protected function _getConfigOrDefault($var)
     {
-        return AboutMdeOutputHelper::getConfigOrDefault($var);
+        return MdeManifestOutputHelper::getConfigOrDefault($var);
     }
 
 // -------------------

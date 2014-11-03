@@ -1,6 +1,6 @@
 <?php
 
-namespace AboutMde;
+namespace MdeManifest;
 
 use MarkdownExtended\MarkdownExtended;
 use MarkdownExtended\API\ContentInterface;
@@ -10,14 +10,14 @@ use MarkdownExtended\Helper as MDE_Helper;
 use MarkdownExtended\Exception as MDE_Exception;
 use MarkdownExtended\OutputFormat\HTMLHelper;
 
-use AboutMde\AboutMdeOutput;
+use MdeManifest\MdeManifestOutput;
 
 /**
  * DocBook output Helper
  *
  * All '$_defaults' entries can be overwritten in config.
  */
-class AboutMdeOutputHelper extends HTMLHelper implements OutputFormatHelperInterface
+class MdeManifestOutputHelper extends HTMLHelper implements OutputFormatHelperInterface
 {
 
     protected static $_defaults = array(
@@ -30,9 +30,8 @@ class AboutMdeOutputHelper extends HTMLHelper implements OutputFormatHelperInter
         'permalink_mask_title' => 'Copy this link URL to get this title permanent link: %%',
         'permalink_title_separator' => ' - ',
         'toc_backlink_title'    => 'Click to go back to table of contents',
-//        'backlink_onclick_mask' => "document.location.hash='%%'; return false;",
-        'backlink_onclick_mask' => "return scrollToAnchor('#%%');",
-        
+        'backlink_onclick_mask' => "document.location.hash='%%'; return false;",
+
     );
 
     public static function getConfigOrDefault($var)

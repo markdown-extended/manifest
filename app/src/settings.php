@@ -22,11 +22,13 @@ settings('app_vendor',          realpath(settings('app_root').'/vendor'));
 settings('app_bin',             realpath(settings('app_root').'/bin'));
 settings('html5_quick_template',realpath(settings('app_vendor').'/piwi/html5-quick-template/html5-quick-template.html.php'));
 settings('mde_console',         realpath(settings('app_bin').'/markdown-extended'));
+settings('mde_config',          realpath(settings('app_root').'/src/markdown_config.full.ini'));
 settings('mde_manifest',        realpath(settings('document_root').'/mde-manifest.md'));
 settings('template_file',       settings('app_root').'/bin/mde-template.html');
 settings('target_file',         settings('document_root').'/index.html');
 settings('version_files',       array('mde_manifest'));
 settings('php_bin',             'php');
+settings('mde_output_format',   '\MdeManifest\MdeManifestOutput');
 
 // MDE source
 $documentation = settings('mde_manifest');
@@ -128,3 +130,23 @@ $settings['profiler_stack'] = array(
     'profiler_date' => date('c') . ' (' . @date_default_timezone_get() . ')',
     'profiler-user-agent' => '',
 );
+
+// styles
+$css = <<<EOT
+/* permalinks title */
+h1 a.permalink,
+h2 a.permalink,
+h3 a.permalink,
+h4 a.permalink,
+h5 a.permalink { font-size: 13pt; color: #ffffff/*#EFEFEF*/; background-image:none !important; font-size: .8em; font-weight: normal !important; padding: 0px 6px 2px 6px !important; line-height: inherit !important; line-height: 125%; vertical-align: middle; }
+h1 a.permalink:first-child,
+h2 a.permalink:first-child,
+h3 a.permalink:first-child,
+h4 a.permalink:first-child,
+h5 a.permalink:first-child { padding-left: 12px !important; }
+h1:hover a.permalink,
+h2:hover a.permalink,
+h3:hover a.permalink,
+h4:hover a.permalink,
+h5:hover a.permalink { color: #ccc; }
+EOT;
