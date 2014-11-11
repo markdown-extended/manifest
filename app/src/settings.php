@@ -9,7 +9,7 @@ set_error_handler('error_handler');
 set_exception_handler('exception');
 
 // required cli_library
-if (file_exists($cli_library = __DIR__.'/../bin/cli-functions.php')) {
+if (file_exists($cli_library = __DIR__.'/../bin/phpclib-functions.php')) {
     require_once $cli_library;
 } else {
     die("> ERROR !! - cli_library '$cli_library' not found!");

@@ -37,7 +37,7 @@ class MdeManifestOutputHelper extends HTMLHelper implements OutputFormatHelperIn
     public static function getConfigOrDefault($var)
     {
         $cfg_val = MarkdownExtended::getConfig($var);
-        if (empty($cfg_val)) $cfg_val = self::$_defaults[$var];
+        if (!isset($cfg_val)) $cfg_val = self::$_defaults[$var];
         return $cfg_val;
     }
 
