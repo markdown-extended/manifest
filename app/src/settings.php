@@ -97,7 +97,7 @@ $settings['menu_item_content_stamp'] = function() use (&$stamp_url, &$stamp_titl
     $icon = hqt_safestring(hqt_setting('menu_item_content_stamp_icon'));
     return '<a title="'.hqt_safestring($stamp_title).'" href="'.hqt_safestring($stamp_url).'">'.$icon.'MDE</a>';
 };
-$settings['navbar_items'] = array('menu', 'toc', 'top', 'bottom');
+$settings['navbar_items'] = array(/*'menu',*/ 'toc', 'top', 'bottom');
 $settings['language_strings'] = array();
 $settings['language_strings']['toc_block_header'] = '';
 $settings['language_strings']['notes_block_header'] = '';
