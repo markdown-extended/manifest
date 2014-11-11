@@ -20,9 +20,9 @@ if (file_exists($opts = __DIR__.'/../src/settings.php')) {
 
 // usage string & exit
 function usage($status = 0) {
-    $args                   = settings('argv');
+    $args = settings('argv');
     echo <<<EOT
-usage:      {$args[0]}  [-h | -q]  [<action> = read]  [<version>]
+usage:      {$args[0]}  [-h | -q] [<action> = read] [<version>]
 
 options:
     -q         : "quiet" mode
@@ -34,21 +34,25 @@ EOT;
     exit($status);
 }
 
-// usage info if so
-if (count($argv)>1 && in_array($argv[1], array('help', '-h', '--help')) && function_exists('usage')) {
-    usage(); exit();
-}
-
-// debug info if so
-if (count($argv)>1 && in_array($argv[1], array('-x', '--debug'))) {
-    debug(settings());
-    exit();
-}
-
-// quiet mode if so
-if (count($argv)>1 && in_array($argv[1], array('-q', '--quiet'))) {
-    settings('quiet', true);
-}
+// options
+$opts = get_options(null, null, array(
+    array(
+        'options'   => array('h', 'help'),
+        'value'     => function() { if (function_exists('usage')) { usage(); exit(); } },
+    ),
+    array(
+        'options'   => array('x', 'debug'),
+        'value'     => function() { debug(settings()); exit(); },
+    ),
+    array(
+        'options'   => array('v', 'verbose'),
+        'value'     => 'verbose',
+    ),
+    array(
+        'options'   => array('q', 'quiet'),
+        'value'     => 'quiet',
+    )
+));
 
 // let's go
 extract(settings());

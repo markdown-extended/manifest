@@ -26,7 +26,7 @@ function usage($status = 0) {
     $mde_manifest           = settings('mde_manifest');
     echo <<<EOT
 
-usage:  php  {$args[0]}  <manifest.md>  <html5-quick-template-path>  <mde-console-path>
+usage:  php  {$args[0]}  [--manifest =manifest.md]  [--templater =html5-quick-template-path] [--mde =mde-console-path]
 
 defaults from DOCUMENT_ROOT:
     <manifest.md>                   : {$mde_manifest}
@@ -38,23 +38,36 @@ EOT;
     exit($status);
 }
 
-// usage info if so
-if (count($argv)>1 && in_array($argv[1], array('help', '-h', '--help')) && function_exists('usage')) {
-    usage(); exit();
-}
-
-// debug info if so
-if (count($argv)>1 && in_array($argv[1], array('-x', '--debug'))) {
-    debug(settings());
-    exit();
-}
-
-// verbose mode if so
-if (count($argv)>1 && in_array($argv[1], array('-v', '--verbose'))) {
-    settings('verbose', true);
-}
+// options
+$opts = get_options(null, null, array(
+    array(
+        'options'   => array('h', 'help'),
+        'value'     => function() { if (function_exists('usage')) { usage(); exit(); } },
+    ),
+    array(
+        'options'   => array('x', 'debug'),
+        'value'     => function() { debug(settings()); exit(); },
+    ),
+    array(
+        'options'   => array('v', 'verbose'),
+        'value'     => 'verbose',
+    ),
+    array(
+        'options'   => array('manifest'),
+        'value'     => 'mde_manifest',
+    ),
+    array(
+        'options'   => array('templater'),
+        'value'     => 'html5_quick_template',
+    ),
+    array(
+        'options'   => array('mde'),
+        'value'     => 'mde_console',
+    )
+));
 
 // generate HTML template
+extract(settings());
 ob_start();
 require $html5_quick_template;
 $_tpl = ob_get_contents();
