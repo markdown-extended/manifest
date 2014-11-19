@@ -162,7 +162,7 @@ some contents with an easy-to-read, easy-to-write set of rules for plain text fo
 to convert it in a rich format (basically HTML).
 
 Many developers have proposed their own implementation of the original syntax with specific
-evolutions and extensions. The goal of **Markdown Extended** is to define an  
+evolutions and extensions. The goal of **Markdown Extended** is to define an 
 homogeneous new version, as complete and rich as possible, while keeping only the relevant 
 evolutions or more used rules. **Markdown Extended can be considered by developers as the 
 new standard for Markdown, so that each user does not need to adapt to the current 
@@ -201,7 +201,7 @@ literal meaning.
 The present specifications of the syntax DOES NOT suppose about the final rendering of the 
 content. This rendering is the purpose of the *parsers* and specific applications (this concept
 is developed in [§§](#A1)). The "HTML" final output CAN be used as a rendering example but 
-MUST NOT be a specification reference.  
+MUST NOT be a specification reference.
 
 Each item of the sections below is identified by a structural ID composed like `A.B.C.` 
 to allow it to be referenced and used in citations, implementations, documentations etc.
