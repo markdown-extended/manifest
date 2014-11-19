@@ -17,7 +17,7 @@ TODOS
 
 ----
 
-This document explains the "official" specifications of the *Markdown Extended* syntax. 
+This document describes the specifications of the *Markdown Extended* syntax.
 It intends to be a concise and complete set of syntax's rules and tags to use to write 
 under Markdown Extended and a reference to build parsers implementations. It can be 
 considered as the **Markdown Extended reference** for any purpose. The goal of these 
@@ -58,7 +58,7 @@ or contribution, please refer to [the dedicated section](#contribute).
         -   [B.5.b. Indentation rules](#B5b)
         -   [B.5.c. Breaking indentation](#B5c)
     -   [B.6. Meta-characters](#B6)
--   [C. Typographic rules: the "span" elements](#C)
+-   [C. Typographic rules: the inline elements](#C)
     -   [C.1. Application scope](#C1)
     -   [C.2. Emphasis](#C2)
         -   [C.2.a. Emphasis with underscores](#C2a)
@@ -162,7 +162,7 @@ some contents with an easy-to-read, easy-to-write set of rules for plain text fo
 to convert it in a rich format (basically HTML).
 
 Many developers have proposed their own implementation of the original syntax with specific
-evolutions and extensions. The goal of **Markdown Extended** is to define an official and 
+evolutions and extensions. The goal of **Markdown Extended** is to define an  
 homogeneous new version, as complete and rich as possible, while keeping only the relevant 
 evolutions or more used rules. **Markdown Extended can be considered by developers as the 
 new standard for Markdown, so that each user does not need to adapt to the current 
@@ -216,8 +216,8 @@ For the purposes of this document, the following terms and definitions apply:
 
 **MDE** - shortcut for "Markdown Extended".
 
-**span element** - A "span" element is a piece of content that does not concern an entire 
-paragraph ; span elements are described in the *typographic rules* of these specifications 
+**inline element** - An "inline" element is a piece of content that does not concern an entire 
+paragraph ; inline elements are described in the *typographic rules* of these specifications 
 ([§§](#C)).
 
 **block element** - A "block" element is a piece of content that concerns an entire paragraph
@@ -358,7 +358,7 @@ The syntax's rules of these specifications are separated in the following four t
 **Typography**
 :   Rules concerning the rendering of typographic writing usages, such as bold
     emphasis or links ; this almost concerns a word, a group of words or an expression.
-    The *typographic* rules are often called "span elements".
+    The *typographic* rules are often called "inline elements".
     See [§§](#C).
 
 **Structure**
